@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-12 text-center mt-3 d-flex justify-content-between">
+        <h2>Team Manager</h2>
+    </div>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table text-center table-light my-2">
+            <thead>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nombre Equipo 1</td>
+                    <td>{{description | slice : 0 : 150}}</td>
+                    <td class="">
+                        <a class="pointer m-2" [ngStyle]="{color: '#1f516f'}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="pointer m-2" [ngStyle]="{color: '#e15639'}"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Nombre Equipo 2</td>
+                    <td>Descripcion Equipo 2</td>
+                    <td class="">
+                        <a class="pointer m-2" [ngStyle]="{color: '#1f516f'}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="pointer m-2" [ngStyle]="{color: '#e15639'}"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

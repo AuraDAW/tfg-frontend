@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-12 text-center mt-3 d-flex justify-content-between">
+        <h2>Team Builder</h2>
+    </div>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-12">
+        <a href="/pokemonFrm" class="btn btn-success mx-2">Add Pokemon</a>
+        <button class="btn btn-success">Save Team</button>
+        <div class="border my-2" [ngStyle]="{position:'relative'}">
+            <div class="row">
+                <div class="col-2 text-center my-2">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1000.png" class="img-fluid mx-auto d-block">
+                    <p>Name of Pokemon</p>
+                </div>
+                <div class="col-4 my-2">
+                    <div class="form-group text-center">
+                        <small>Ability</small>
+                        <select id="ability" class="form-select" disabled>
+                            <option value="" selected>Ability Selected</option>
+                        </select>
+                    </div>
+                    <div class="form-group text-center">
+                        <small>Item</small>
+                        <select id="item" class="form-select" disabled>
+                            <option value="" selected>Item Selected</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-6 my-2">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group text-center">
+                                <small>Move 1</small>
+                                <select id="move1" class="form-select" disabled>
+                                    <option value="" selected>Move Selected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group text-center">
+                                <small>Move 2</small>
+                                <select id="move2" class="form-select" disabled>
+                                    <option value="" selected>Move Selected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group text-center">
+                                <small>Move 3</small>
+                                <select id="move4" class="form-select" disabled>
+                                    <option value="" selected>Move Selected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group text-center">
+                                <small>Move 4</small>
+                                <select id="move4" class="form-select" disabled>
+                                    <option value="" selected>Move Selected</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="/pokemonFrm/1" class="stretched-link"></a>
+        </div>
+    </div>
+</div>

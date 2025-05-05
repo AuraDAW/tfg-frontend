@@ -1,0 +1,262 @@
+<!-- <p>Este es el formulario super chungo donde se crea un pokemon. Si se ha hecho clic sobre un Pokemon existente, aparecen sus datos
+    para poder editar. Si se hace clic sobre el boton de guardar, se guarda toda la informacion actual (si algo esta vacio, se pone como NULL),
+    se sube a la BD y se redirige al team-builder.
+</p> -->
+<div class="row">
+    <div class="col-12 text-center mt-3 d-flex justify-content-between">
+        <h2>Edit Pokemon</h2>
+        <button class="btn btn-success">Save</button>
+    </div>
+</div>
+<hr>
+<form [formGroup]="frm" autocomplete="off">
+<div class="row ">
+    <div class="col-2 border border-danger mt-2">
+        <!-- alinear bien la imagen cuando se pueda -->
+        @if(selectedPokemon && shiny==false){
+            <img src="{{aPokemonDataId[0].image}}" class="img-fluid mx-auto d-block">
+        }@else if(selectedPokemon!=null && shiny==true){
+            <img src="{{aPokemonDataId[0].image_shiny}}" class="img-fluid mx-auto d-block">
+        }@else {
+            <img src="poke-ball.png" class="img-fluid mx-auto d-block">
+        }
+        <div class="form-group mb-3 text-center">
+            <label for="pokemonId" class=""><small>Pokemon</small></label>
+            <select id="pokemonId" class="form-select" formControlName="pokemonId" (change)="obtainPokemonDataId($event)">
+                <option value="" selected>Select a Pokemon...</option>
+                @for (data of aPokemonData; track $index){
+                    <option value={{data.id}}>{{data.name | titlecase}}</option>
+                }
+            </select>
+        </div>
+        <div class="d-flex justify-content-center mb-2">
+            @if(selectedPokemon){
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/ultra-sun-ultra-moon/9.png" class="img-fluid mx-auto d-block">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/ultra-sun-ultra-moon/8.png" class="img-fluid mx-auto d-block">
+            }
+        </div>
+    </div>
+    <div class="col-4 border border-black mt-2">
+        <div class="form-group text-center">
+            <label for="ability" class=""><small>Ability</small></label>
+            <select id="ability" class="form-select" formControlName="ability">
+                <option value="" selected>Select an ability...</option>
+                @for (ability of aAbilities; track $index) {
+                    <option value={{ability.id}}>{{ability.name | titlecase}}</option>
+                }
+            </select>
+        </div>
+        <div class="form-group text-center">
+            <label for="item" class=""><small>Item</small></label>
+            <select id="item" class="form-select" formControlName="item">
+                <option value="" selected>Select an item...</option>
+                @for(item of aItems;track $index){
+                    <option value={{item.id}}>{{item.name | titlecase}}</option>
+                }
+            </select>
+        </div>
+        <div class="d-flex justify-content-center mb-2 text-center">
+            <div class="form-group me-2">
+                <label for="level"><small>Level</small></label>
+                <input type="number" class="form-control" id="level" formControlName="level" min="1" max="100">
+            </div>
+            <div class="form-group">
+                <label for="teratype" class=""><small>Tera Type</small></label>
+                <select id="teratype" class="form-select" formControlName="teratype">
+                    <option value="" selected>Select a type...</option>
+                    @for (type of aTypes; track $index){
+                        <option value={{type.id}}>{{type.name | titlecase}}</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+        <div class="form-check">
+            <label class="form-check-label" for="isShiny">Shiny</label>
+            <input type="checkbox" class="form-check-input" id="isShiny" formControlName="isShiny" [(ngModel)]="shiny">
+        </div>
+        </div>
+    </div>
+    <div class="col-6 border border-info mt-2">
+        <div class="d-flex flex-column">
+            <div class="form-group my-2">
+                <select id="move1" class="form-select" formControlName="move1">
+                    <option value="" selected>Move 1</option>
+                    @for (move of aMoves; track $index){
+                        <option value={{move.id}}>{{move.name | titlecase}}</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group my-2">
+                <select id="move2" class="form-select" formControlName="move2">
+                    <option value="" selected>Move 2</option>
+                    @for (move of aMoves; track $index){
+                        <option value={{move.id}}>{{move.name | titlecase}}</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group my-2">
+                <select id="move3" class="form-select" formControlName="move3">
+                    <option value="" selected>Move 3</option>
+                    @for (move of aMoves; track $index){
+                        <option value={{move.id}}>{{move.name | titlecase}}</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group my-2">
+                <select id="move4" class="form-select" formControlName="move4">
+                    <option value="" selected>Move 4</option>
+                    @for (move of aMoves; track $index){
+                        <option value={{move.id}}>{{move.name | titlecase}}</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+@if(selectedPokemon){
+
+<div class="row mt-2">
+    <div class="col-12 border border-success">
+        <table class="table text-center table-light">
+            <thead>
+                <th scope="col">Stat</th>
+                <th scope="col">Base Value</th>
+                <th scope="col"></th>
+                <th scope="col">EV</th>
+                <th scope="col">IV</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">HP</th>
+                    <td>{{aPokemonDataId[0].base_hp}}</td>
+                    <td class="col-8">
+                        <div class="progress mt-2 w-full" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                             <div class="progress-bar" [ngStyle]="{'width': aStatbar[0].width, 'background-color': aStatbar[0].color}"></div>
+                            <!-- el width se obtiene diviendo el stat base entre 200 ((87/200)*100), para la HP de gholdengo seria 43%
+                             se divide entre 200 y no entre 255 que es el maximo para que las barras se queden mas llenas, si un stat sobrepasa
+                             200 se pone directamente como width 100% -->
+                             <!-- los colores de las barras -->
+                             <!-- Red: Very Bad (1 - 29) #f34444
+                                Orange: Bad (30 - 59) #ff7f0f
+                                Yellow: Bad - Mediocre (60 - 89) #ffdd57
+                                Green: Decent - Good (90 - 119) #a0e515
+                                Dark Green: Very Good (120 - 149) #23cd5e
+                                Blue: Phenomenal (150 - 255) #00c2b8 -->
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="evhp" formControlName="evhp" value="0" min="0" max="252">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="ivhp" formControlName="ivhp" value="31" min="0" max="31">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">ATK</th>
+                    <td>{{aPokemonDataId[0].base_atk}}</td>
+                    <td class="col-8">
+                        <div class="progress mt-2 w-full" role="progressbar" aria-label="Basic example" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" [ngStyle]="{'width': aStatbar[1].width, 'background-color': aStatbar[1].color}"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="evatk" formControlName="evatk" value="0" min="0" max="252">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="ivatk" formControlName="ivatk" value="31" min="0" max="31">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">DEF</th>
+                    <td>{{aPokemonDataId[0].base_def}}</td>
+                    <td class="col-8">
+                        <div class="progress mt-2 w-full" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" [ngStyle]="{'width': aStatbar[2].width, 'background-color': aStatbar[2].color}"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="evdef" formControlName="evdef" value="0" min="0" max="252">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="ivdef" formControlName="ivdef" value="31" min="0" max="31">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">SPATK</th>
+                    <td>{{aPokemonDataId[0].base_spatk}}</td>
+                    <td class="col-8">
+                        <div class="progress mt-2 w-full" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" [ngStyle]="{'width': aStatbar[3].width, 'background-color': aStatbar[3].color}"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="evspatk" formControlName="evspatk" value="0" min="0" max="252">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="ivspatk" formControlName="ivspatk" value="31" min="0" max="31">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">SPDEF</th>
+                    <td>{{aPokemonDataId[0].base_spdef}}</td>
+                    <td class="col-8">
+                        <div class="progress mt-2 w-full" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" [ngStyle]="{'width': aStatbar[4].width, 'background-color': aStatbar[4].color}"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="evspdef" formControlName="evspdef" value="0" min="0" max="252">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="ivspdef" formControlName="ivspdef" value="31" min="0" max="31">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">SPD</th>
+                    <td>{{aPokemonDataId[0].base_spd}}</td>
+                    <td class="col-8">
+                        <div class="progress mt-2 w-full" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" [ngStyle]="{'width': aStatbar[5].width, 'background-color': aStatbar[5].color}"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="evspd" formControlName="evspd" value="0" min="0" max="252">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group text-center">
+                            <input type="number" class="form-control" id="ivspd" formControlName="ivspd" value="31" min="0" max="31">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+}
+</form>
+
+
+        
