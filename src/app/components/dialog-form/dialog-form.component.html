@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Create a team</h2>
+<mat-dialog-content class="row">
+  <form [formGroup]="frm">
+    <mat-form-field class="col-12">
+      <mat-label>Team Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    @if (nameNotRequired) {
+        <span class="text-danger fst-italic">You must input a name.</span>
+    }@else if (nameWrongLength) {
+        <small class="text-danger fst-italic">The name must have between 5 and 30 caracters.</small>
+    }
+    <mat-form-field class="col-12">
+      <mat-label>Team Description</mat-label>
+      <input matInput formControlName="description">
+    </mat-form-field>
+    @if (descriptionNotRequired) {
+        <span class="text-danger fst-italic">You must input a description.</span>
+    }@else if (descriptionWrongLength) {
+        <small class="text-danger fst-italic">The description must have between 5 and 150 caracters.</small>
+    }
+  </form>
+</mat-dialog-content>
+<!-- <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button type="submit" mat-button [disabled]="frm.invalid">Create</button>
+  </mat-dialog-actions> -->
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()" [disabled]="frm.invalid">Submit</button>
+</mat-dialog-actions>
