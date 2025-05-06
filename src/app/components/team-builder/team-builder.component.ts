@@ -1,4 +1,5 @@
 import { CommonModule, NgStyle } from '@angular/common';
+<<<<<<< HEAD
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PokemonTeam } from '../../models/pokemon-team';
@@ -11,6 +12,9 @@ import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.ser
 import { ItemsService } from '../../services/items/items.service';
 import { AbilitiesService } from '../../services/abilities/abilities.service';
 import { MovesService } from '../../services/moves/moves.service';
+=======
+import { Component } from '@angular/core';
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 
 @Component({
   selector: 'app-team-builder',
@@ -19,6 +23,7 @@ import { MovesService } from '../../services/moves/moves.service';
   styles: ``
 })
 export class TeamBuilderComponent {
+<<<<<<< HEAD
   // definir variables
   private userId!:number;
   private teamId!:number
@@ -150,3 +155,7 @@ export class TeamBuilderComponent {
   }
 }
 
+=======
+
+}
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f

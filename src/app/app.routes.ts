@@ -18,6 +18,7 @@ export const routes: Routes = [
         loadComponent:()=>import("./components/team-manager/team-manager.component").then(c=>c.TeamManagerComponent)
     },
     {
+<<<<<<< HEAD
         // team builder de un equipo existente (para editar)
         path:"teamBuilder/:userId/:teamId",
         loadComponent:()=>import("./components/team-builder/team-builder.component").then(c=>c.TeamBuilderComponent)
@@ -30,6 +31,20 @@ export const routes: Routes = [
     {
         // editando 1 pokemon de un equipo
         path:"pokemonFrm/:teamId/:id",
+=======
+        // team builder
+        path:"teamBuilder/:id",
+        loadComponent:()=>import("./components/team-builder/team-builder.component").then(c=>c.TeamBuilderComponent)
+    },
+    {
+        // pokemon individual del team builder
+        path:"pokemonFrm",
+        loadComponent:()=>import("./components/pokemon-frm/pokemon-frm.component").then(c=>c.PokemonFrmComponent)
+    },
+    {
+        // editar pokemon
+        path:"pokemonFrm/:id",
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
         loadComponent:()=>import("./components/pokemon-frm/pokemon-frm.component").then(c=>c.PokemonFrmComponent)
     },
     {

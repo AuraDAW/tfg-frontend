@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
+=======
+import { Component, inject } from '@angular/core';
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 import { Type } from '../../models/type';
 import { TypesService } from '../../services/types/types.service';
 import { CommonModule } from '@angular/common';
@@ -11,11 +15,16 @@ import { MovesService } from '../../services/moves/moves.service';
 import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.service';
 import { PokemonData } from '../../models/pokemon-data';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+<<<<<<< HEAD
 import { ActivatedRoute, Router } from '@angular/router';
 import { Statbar } from '../../models/statbar';
 import { PokemonTeam } from '../../models/pokemon-team';
 import { PokemonTeamService } from '../../services/pokemon-team/pokemon-team.service';
 import Swal from 'sweetalert2';
+=======
+import { Router } from '@angular/router';
+import { Statbar } from '../../models/statbar';
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 @Component({
   selector: 'app-pokemon-frm',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -28,8 +37,11 @@ export class PokemonFrmComponent {
   public selectedPokemon!: number;
   public shiny:boolean=false;
   public aStatbar:Statbar[]=[];
+<<<<<<< HEAD
   public teamId!:number;
   public id!:number
+=======
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
   // definir arrays para rellenar con datos de la BD
   public aTypes : Type[]=[];
   public aItems:Item[]=[];
@@ -37,17 +49,24 @@ export class PokemonFrmComponent {
   public aMoves:Move[]=[];
   public aPokemonData:PokemonData[]=[];
   public aPokemonDataId:PokemonData[]=[];
+<<<<<<< HEAD
   public aPokemonTypes:Type[]=[];
+=======
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 
   // inyectar servicios
   private fb=inject(FormBuilder)
   private router = inject(Router)
+<<<<<<< HEAD
   private activateRoute = inject(ActivatedRoute)
+=======
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
   private serviceTypes = inject(TypesService)
   private serviceItems = inject(ItemsService)
   private serviceAbilities = inject(AbilitiesService)
   private serviceMoves = inject(MovesService)
   private servicePokemonData = inject(PokemonDataService)
+<<<<<<< HEAD
   private servicePokemonTeam = inject(PokemonTeamService)
 
   ngOnInit(){
@@ -99,6 +118,13 @@ export class PokemonFrmComponent {
         }
       })
     }
+=======
+
+
+  ngOnInit(){
+    this.validacionesFrm();
+    this.obtainData()
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
   }
 
   private validacionesFrm(){
@@ -106,13 +132,20 @@ export class PokemonFrmComponent {
       pokemonId:["",[Validators.required]],
       ability:['', [Validators.required]],
       item:['', [Validators.required]],
+<<<<<<< HEAD
       level:['100', [Validators.min(1), Validators.max(100)]],
       teratype:['', [Validators.required]],
       isShiny:[''],
+=======
+      level:['100', [Validators.required, Validators.min(1), Validators.max(100)]],
+      teratype:['', [Validators.required]],
+      isShiny:['',],
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
       move1:['', [Validators.required]],
       move2:['', [Validators.required]],
       move3:['', [Validators.required]],
       move4:['', [Validators.required]],
+<<<<<<< HEAD
       evhp:['0', [Validators.min(0), Validators.max(252)]],
       ivhp:['31', [Validators.min(0), Validators.max(31)]],
       evatk:['0', [Validators.min(0), Validators.max(252)]],
@@ -188,12 +221,32 @@ export class PokemonFrmComponent {
     })
   }
 
+=======
+      evhp:['0', [Validators.required, Validators.min(1), Validators.max(252)]],
+      ivhp:['31', [Validators.required, Validators.min(0), Validators.max(31)]],
+      evatk:['0', [Validators.required, Validators.min(1), Validators.max(252)]],
+      ivatk:['31', [Validators.required, Validators.min(0), Validators.max(31)]],
+      evdef:['0', [Validators.required, Validators.min(1), Validators.max(252)]],
+      ivdef:['31', [Validators.required, Validators.min(0), Validators.max(31)]],
+      evspatk:['0', [Validators.required, Validators.min(1), Validators.max(252)]],
+      ivspatk:['31', [Validators.required, Validators.min(0), Validators.max(31)]],
+      evspdef:['0', [Validators.required, Validators.min(1), Validators.max(252)]],
+      ivspdef:['31', [Validators.required, Validators.min(0), Validators.max(31)]],
+      evspd:['0', [Validators.required, Validators.min(1), Validators.max(252)]],
+      ivspd:['31', [Validators.required, Validators.min(0), Validators.max(31)]],
+    })
+  }
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
   private obtainData(){
     this.obtainTypes();
     this.obtainItems();
     this.obtainAbilities();
     this.obtainMoves();
+<<<<<<< HEAD
     this.obtainAllPokemonData();
+=======
+    this.obtainPokemonData();
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
   }
 
   private obtainTypes(){
@@ -244,7 +297,11 @@ export class PokemonFrmComponent {
     })
   }
 
+<<<<<<< HEAD
   private obtainAllPokemonData(){
+=======
+  private obtainPokemonData(){
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
     this.servicePokemonData.getPokemonData().subscribe({
       next:(data)=>{
         this.aPokemonData=data;
@@ -256,11 +313,15 @@ export class PokemonFrmComponent {
     })
   }
 
+<<<<<<< HEAD
   onChangeEvent($event: Event) {
     this.obtainPokemonDataId();
   }
 
   private obtainPokemonDataId(){
+=======
+  obtainPokemonDataId($event: Event) {
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
     this.selectedPokemon = this.frm.get("pokemonId")?.value;
     if(this.selectedPokemon){
       this.servicePokemonData.getPokemonDataId(this.selectedPokemon).subscribe({
@@ -268,7 +329,10 @@ export class PokemonFrmComponent {
           this.aPokemonDataId=data;
           console.log(this.aPokemonDataId);
           this.setStatBars();
+<<<<<<< HEAD
           this.obtainPokemonTypes();
+=======
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
         },
         error:(err)=>{
           console.log(err);
@@ -277,6 +341,7 @@ export class PokemonFrmComponent {
     }
   }
 
+<<<<<<< HEAD
   obtainPokemonTypes(){
     this.serviceTypes.getPokemonDataTypes(this.selectedPokemon).subscribe({
       next:(data)=>{
@@ -289,11 +354,17 @@ export class PokemonFrmComponent {
     })
   }
 
+=======
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
   private setStatBars(){
     this.aStatbar=[];
     const statValues = [this.aPokemonDataId[0].base_hp,this.aPokemonDataId[0].base_atk,
     this.aPokemonDataId[0].base_def,this.aPokemonDataId[0].base_spatk,this.aPokemonDataId[0].base_spdef,this.aPokemonDataId[0].base_spd,];
+<<<<<<< HEAD
     // console.log(statValues);
+=======
+    console.log(statValues);
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
     for (let index = 0; index < statValues.length; index++) {
       const valuePercent = Math.round((statValues[index]/200)*100)
       let colorBar="";
@@ -319,8 +390,19 @@ export class PokemonFrmComponent {
       this.aStatbar.push(stat)
     }
 
+<<<<<<< HEAD
     // console.log(this.aStatbar);
   }
 
 
+=======
+    console.log(this.aStatbar);
+    // const hpPercent = Math.round((this.aPokemonDataId[0].base_hp/200)*100)
+    // this.hpbar={
+    //   width:  hpPercent + "%",
+    //   color: "#00c2b8"
+    // }
+    // console.log(this.hpbar);
+  }
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 }

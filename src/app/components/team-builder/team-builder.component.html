@@ -1,13 +1,19 @@
 <div class="row">
+<<<<<<< HEAD
     <div class="col-12 mt-3 d-flex flex-column justify-content-between">
         <h2>{{aTeams[0].name}}</h2>
         <span>{{aTeams[0].description}}</span>
+=======
+    <div class="col-12 text-center mt-3 d-flex justify-content-between">
+        <h2>Team Builder</h2>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
     </div>
 </div>
 <hr>
 
 <div class="row">
     <div class="col-12">
+<<<<<<< HEAD
         <a class="btn btn-success mx-2" (click)="addPokemon()">Add Pokemon</a>
         @for (pokemonData of aFullPokemonTeam; track $index) {
         <div class="border my-2" [ngStyle]="{position:'relative'}">
@@ -19,18 +25,35 @@
                     <img src="{{pokemonData.baseData.image}}" class="img-fluid mx-auto d-block">
                     }
                     <p>{{pokemonData.baseData.name| titlecase}}</p>
+=======
+        <a href="/pokemonFrm" class="btn btn-success mx-2">Add Pokemon</a>
+        <button class="btn btn-success">Save Team</button>
+        <div class="border my-2" [ngStyle]="{position:'relative'}">
+            <div class="row">
+                <div class="col-2 text-center my-2">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1000.png" class="img-fluid mx-auto d-block">
+                    <p>Name of Pokemon</p>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
                 </div>
                 <div class="col-4 my-2">
                     <div class="form-group text-center">
                         <small>Ability</small>
                         <select id="ability" class="form-select" disabled>
+<<<<<<< HEAD
                             <option selected>{{abilityMap[pokemonData.teamInfo.ability] | titlecase}}</option>
+=======
+                            <option value="" selected>Ability Selected</option>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
                         </select>
                     </div>
                     <div class="form-group text-center">
                         <small>Item</small>
                         <select id="item" class="form-select" disabled>
+<<<<<<< HEAD
                             <option selected>{{itemMap[pokemonData.teamInfo.item] | titlecase}}</option>
+=======
+                            <option value="" selected>Item Selected</option>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
                         </select>
                     </div>
                 </div>
@@ -41,7 +64,11 @@
                             <div class="form-group text-center">
                                 <small>Move 1</small>
                                 <select id="move1" class="form-select" disabled>
+<<<<<<< HEAD
                                     <option selected>{{moveMap[pokemonData.teamInfo.move_1] | titlecase}}</option>
+=======
+                                    <option value="" selected>Move Selected</option>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
                                 </select>
                             </div>
                         </div>
@@ -49,7 +76,11 @@
                             <div class="form-group text-center">
                                 <small>Move 2</small>
                                 <select id="move2" class="form-select" disabled>
+<<<<<<< HEAD
                                     <option selected>{{moveMap[pokemonData.teamInfo.move_2] | titlecase}}</option>
+=======
+                                    <option value="" selected>Move Selected</option>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
                                 </select>
                             </div>
                         </div>
@@ -57,7 +88,11 @@
                             <div class="form-group text-center">
                                 <small>Move 3</small>
                                 <select id="move4" class="form-select" disabled>
+<<<<<<< HEAD
                                     <option selected>{{moveMap[pokemonData.teamInfo.move_3] | titlecase}}</option>
+=======
+                                    <option value="" selected>Move Selected</option>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
                                 </select>
                             </div>
                         </div>
@@ -65,16 +100,25 @@
                             <div class="form-group text-center">
                                 <small>Move 4</small>
                                 <select id="move4" class="form-select" disabled>
+<<<<<<< HEAD
                                     <option selected>{{moveMap[pokemonData.teamInfo.move_4] | titlecase}}</option>
+=======
+                                    <option value="" selected>Move Selected</option>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <a href="/pokemonFrm/{{aTeams[0].id}}/{{pokemonData.teamInfo.id}}" class="stretched-link"></a>
         </div>
 }
         
+=======
+            <a href="/pokemonFrm/1" class="stretched-link"></a>
+        </div>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
     </div>
 </div>

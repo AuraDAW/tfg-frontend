@@ -1,12 +1,17 @@
+<<<<<<< HEAD
 import { inject, Injectable } from '@angular/core';
 import { Team } from '../../models/team';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+=======
+import { Injectable } from '@angular/core';
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamsService {
+<<<<<<< HEAD
   public url="http://localhost:3000"
   // crear objeto Http
   public http = inject(HttpClient);
@@ -58,4 +63,8 @@ export class TeamsService {
       new Error (errorMessage)
     })
   }
+=======
+
+  constructor() { }
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 }

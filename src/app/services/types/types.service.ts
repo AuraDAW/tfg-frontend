@@ -23,12 +23,15 @@ export class TypesService {
     )
   }
 
+<<<<<<< HEAD
   getPokemonDataTypes(id:number):Observable<Type[]>{
     return this.http.get<Type[]>(`${this.url}/types/getTypes/${id}`).pipe(
       catchError(this.handleError)
     )
   }
 
+=======
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";
     if(err.error instanceof ErrorEvent ){

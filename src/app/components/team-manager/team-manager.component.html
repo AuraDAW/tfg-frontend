@@ -1,7 +1,10 @@
 <div class="row">
     <div class="col-12 text-center mt-3 d-flex justify-content-between">
         <h2>Team Manager</h2>
+<<<<<<< HEAD
         <button class="btn btn-success" (click)="createTeam()">Create New Team</button>
+=======
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
     </div>
 </div>
 <hr>
@@ -15,6 +18,7 @@
                 <th scope="col">Actions</th>
             </thead>
             <tbody>
+<<<<<<< HEAD
                 @for (team of aTeams; track $index) {
                 <tr>
                     <td>{{team.name}}</td>
@@ -29,6 +33,25 @@
                     <td colspan="3" class="text-center">No teams have been created.</td>
                 </tr>
             }
+=======
+                <tr>
+                    <td>Nombre Equipo 1</td>
+                    <td>{{description | slice : 0 : 150}}</td>
+                    <td class="">
+                        <a class="pointer m-2" [ngStyle]="{color: '#1f516f'}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="pointer m-2" [ngStyle]="{color: '#e15639'}"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Nombre Equipo 2</td>
+                    <td>Descripcion Equipo 2</td>
+                    <td class="">
+                        <a class="pointer m-2" [ngStyle]="{color: '#1f516f'}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="pointer m-2" [ngStyle]="{color: '#e15639'}"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
             </tbody>
         </table>
     </div>

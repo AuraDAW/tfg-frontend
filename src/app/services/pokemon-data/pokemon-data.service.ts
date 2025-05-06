@@ -24,12 +24,15 @@ export class PokemonDataService {
     )
   }
 
+<<<<<<< HEAD
   getPokemonDataFromTeam(id:number):Observable<PokemonData[]>{
     return this.http.get<PokemonData[]>(`${this.url}/pokemonData/getData/${id}`).pipe(
       catchError(this.handleError)
     )
   }
 
+=======
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";
     if(err.error instanceof ErrorEvent ){

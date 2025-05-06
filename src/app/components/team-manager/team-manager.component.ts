@@ -1,4 +1,5 @@
 import { CommonModule, NgStyle } from '@angular/common';
+<<<<<<< HEAD
 import { Component, inject } from '@angular/core';
 import { Team } from '../../models/team';
 import { TeamsService } from '../../services/teams/teams.service';
@@ -6,6 +7,9 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogFormComponent } from '../dialog-form/dialog-form.component';
+=======
+import { Component } from '@angular/core';
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 
 @Component({
   selector: 'app-team-manager',
@@ -14,6 +18,7 @@ import { DialogFormComponent } from '../dialog-form/dialog-form.component';
   styles: ``
 })
 export class TeamManagerComponent {
+<<<<<<< HEAD
   // definir variables
   public aTeams:Team[]=[];
   // definir servicios
@@ -94,4 +99,7 @@ export class TeamManagerComponent {
       }
     })
   }
+=======
+  public description = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur incidunt, a, doloribus maiores eligendi quaerat dolore corporis vitae consequuntur excepturi, doloremque voluptas voluptatibus. Dolores harum, mollitia quos eum voluptatum quibusdam!"
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 }

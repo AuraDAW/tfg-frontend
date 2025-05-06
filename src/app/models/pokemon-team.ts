@@ -1,4 +1,5 @@
 export interface PokemonTeam {
+<<<<<<< HEAD
     id?:number | null,
     id_pokemon?:number | null,
     move_1?:number | null,
@@ -22,4 +23,29 @@ export interface PokemonTeam {
     is_shiny?:boolean | null,
     tera_type?:number | null,
     level?:number | null
+=======
+    id:number,
+    id_pokemon:number,
+    move_1:number,
+    move_2:number,
+    move_3:number,
+    move_4:number,
+    ability:number,
+    item:number,
+    iv_atk:number,
+    iv_spatk:number,
+    iv_def:number,
+    iv_spdef:number,
+    iv_spd:number,
+    iv_hp:number,
+    ev_atk:number,
+    ev_spatk:number,
+    ev_def:number,
+    ev_spdef:number,
+    ev_spd:number,
+    ev_hp:number,
+    is_shiny:boolean,
+    tera_type:number,
+    level:number
+>>>>>>> b305fe81c8d3ca6dac897524b65c84cc5796ad4f
 }
