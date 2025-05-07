@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, Type } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Ability } from '../../models/ability';

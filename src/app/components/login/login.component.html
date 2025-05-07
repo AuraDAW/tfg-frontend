@@ -1,13 +1,14 @@
+<form [formGroup]="frm" autocomplete="off" (submit)="login()">
 <div class="row">
-    <div class="col-12 mt-3 d-flex flex-column justify-content-between">
+    <div class="col-12 mt-3 d-flex justify-content-between">
         <h2>Login</h2>
+        <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Login</button>
     </div>
 </div>
 <hr>
 
 <div class="row">
     <div class="col-12 my-2 text-center">
-        <form [formGroup]="frm">
             <mat-form-field class="col-12">
               <mat-label>Email</mat-label>
               <input matInput formControlName="email">
@@ -24,7 +25,7 @@
             @if (passwordNotRequired) {
                 <span class="text-danger fst-italic">You must input a password.</span>
             }
-          </form>
+    </div>
           <p>Don't have an account? <a href="/register">Sign Up</a></p>
     </div>
-</div>
+</form>

@@ -60,15 +60,27 @@
               >Pokemon Form ID</a
             >
           </li>
-          <li class="nav-item">
-            <a
-              routerLink="/login"
-              class="nav-link"
-              aria-current="page"
-              href="#"
-              >Login</a
-            >
-          </li>
+          @if(isLogged){
+            <li class="nav-item">
+              <a
+                routerLink="/#"
+                class="nav-link"
+                aria-current="page"
+                href="#"
+                >Logout</a
+              >
+            </li>
+          }@else{
+            <li class="nav-item">
+              <a
+                routerLink="/login"
+                class="nav-link"
+                aria-current="page"
+                href="#"
+                >Login</a
+              >
+            </li>
+          }
         </ul>
       </div>
     </div>

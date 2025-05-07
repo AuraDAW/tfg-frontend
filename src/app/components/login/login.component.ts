@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { User } from '../../models/user';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class LoginComponent {
   public frm!:FormGroup;
+
+  private serviceAuth = inject(AuthService)
 
   constructor(
     private fb: FormBuilder,
@@ -32,6 +36,22 @@ export class LoginComponent {
   } 
   get passwordNotRequired(){
     return this.frm.get('password')?.errors?.['required'] && this.frm.get('password')?.touched
+  }
+
+  login(){
+    const user:User={
+      email: this.frm.get("email")?.value,
+      password: this.frm.get("password")?.value
+    }
+    console.log(user);
+    this.serviceAuth.login(user).subscribe({
+      next:(data)=>{
+        console.log("logeado");
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
   }
   
 }

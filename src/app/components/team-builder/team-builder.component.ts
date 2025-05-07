@@ -130,6 +130,7 @@ export class TeamBuilderComponent {
         });
       }
     });
+    console.log("abilityMap",this.abilityMap);
   
     this.serviceItems.getItems().subscribe({
       next: (items) => {
