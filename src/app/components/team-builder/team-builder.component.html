@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-12">
-        <a class="btn btn-success mx-2" (click)="addPokemon()">Add Pokemon</a>
+        <button class="btn btn-success mx-2" (click)="addPokemon()" [disabled]="aFullPokemonTeam.length>=6">Add Pokemon</button>
         @for (pokemonData of aFullPokemonTeam; track $index) {
         <div class="border my-2" [ngStyle]="{position:'relative'}">
             <div class="row">
@@ -74,7 +74,8 @@
             </div>
             <a href="/pokemonFrm/{{aTeams[0].id}}/{{pokemonData.teamInfo.id}}" class="stretched-link"></a>
         </div>
-}
-        
-    </div>
+    } @empty{
+        <p class="text-center">This team has no Pokemon.</p>
+    }
+</div>
 </div>

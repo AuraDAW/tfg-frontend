@@ -47,6 +47,16 @@ export class TeamsService {
     )
   }
 
+  addPokemonToTeam(teamId:number, pokemonId:Number):Observable<{message:string}>{
+    const headers = new HttpHeaders({
+      'Content-Type':'application/json'
+    })
+    const body = { id: pokemonId };
+    return this.http.post<{message:string}>(`${this.url}/teams/addPokemon/${teamId}`,body,{headers}).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";
     if(err.error instanceof ErrorEvent ){

@@ -16,6 +16,8 @@ import { Statbar } from '../../models/statbar';
 import { PokemonTeam } from '../../models/pokemon-team';
 import { PokemonTeamService } from '../../services/pokemon-team/pokemon-team.service';
 import Swal from 'sweetalert2';
+import { D } from '@angular/cdk/keycodes';
+import { TeamsService } from '../../services/teams/teams.service';
 @Component({
   selector: 'app-pokemon-frm',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -49,6 +51,7 @@ export class PokemonFrmComponent {
   private serviceMoves = inject(MovesService)
   private servicePokemonData = inject(PokemonDataService)
   private servicePokemonTeam = inject(PokemonTeamService)
+  private serviceTeams = inject(TeamsService)
 
   ngOnInit(){
     this.obtainId();
@@ -165,9 +168,13 @@ export class PokemonFrmComponent {
   private addPokemon(pokemon:PokemonTeam){
     this.servicePokemonTeam.postPokemonTeam(pokemon).subscribe({
       next:(data)=>{
-        Swal.fire('El pokemon ha sido añadido',"","success")
-        this.frm.reset();
-        this.router.navigateByUrl(`/teamBuilder/1/${this.teamId}`)
+        this.serviceTeams.addPokemonToTeam(this.teamId, data.id).subscribe({
+          next:(data)=>{
+            Swal.fire('The pokemon has been added', "","success");
+            this.frm.reset();
+            this.router.navigateByUrl(`/teamBuilder/1/${this.teamId}`)
+          }
+        }) 
       },
       error:(err)=>{
         console.log(err);
@@ -178,9 +185,9 @@ export class PokemonFrmComponent {
   private updatePokemon(pokemon:PokemonTeam){
     this.servicePokemonTeam.updatePokemonTeam(pokemon).subscribe({
       next:(data)=>{
-        Swal.fire(`${data.message}`,"","success")
+        Swal.fire('The pokemon has been updated.',"","success")
         this.frm.reset();
-        this.router.navigateByUrl("/teamBuilder/1")
+        this.router.navigateByUrl(`/teamBuilder/1/${this.teamId}`)
       },
       error:(err)=>{
         console.log(err);

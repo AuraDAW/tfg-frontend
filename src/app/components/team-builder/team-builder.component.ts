@@ -55,7 +55,7 @@ export class TeamBuilderComponent {
     this.teamsService.getTeam(this.teamId).subscribe({
       next:(data)=>{
         this.aTeams = data;
-        console.log(this.aTeams);
+        console.log("Team data",this.aTeams);
         for (const team of this.aTeams) {
           for (let i = 1; i <= 6; i++) {
             const key = `pokemon_${i}` as keyof Team;
@@ -80,7 +80,6 @@ export class TeamBuilderComponent {
         this.aPokemonTeamInfo = results
         .map(data => Array.isArray(data) && data.length > 0 ? data[0] : null)
         .filter(info => info !== null);
-        console.log("All PokémonTeam info loaded:", this.aPokemonTeamInfo);
         this.obtainPokemonData(); 
       },
       error: (err) => {
