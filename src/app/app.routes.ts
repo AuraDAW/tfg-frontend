@@ -33,6 +33,16 @@ export const routes: Routes = [
         loadComponent:()=>import("./components/pokemon-frm/pokemon-frm.component").then(c=>c.PokemonFrmComponent)
     },
     {
+        // login
+        path:"login",
+        loadComponent:()=>import("./components/login/login.component").then(c=>c.LoginComponent)
+    },
+    {
+        // register
+        path:"register",
+        loadComponent:()=>import("./components/register/register.component").then(c=>c.RegisterComponent)
+    },
+    {
         // 404
         path:"**",
         loadComponent:()=>import("./components/c404/c404.component").then(c=>c.C404Component)

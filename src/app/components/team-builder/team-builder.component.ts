@@ -11,6 +11,9 @@ import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.ser
 import { ItemsService } from '../../services/items/items.service';
 import { AbilitiesService } from '../../services/abilities/abilities.service';
 import { MovesService } from '../../services/moves/moves.service';
+import { DialogFormComponent } from '../dialog-form/dialog-form.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-team-builder',
@@ -22,6 +25,7 @@ export class TeamBuilderComponent {
   // definir variables
   private userId!:number;
   private teamId!:number
+  constructor(private dialog: MatDialog) {}
   // definimos estos mapas para almacenar el id de un movimiento/habilidad/item y su nombre, para poder mostrarlo en pantalla
   abilityMap: { [id: number]: string } = {};
   itemMap: { [id: number]: string } = {};
@@ -35,7 +39,7 @@ export class TeamBuilderComponent {
   // inyectar servicios
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private teamsService = inject(TeamsService);
+  private serviceTeams = inject(TeamsService);
   private pokemonTeamService = inject(PokemonTeamService);
   private pokemonDataService = inject(PokemonDataService)
   private serviceItems = inject(ItemsService)
@@ -52,7 +56,7 @@ export class TeamBuilderComponent {
   }
 
   private obtainTeamInfo() {
-    this.teamsService.getTeam(this.teamId).subscribe({
+    this.serviceTeams.getTeam(this.teamId).subscribe({
       next:(data)=>{
         this.aTeams = data;
         console.log("Team data",this.aTeams);
@@ -146,6 +150,41 @@ export class TeamBuilderComponent {
 
   addPokemon(){
     this.router.navigateByUrl("/pokemonFrm/1");
+  }
+
+  editTeam(){
+    const dialogRef = this.dialog.open(DialogFormComponent, {
+      data:{name:this.aTeams[0].name,description:this.aTeams[0].description}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+          // if result exists, execute if (should always execute since you cannot submit without having validated and data is required for validation)
+          if (result) {
+            // must add all data to interface even if method will only care about name and description
+            const team:Team={
+              id:this.aTeams[0].id,
+              name:result.name,
+              description:result.description,
+              user_id:this.aTeams[0].user_id,
+              pokemon_1:this.aTeams[0].pokemon_1,
+              pokemon_2:this.aTeams[0].pokemon_2,
+              pokemon_3:this.aTeams[0].pokemon_3,
+              pokemon_4:this.aTeams[0].pokemon_4,
+              pokemon_5:this.aTeams[0].pokemon_5,
+              pokemon_6:this.aTeams[0].pokemon_6 
+            }
+            console.log(team);
+            this.serviceTeams.updatePokemonTeam(team).subscribe({
+              next:(data)=>{
+                Swal.fire("The team has been updated","","success")
+                this.router.navigate([this.router.url]);
+              },
+              error:(err)=>{
+                console.log(err);
+              }
+            })
+        }
+      });
   }
 }
 

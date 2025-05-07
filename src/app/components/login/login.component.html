@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-12 mt-3 d-flex flex-column justify-content-between">
+        <h2>Login</h2>
+    </div>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-12 my-2 text-center">
+        <form [formGroup]="frm">
+            <mat-form-field class="col-12">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email">
+            </mat-form-field>
+            @if (emailNotRequired) {
+                <span class="text-danger fst-italic">You must input an email.</span>
+            }@else if (emailNotEmail) {
+                <small class="text-danger fst-italic">The email has an incorrect format.</small>
+            }
+            <mat-form-field class="col-12">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password">
+            </mat-form-field>
+            @if (passwordNotRequired) {
+                <span class="text-danger fst-italic">You must input a password.</span>
+            }
+          </form>
+          <p>Don't have an account? <a href="/register">Sign Up</a></p>
+    </div>
+</div>

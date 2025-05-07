@@ -21,10 +21,6 @@
     }
   </form>
 </mat-dialog-content>
-<!-- <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button type="submit" mat-button [disabled]="frm.invalid">Create</button>
-  </mat-dialog-actions> -->
 <mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancel</button>
   <button mat-button (click)="onSubmit()" [disabled]="frm.invalid">Submit</button>
