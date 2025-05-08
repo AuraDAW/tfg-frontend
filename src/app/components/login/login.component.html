@@ -2,7 +2,6 @@
 <div class="row">
     <div class="col-12 mt-3 d-flex justify-content-between">
         <h2>Login</h2>
-        <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Login</button>
     </div>
 </div>
 <hr>
@@ -26,6 +25,9 @@
                 <span class="text-danger fst-italic">You must input a password.</span>
             }
     </div>
-          <p>Don't have an account? <a href="/register">Sign Up</a></p>
+    <div class="col-12 my-2 text-center">
+        <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Login</button>
+        <p class="my-2">Don't have an account? <a href="/register" class="link-underline link-underline-opacity-0">Create one!</a></p>
+    </div>
     </div>
 </form>

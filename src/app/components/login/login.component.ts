@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -51,8 +52,8 @@ export class LoginComponent {
         console.log("logeado");
         this.router.navigateByUrl("/home")
       },
-      error:(err)=>{
-        console.log(err);
+      error:(error)=>{
+        Swal.fire(`${error.error.message}`,"","error");
       }
     })
   }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { User } from '../../models/user';
 import { catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
@@ -21,6 +21,16 @@ export class AuthService {
       shareReplay()
     );
   }
+
+  register(user: User): Observable<{ id: Number }> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.post<{ id: Number }>(`${this.url}/register`, user, { headers }).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   private setSession(authResult: { idToken: any; expiresIn: any; }) {
     console.log(authResult);
     const expiresAt = moment().add(authResult.expiresIn,'second');

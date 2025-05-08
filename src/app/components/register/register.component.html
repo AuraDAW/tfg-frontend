@@ -1,3 +1,4 @@
+<form [formGroup]="frm" autocomplete="off" (submit)="register()">
 <div class="row">
     <div class="col-12 mt-3 d-flex flex-column justify-content-between">
         <h2>Register</h2>
@@ -7,15 +8,12 @@
 
 <div class="row">
     <div class="col-12 my-2 text-center">
-        <form [formGroup]="frm">
             <mat-form-field class="col-12">
                 <mat-label>Name</mat-label>
-                <input matInput formControlName="name">
+                <input matInput formControlName="username">
             </mat-form-field>
             @if (nameNotRequired) {
-                <span class="text-danger fst-italic">You must input an email.</span>
-            }@else if (nameWrongLength) {
-                <span class="text-danger fst-italic">The email has an incorrect format.</span>
+                <span class="text-danger fst-italic">You must input a name.</span>
             }
             <mat-form-field class="col-12">
               <mat-label>Email</mat-label>
@@ -33,6 +31,10 @@
             @if (passwordNotRequired) {
                 <span class="text-danger fst-italic">You must input a password.</span>
             }
-          </form>
+        </div>
+        <div class="col-12 my-2 text-center">
+            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Register</button>
+            <p class="my-2">Already have an account? <a href="/login" class="link-underline link-underline-opacity-0">Log in!</a></p>
+        </div>
     </div>
-</div>
+</form>

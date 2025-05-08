@@ -4,6 +4,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -27,6 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError(error => {
         // Log and handle the error
         console.error('Error occurred:', error);
+        // Swal.fire(`${error.error.message}`,"","error")
         return throwError(error);
       })
     );
