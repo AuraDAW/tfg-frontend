@@ -14,11 +14,11 @@
     <div class="col-2 border border-danger mt-2">
         <!-- alinear bien la imagen cuando se pueda -->
         @if(selectedPokemon && shiny==false){
-            <img src="{{aPokemonDataId[0].image}}" class="img-fluid mx-auto d-block">
+            <img [src]="aPokemonDataId[0].image| pokemonPath" class="img-fluid mx-auto d-block">
         }@else if(selectedPokemon!=null && shiny==true){
-            <img src="{{aPokemonDataId[0].image_shiny}}" class="img-fluid mx-auto d-block">
+            <img [src]="aPokemonDataId[0].image_shiny| pokemonShinyPath" class="img-fluid mx-auto d-block">
         }@else {
-            <img src="poke-ball.png" class="img-fluid mx-auto d-block">
+            <img src="assets/images/pokemon/pokeball.png" class="img-fluid mx-auto d-block">
         }
         <div class="form-group mb-3 text-center">
             <label for="pokemonId" class=""><small>Pokemon</small></label>
@@ -32,7 +32,7 @@
         <div class="d-flex justify-content-center mb-2">
             @if(selectedPokemon){
                 @for (type of aPokemonTypes; track $index) {
-                    <img src="{{type.image}}" class="img-fluid mx-auto d-block">
+                    <img [src]="type.image | typePath" class="img-fluid mx-auto d-block">
                 }
                 <!-- <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/ultra-sun-ultra-moon/9.png" class="img-fluid mx-auto d-block">
                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/ultra-sun-ultra-moon/8.png" class="img-fluid mx-auto d-block"> -->

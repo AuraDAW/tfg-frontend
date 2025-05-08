@@ -12,12 +12,14 @@ import { ItemsService } from '../../services/items/items.service';
 import { AbilitiesService } from '../../services/abilities/abilities.service';
 import { MovesService } from '../../services/moves/moves.service';
 import { DialogFormComponent } from '../dialog-form/dialog-form.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { PokemonPathPipe } from '../../pipes/pokemonPath/pokemon-path.pipe';
+import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny-path.pipe';
 
 @Component({
   selector: 'app-team-builder',
-  imports: [CommonModule, NgStyle],
+  imports: [CommonModule, NgStyle, PokemonPathPipe, PokemonShinyPathPipe],
   templateUrl: './team-builder.component.html',
   styles: ``
 })

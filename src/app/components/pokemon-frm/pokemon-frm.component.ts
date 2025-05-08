@@ -18,9 +18,12 @@ import { PokemonTeamService } from '../../services/pokemon-team/pokemon-team.ser
 import Swal from 'sweetalert2';
 import { D } from '@angular/cdk/keycodes';
 import { TeamsService } from '../../services/teams/teams.service';
+import { PokemonPathPipe } from '../../pipes/pokemonPath/pokemon-path.pipe';
+import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny-path.pipe';
+import { TypePathPipe } from '../../pipes/typePath/type-path.pipe';
 @Component({
   selector: 'app-pokemon-frm',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe],
   templateUrl: './pokemon-frm.component.html',
   styles: ``
 })

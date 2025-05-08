@@ -17,13 +17,13 @@ export class AuthInterceptor implements HttpInterceptor {
     });
 
     // Log the request
-    console.log('Outgoing request', authReq);
+    // console.log('Outgoing request', authReq);
 
     // Handle the request and catch errors
     return next.handle(authReq).pipe(
       tap(event => {
         // Log the response
-        console.log('Incoming response', event);
+        // console.log('Incoming response', event);
       }),
       catchError(error => {
         // Log and handle the error
