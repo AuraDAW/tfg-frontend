@@ -11,7 +11,6 @@ export class PokemonPathPipe implements PipeTransform {
         // if fileName does not exist, return empty string
         return "";
       }
-      console.log(`${environment.pokemonBasePath}${fileName}`);
       return `${environment.pokemonBasePath}${fileName}`;
     }
 

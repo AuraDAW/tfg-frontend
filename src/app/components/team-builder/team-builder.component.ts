@@ -16,10 +16,12 @@ import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { PokemonPathPipe } from '../../pipes/pokemonPath/pokemon-path.pipe';
 import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny-path.pipe';
+import { TypesService } from '../../services/types/types.service';
+import { TypePathPipe } from '../../pipes/typePath/type-path.pipe';
 
 @Component({
   selector: 'app-team-builder',
-  imports: [CommonModule, NgStyle, PokemonPathPipe, PokemonShinyPathPipe],
+  imports: [CommonModule, NgStyle, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe],
   templateUrl: './team-builder.component.html',
   styles: ``
 })
@@ -37,7 +39,7 @@ export class TeamBuilderComponent {
   public aPokemonTeamIds:number[]=[];
   public aPokemonTeamInfo:PokemonTeam[]=[];
   public aPokemonData:PokemonData[]=[];
-  public aFullPokemonTeam: { teamInfo: any, baseData: any }[] = [];
+  public aFullPokemonTeam: { teamInfo: any, baseData: any,teraTypeImage: string }[] = [];
   // inyectar servicios
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -47,6 +49,7 @@ export class TeamBuilderComponent {
   private serviceItems = inject(ItemsService)
   private serviceAbilities = inject(AbilitiesService)
   private serviceMoves = inject(MovesService)
+  private serviceTypes = inject(TypesService)
 
  ngOnInit(){
     this.activatedRoute.paramMap.subscribe(params=>{
@@ -61,7 +64,7 @@ export class TeamBuilderComponent {
     this.serviceTeams.getTeam(this.teamId).subscribe({
       next:(data)=>{
         this.aTeams = data;
-        console.log("Team data",this.aTeams);
+        // console.log("Team data",this.aTeams);
         for (const team of this.aTeams) {
           for (let i = 1; i <= 6; i++) {
             const key = `pokemon_${i}` as keyof Team;
@@ -95,34 +98,50 @@ export class TeamBuilderComponent {
   }
 
   private obtainPokemonData() {
-    const requests = this.aPokemonTeamInfo.map(info =>
+    const baseDataRequests = this.aPokemonTeamInfo.map(info =>
       this.pokemonDataService.getPokemonDataFromTeam(info.id_pokemon!)
     );
-
-    forkJoin(requests).subscribe({
-      next: (results) => {
-        // Each result is an array; extract the first object from each
-        this.aPokemonData = results
-          .map(res => Array.isArray(res) && res.length > 0 ? res[0] : null)
-          .filter(data => data !== null);
-        this.aFullPokemonTeam = [];
+  
+    const teraTypeRequests = this.aPokemonTeamInfo.map(info =>
+      this.serviceTypes.getType(info.tera_type!)
+    );
+  
+    forkJoin([
+      forkJoin(baseDataRequests),
+      forkJoin(teraTypeRequests)
+    ]).subscribe({
+      next: ([baseDataResults, teraTypeResults]) => {
+        const filteredBaseData = baseDataResults
+          .map(res => Array.isArray(res) && res.length > 0 ? res[0] : null);
+          const filteredTeraData = teraTypeResults.map((res, index) => {
+            if (Array.isArray(res) && res.length > 0) {
+              // console.log(`Tera type [${index}]:`, res[0]);
+              return res[0]; // extract the first object
+            }
+          });
+        
         for (let i = 0; i < this.aPokemonTeamInfo.length; i++) {
           const teamInfo = this.aPokemonTeamInfo[i];
-          const baseData = this.aPokemonData[i];
+          const baseData = filteredBaseData[i];
+          const teraData = filteredTeraData[i];
+          // console.log("teraData", teraData);
           if (teamInfo && baseData) {
             this.aFullPokemonTeam.push({
               teamInfo: teamInfo,
-              baseData: baseData
+              baseData: baseData,
+              teraTypeImage: teraData.image_small
             });
           }
         }
-        console.log('Full Pokémon team data:', this.aFullPokemonTeam);
+  
+        console.log('Full Pokémon team data with teraType images:', this.aFullPokemonTeam);
       },
       error: (err) => {
-        console.error('Error fetching one or more Pokémon data entries:', err);
+        console.error('Error fetching Pokémon or Tera Type data:', err);
       }
     });
   }
+  
 
   private loadMovesAbilitiesItems(): void {
     this.serviceAbilities.getAbilities().subscribe({
@@ -132,7 +151,7 @@ export class TeamBuilderComponent {
         });
       }
     });
-    console.log("abilityMap",this.abilityMap);
+    // console.log("abilityMap",this.abilityMap);
   
     this.serviceItems.getItems().subscribe({
       next: (items) => {
@@ -176,7 +195,7 @@ export class TeamBuilderComponent {
               pokemon_5:this.aTeams[0].pokemon_5,
               pokemon_6:this.aTeams[0].pokemon_6 
             }
-            console.log(team);
+            // console.log(team);
             this.serviceTeams.updatePokemonTeam(team).subscribe({
               next:(data)=>{
                 Swal.fire("The team has been updated","","success")

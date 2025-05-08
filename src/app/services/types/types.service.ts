@@ -17,8 +17,8 @@ export class TypesService {
     );
   }
 
-  getType(id:number):Observable<Type[]>{
-    return this.http.get<Type[]>(`${this.url}/types/${id}`).pipe(
+  getType(id:number):Observable<Type>{
+    return this.http.get<Type>(`${this.url}/types/${id}`).pipe(
       catchError(this.handleError)
     )
   }

@@ -19,6 +19,7 @@
                     }@else{
                         <img [src]="pokemonData.baseData.image | pokemonPath" class="img-fluid mx-auto d-block">
                     }
+                    <img [src]="pokemonData.teraTypeImage | typePath" class="img-fluid mx-auto d-block w-25">
                     <p>{{pokemonData.baseData.name| titlecase}}</p>
                 </div>
                 <div class="col-4 my-2">
