@@ -17,11 +17,18 @@ export class TeamsService {
     );
   }
 
+  getTeamsUser(id:number):Observable<Team[]>{
+    return this.http.get<Team[]>(`${this.url}/teams/userId/${id}`).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   getTeam(id:number):Observable<Team[]>{
     return this.http.get<Team[]>(`${this.url}/teams/${id}`).pipe(
       catchError(this.handleError)
     )
   }
+
 
   postPokemonTeam(team:Team):Observable<{id:Number}>{
     const headers = new HttpHeaders({

@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent {
   public frm!:FormGroup;
 
   private serviceAuth = inject(AuthService)
+  private router = inject(Router)
 
   constructor(
     private fb: FormBuilder,
@@ -47,6 +49,7 @@ export class LoginComponent {
     this.serviceAuth.login(user).subscribe({
       next:(data)=>{
         console.log("logeado");
+        this.router.navigateByUrl("/home")
       },
       error:(err)=>{
         console.log(err);

@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { User } from '../../models/user';
 import { catchError, Observable, shareReplay, tap, throwError } from 'rxjs';
 import moment, {} from "moment";
+import { jwtDecode } from "jwt-decode";
+import { JWTCustomPayload } from '../../models/jwtcustom-payload';
 
 @Injectable({
   providedIn: 'root'
@@ -33,18 +35,37 @@ export class AuthService {
   }
 
   public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+    // return moment().isBefore(this.getExpiration());
+    return localStorage.getItem('id_token') !== null;
   }
 
-isLoggedOut() {
+  isLoggedOut() {
     return !this.isLoggedIn();
-}
+  }
 
-getExpiration() {
+  getExpiration() {
     const expiration = localStorage.getItem("expires_at");
     const expiresAt = JSON.parse(expiration!);
     return moment(expiresAt);
-}    
+  }
+  
+  getUserIdFromToken(){
+    const token = localStorage.getItem("id_token");
+    // if token hasnt been set, return null
+    if(!token){
+      return null;
+    }
+
+    try{
+      // jwtDecode returns a JWTPayload object, which does not have custom attributes so you cannot obtain userId. 
+      // to fix this, i created an interface with everything the payload should return so i can obtain userId without issue
+      const decodedToken = jwtDecode<JWTCustomPayload>(token)
+      return decodedToken.userId;
+    }catch(error){
+      console.log(error);
+      return null;
+    }
+  }
 
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";

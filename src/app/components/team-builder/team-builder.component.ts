@@ -150,7 +150,7 @@ export class TeamBuilderComponent {
   }
 
   addPokemon(){
-    this.router.navigateByUrl("/pokemonFrm/1");
+    this.router.navigateByUrl(`/pokemonFrm/${this.teamId}`);
   }
 
   editTeam(){

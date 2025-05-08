@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -10,11 +10,26 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrl: './menu.component.css'
 })
 export class MenuComponent {
-  public isLogged!:boolean;
+  public isAuthenticated!:boolean;
+  public userId!:number;
   private serviceAuth = inject(AuthService)
+  private router = inject(Router)
 
   ngOnInit(){
-    this.isLogged=this.serviceAuth.isLoggedIn();
-    console.log(this.isLogged);
+    //if method returns anything other than null, then token is real and returned the user id
+    //thus we can use the ! operator to specify it will never be null
+    if(this.serviceAuth.getUserIdFromToken()!=null){
+      this.userId = this.serviceAuth.getUserIdFromToken()!;
+    }
+    this.isAuthenticated=this.serviceAuth.isLoggedIn();
+  }
+
+  ngOnChanges(){
+    this.isAuthenticated=this.serviceAuth.isLoggedIn();
+  }
+
+  logout(){
+    this.serviceAuth.logout();
+    this.router.navigateByUrl("/home")
   }
 }

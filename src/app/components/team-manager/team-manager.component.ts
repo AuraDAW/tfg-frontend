@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogFormComponent } from '../dialog-form/dialog-form.component';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-team-manager',
@@ -16,17 +17,24 @@ import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 export class TeamManagerComponent {
   // definir variables
   public aTeams:Team[]=[];
+  public userId!:number;
   // definir servicios
   private router = inject(Router)
   private serviceTeams = inject(TeamsService);
+  private serviceAuth = inject(AuthService)
   constructor(private dialog: MatDialog) {}
 
   ngOnInit(){
+    //if method returns anything other than null, then token is real and returned the user id
+    //thus we can use the ! operator to specify it will never be null
+    if(this.serviceAuth.getUserIdFromToken()!=null){
+      this.userId = this.serviceAuth.getUserIdFromToken()!;
+    }
     this.showAllTeams();
   }
 
   private showAllTeams(){
-    this.serviceTeams.getTeams().subscribe({
+    this.serviceTeams.getTeamsUser(this.userId).subscribe({
       next:(data)=>{
         this.aTeams=data;
         console.log(this.aTeams);
@@ -47,7 +55,7 @@ export class TeamManagerComponent {
           id:undefined,
           name:result.name,
           description:result.description,
-          user_id:1,
+          user_id:this.userId,
           pokemon_1:undefined,
           pokemon_2:undefined,
           pokemon_3:undefined,

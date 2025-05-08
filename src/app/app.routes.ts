@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './services/guard/auth.guard';
 
 export const routes: Routes = [
     {
@@ -15,22 +16,26 @@ export const routes: Routes = [
     {
         // team manager
         path:"teamManager",
-        loadComponent:()=>import("./components/team-manager/team-manager.component").then(c=>c.TeamManagerComponent)
+        loadComponent:()=>import("./components/team-manager/team-manager.component").then(c=>c.TeamManagerComponent),
+        canActivate:[authGuard]
     },
     {
         // team builder de un equipo existente (para editar)
         path:"teamBuilder/:userId/:teamId",
-        loadComponent:()=>import("./components/team-builder/team-builder.component").then(c=>c.TeamBuilderComponent)
+        loadComponent:()=>import("./components/team-builder/team-builder.component").then(c=>c.TeamBuilderComponent),
+        canActivate:[authGuard]
     },
     {
         // añadiendo pokemon a un equipo
         path:"pokemonFrm/:teamId",
-        loadComponent:()=>import("./components/pokemon-frm/pokemon-frm.component").then(c=>c.PokemonFrmComponent)
+        loadComponent:()=>import("./components/pokemon-frm/pokemon-frm.component").then(c=>c.PokemonFrmComponent),
+        canActivate:[authGuard]
     },
     {
         // editando 1 pokemon de un equipo
         path:"pokemonFrm/:teamId/:id",
-        loadComponent:()=>import("./components/pokemon-frm/pokemon-frm.component").then(c=>c.PokemonFrmComponent)
+        loadComponent:()=>import("./components/pokemon-frm/pokemon-frm.component").then(c=>c.PokemonFrmComponent),
+        canActivate:[authGuard]
     },
     {
         // login
