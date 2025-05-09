@@ -21,7 +21,6 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
   ) {
-      //si no existe data (estamos intentando crear un equipo) mostramos formulario sin valores por defecto
     this.frm = this.fb.group({
       username:["",[Validators.required]],
       email: ["", [Validators.required, Validators.email]],
@@ -41,6 +40,10 @@ export class RegisterComponent {
     return this.frm.get('password')?.errors?.['required'] && this.frm.get('password')?.touched
   }
   
+  /**
+   * @description Obtains data from the form, creates a User object with it and calls to serviceAuth.register(user) to create a new user
+   * After creating user, it redirects to login.
+   */
   register() {
     const user: User = {
       username:this.frm.get("username")?.value,

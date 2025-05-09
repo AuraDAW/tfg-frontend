@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Add an authentication token to the request headers
+    // Gets the JWT token from localStorage and adds the authentication token to the headers
     const storedToken = localStorage.getItem("id_token");
     const authToken = 'Bearer '+storedToken;
     const authReq = req.clone({

@@ -21,13 +21,13 @@ export class DialogFormComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if(!data){
-      //si no existe data (estamos intentando crear un equipo) mostramos formulario sin valores por defecto
+      // if data does not exist, we are trying to create a new team so we dont display any default values
     this.frm = this.fb.group({
       name: ["", [Validators.required, Validators.minLength(5), Validators.maxLength(45)]],
       description: ["", [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
     });
   }else{
-    // si existe data (estamos editando un equipo existente), mostramos formulario con name y description como default values
+    // if data exists we are trying to edit a team, so we display the team's name and description as default values
     this.frm = this.fb.group({
       name: [data.name, [Validators.required, Validators.minLength(5), Validators.maxLength(45)]],
       description: [data.description, [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
@@ -35,6 +35,8 @@ export class DialogFormComponent {
   }
 }
 
+  // Methods that will execute when the following form element has a validation error.
+  // They return true or false so we can show error messages in the HTML. 
   get nameNotRequired(){
     return this.frm.get('name')?.errors?.['required'] && this.frm.get('name')?.touched
   }
@@ -48,12 +50,18 @@ export class DialogFormComponent {
     return this.frm.get('description')?.errors?.['minlength'] || this.frm.get('description')?.errors?.['maxlength']
   } 
 
+  /**
+   * @description Executes when pressing the "cancel" button on dialog. It will simply close it.
+   */
   onCancel(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * @description Executes when submitting the dialog. It will close it + send the form data to whatever other component
+   * created the dialog, so we can use the form data to manipulate the DB.
+   */
   onSubmit(): void {
-    // close dialog + send the form data so team-manager can subscribe to it and manipulate the result of the form
     this.dialogRef.close(this.frm.value);
   }
 }

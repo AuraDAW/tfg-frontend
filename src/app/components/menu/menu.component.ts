@@ -28,6 +28,10 @@ export class MenuComponent {
     this.isAuthenticated=this.serviceAuth.isLoggedIn();
   }
 
+  /**
+   * @description Method executed when pressing the "Logout" menu option. It calls to serviceAuth and logs the user out.
+   * It redirects the user to /home after logging out so they're not stuck inside team-builder or smth and view anything.
+   */
   logout(){
     this.serviceAuth.logout();
     this.router.navigateByUrl("/home")

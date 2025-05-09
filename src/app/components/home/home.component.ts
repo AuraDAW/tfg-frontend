@@ -11,8 +11,5 @@ import { CommonModule } from '@angular/common';
   styles: ``
 })
 export class HomeComponent {
-  public logo:string="logos/smogon_logo.png";
-  // idealmente, ruta1 se obtiene de una variable entorno .env, y ruta2 se obtiene de la BD
-  public ruta1:string="logos/";
-  public ruta2:string="smogon_logo.png";
+
 }

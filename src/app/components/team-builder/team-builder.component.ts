@@ -60,6 +60,9 @@ export class TeamBuilderComponent {
     this.loadMovesAbilitiesItems();
   }
 
+  /**
+   * @description Obtains info of the currently selected team.
+   */
   private obtainTeamInfo() {
     this.serviceTeams.getTeam(this.teamId).subscribe({
       next:(data)=>{
@@ -67,6 +70,7 @@ export class TeamBuilderComponent {
         // console.log("Team data",this.aTeams);
         for (const team of this.aTeams) {
           for (let i = 1; i <= 6; i++) {
+            // loops through pokemon_1 to pokemon_6, obtains their id and pushes it into an array
             const key = `pokemon_${i}` as keyof Team;
             const pokemonId = team[key] as number | null;
             if (pokemonId != null) {
@@ -82,10 +86,16 @@ export class TeamBuilderComponent {
     })
   }
 
+  /**
+   * @description Creates a requestsMap with requests for getPokemonTeamId, stores the result of each service call into another map.
+   */
   private obtainPokemonTeamInfo(){
+    // maps each id to a pokemonTeamService call
     const requests = this.aPokemonTeamIds.map(id => this.pokemonTeamService.getPokemonTeamId(id));
+    // subscribes to all requests in the "requests" map, so it can obtain the data of all pokemonIds
     forkJoin(requests).subscribe({
       next: (results) => {
+        // gets the 1st element of each result (request returns array so it must select the 1st element of it)
         this.aPokemonTeamInfo = results
         .map(data => Array.isArray(data) && data.length > 0 ? data[0] : null)
         .filter(info => info !== null);
@@ -97,29 +107,38 @@ export class TeamBuilderComponent {
     });
   }
 
+  /**
+   * @description Obtains the aPokemonTeamInfo map, creates 2 new maps with requests to obtain pokemonTeam info and type
+   */
   private obtainPokemonData() {
+    // creates map with all requests to get pokemonData of each pokemon in the team
     const baseDataRequests = this.aPokemonTeamInfo.map(info =>
       this.pokemonDataService.getPokemonDataFromTeam(info.id_pokemon!)
     );
-  
+    // map of requests to serviceTypes to obtain type data of the teratype of each pokemon in the team 
     const teraTypeRequests = this.aPokemonTeamInfo.map(info =>
       this.serviceTypes.getType(info.tera_type!)
     );
-  
+
+    // subscribes to all requests in both maps
     forkJoin([
       forkJoin(baseDataRequests),
       forkJoin(teraTypeRequests)
     ]).subscribe({
       next: ([baseDataResults, teraTypeResults]) => {
+        // filters the results: both service calls return an array so we obtain the first element inside array
         const filteredBaseData = baseDataResults
           .map(res => Array.isArray(res) && res.length > 0 ? res[0] : null);
-          const filteredTeraData = teraTypeResults.map((res, index) => {
-            if (Array.isArray(res) && res.length > 0) {
-              // console.log(`Tera type [${index}]:`, res[0]);
-              return res[0]; // extract the first object
-            }
-          });
-        
+        const filteredTeraData = teraTypeResults.map((res, index) => {
+          if (Array.isArray(res) && res.length > 0) {
+            // console.log(`Tera type [${index}]:`, res[0]);
+            return res[0]; // extract the first object
+          }
+        });
+        // loops up to the number of pokemon inside team, stores data into aFullPokemonTeam array
+        // teamInfo: pokemonTeam, has the moves/abilities/items/teraType of pokemon
+        // baseData: pokemonData, used to show name and image of pokemon
+        // teraData: type, used to show the teraType image of the pokemon's teraType
         for (let i = 0; i < this.aPokemonTeamInfo.length; i++) {
           const teamInfo = this.aPokemonTeamInfo[i];
           const baseData = filteredBaseData[i];
@@ -133,7 +152,6 @@ export class TeamBuilderComponent {
             });
           }
         }
-  
         console.log('Full Pokémon team data with teraType images:', this.aFullPokemonTeam);
       },
       error: (err) => {
@@ -141,8 +159,9 @@ export class TeamBuilderComponent {
       }
     });
   }
-  
-
+  /**
+   * @description Obtains all moves, abilities and items and stores into maps to simplify the display in the website
+   */
   private loadMovesAbilitiesItems(): void {
     this.serviceAbilities.getAbilities().subscribe({
       next: (abilities) => {
@@ -152,7 +171,7 @@ export class TeamBuilderComponent {
       }
     });
     // console.log("abilityMap",this.abilityMap);
-  
+
     this.serviceItems.getItems().subscribe({
       next: (items) => {
         items.forEach(item => {
@@ -160,7 +179,7 @@ export class TeamBuilderComponent {
         });
       }
     });
-  
+
     this.serviceMoves.getMoves().subscribe({
       next: (moves) => {
         moves.forEach(move => {
@@ -170,10 +189,16 @@ export class TeamBuilderComponent {
     });
   }
 
+  /**
+   * @description Redirects to the form to add a new Pokemon
+   */
   addPokemon(){
     this.router.navigateByUrl(`/pokemonFrm/${this.teamId}`);
   }
 
+  /**
+   * @description Shows a modal window with the team's name and description, so the user can change it.
+   */
   editTeam(){
     const dialogRef = this.dialog.open(DialogFormComponent, {
       data:{name:this.aTeams[0].name,description:this.aTeams[0].description}

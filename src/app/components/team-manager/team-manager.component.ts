@@ -33,6 +33,9 @@ export class TeamManagerComponent {
     this.showAllTeams();
   }
 
+  /**
+   * @description Shows all teams that belong to the currently logged in user.
+   */
   private showAllTeams(){
     this.serviceTeams.getTeamsUser(this.userId).subscribe({
       next:(data)=>{
@@ -45,42 +48,54 @@ export class TeamManagerComponent {
     })
   }
 
-  createTeam(){
+  /**
+   * @description Shows a modal window with a form inside: name and description. On submit, said name and description will be used
+   * to create a new Team. It then redirects to same page so the new team will show up onscreen.
+   */
+  createTeam() {
     const dialogRef = this.dialog.open(DialogFormComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       // if result exists, execute if (should always execute since you cannot submit without having validated and data is required for validation)
       if (result) {
-        const team:Team={
-          id:undefined,
-          name:result.name,
-          description:result.description,
-          user_id:this.userId,
-          pokemon_1:undefined,
-          pokemon_2:undefined,
-          pokemon_3:undefined,
-          pokemon_4:undefined,
-          pokemon_5:undefined,
-          pokemon_6:undefined
+        const team: Team = {
+          id: undefined,
+          name: result.name,
+          description: result.description,
+          user_id: this.userId,
+          pokemon_1: undefined,
+          pokemon_2: undefined,
+          pokemon_3: undefined,
+          pokemon_4: undefined,
+          pokemon_5: undefined,
+          pokemon_6: undefined
         }
         console.log(team);
-      this.serviceTeams.postPokemonTeam(team).subscribe({
-        next:(data)=>{
-          Swal.fire('El equipo ha sido añadido',"","success")
-          this.showAllTeams();
-        },
-        error:(err)=>{
-          console.log(err);
-        }
-      })
-    }
-  });
-}
+        this.serviceTeams.postPokemonTeam(team).subscribe({
+          next: (data) => {
+            Swal.fire('El equipo ha sido añadido', "", "success")
+            this.showAllTeams();
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        })
+      }
+    });
+  }
 
+  /**
+   * @description Redirects to the team whose edit icon was clicked.
+   * @param team The team to edit.
+   */
   editTeam(team:Team){
     this.router.navigateByUrl(`/teamBuilder/${team.user_id}/${team.id}`)
   }
 
+  /**
+   * @description Shows a modal window (sweetAlert), on submit it deletes the team whose delete icon was clicked.
+   * @param team The team to delete.
+   */
   deleteTeam(team:Team){
     Swal.fire({
       title:`¿Do you wish to delete the team ${team.name}?`,
