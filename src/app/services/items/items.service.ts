@@ -2,21 +2,29 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Item } from '../../models/item';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemsService {
-  public url="http://localhost:3000"
+  private url=environment.apiUrl;
   // crear objeto Http
   public http = inject(HttpClient);
-  // obtener todos los tipos
+  /**
+   * @description Obtains all items.
+   * @returns an item array
+   */
   getItems():Observable<Item[]>{
     return this.http.get<Item[]>(`${this.url}/items`).pipe(
       catchError(this.handleError)
     );
   }
-
+  /**
+   * @description Obtains an item by their id.
+   * @param id The id of the item.
+   * @returns an array of Item
+   */
   getItem(id:number):Observable<Item[]>{
     return this.http.get<Item[]>(`${this.url}/items/${id}`).pipe(
       catchError(this.handleError)

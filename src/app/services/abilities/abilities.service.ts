@@ -2,21 +2,30 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { inject, Injectable, Type } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Ability } from '../../models/ability';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AbilitiesService {
-  public url="http://localhost:3000"
+  private url=environment.apiUrl;
   // crear objeto Http
   public http = inject(HttpClient);
-  // obtener todos los tipos
+  /**
+   * @description Obtains all abilities.
+   * @returns Array containing all abilities.
+   */
   getAbilities():Observable<Ability[]>{
     return this.http.get<Ability[]>(`${this.url}/abilities`).pipe(
       catchError(this.handleError)
     );
   }
 
+  /**
+   * @description Obtains one ability by its id.
+   * @param id the id of the ability
+   * @returns array containing all abilities
+   */
   getAbility(id:number):Observable<Ability[]>{
     return this.http.get<Ability[]>(`${this.url}/abilities/${id}`).pipe(
       catchError(this.handleError)

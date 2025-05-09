@@ -2,21 +2,29 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Move } from '../../models/move';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovesService {
-  public url="http://localhost:3000"
+private url=environment.apiUrl;
   // crear objeto Http
   public http = inject(HttpClient);
-  // obtener todos los tipos
+  /**
+   * @description Obtains all moves.
+   * @returns an array of Move
+   */
   getMoves():Observable<Move[]>{
     return this.http.get<Move[]>(`${this.url}/moves`).pipe(
       catchError(this.handleError)
     );
   }
-
+  /**
+   * @description Obtains a move by their id.
+   * @param id the id of the Move
+   * @returns an array of Move
+   */
   getMove(id:number):Observable<Move[]>{
     return this.http.get<Move[]>(`${this.url}/moves/${id}`).pipe(
       catchError(this.handleError)
