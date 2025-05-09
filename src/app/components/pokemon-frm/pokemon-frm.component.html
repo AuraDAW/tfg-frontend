@@ -45,7 +45,7 @@
             <select id="ability" class="form-select" formControlName="ability">
                 <option value="" selected>{{'pokemonFrm.select.ability' | translate}}</option>
                 @for (ability of aAbilities; track $index) {
-                    <option value={{ability.id}}>{{`abilities.id${testId}.name` | translate}}</option>
+                    <option value={{ability.id}}>{{`abilities.id${ability.id}.name` | translate}}</option>
                 }
             </select>
         </div>
