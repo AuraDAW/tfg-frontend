@@ -11,7 +11,7 @@
         <button class="btn btn-success mx-2" (click)="addPokemon()" [disabled]="aFullPokemonTeam.length>=6">Add Pokemon</button>
         <button class="btn btn-success mx-2" (click)="editTeam()" [disabled]="aFullPokemonTeam.length>=6">Edit Team</button>
         @for (pokemonData of aFullPokemonTeam; track $index) {
-        <div class="border my-2" [ngStyle]="{position:'relative'}">
+        <div class="border my-2 shadow-sm" [ngStyle]="{position:'relative'}">
             <div class="row">
                 <div class="col-2 text-center my-2">
                     @if (pokemonData.teamInfo.is_shiny) {
@@ -19,8 +19,10 @@
                     }@else{
                         <img [src]="pokemonData.baseData.image | pokemonPath" class="img-fluid mx-auto d-block">
                     }
-                    <img [src]="pokemonData.teraTypeImage | typePath" class="img-fluid mx-auto d-block w-25">
-                    <p>{{pokemonData.baseData.name| titlecase}}</p>
+                    <div class="d-inline-flex justify-content-center align-items-center">
+                        <p class="my-1">{{pokemonData.baseData.name| titlecase}}</p>
+                        <img [src]="pokemonData.teraTypeImage | typePath" class="img-fluid d-block" style="width: 30px; height: 30px;">
+                    </div>
                 </div>
                 <div class="col-4 my-2">
                     <div class="form-group text-center">
