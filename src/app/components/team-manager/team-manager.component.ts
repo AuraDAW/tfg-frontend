@@ -7,10 +7,11 @@ import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 import { AuthService } from '../../services/auth/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-team-manager',
-  imports: [CommonModule, NgStyle],
+  imports: [CommonModule, NgStyle, TranslateModule],
   templateUrl: './team-manager.component.html',
   styles: ``
 })

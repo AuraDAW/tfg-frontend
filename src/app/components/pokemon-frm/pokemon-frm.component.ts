@@ -20,9 +20,10 @@ import { TeamsService } from '../../services/teams/teams.service';
 import { PokemonPathPipe } from '../../pipes/pokemonPath/pokemon-path.pipe';
 import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny-path.pipe';
 import { TypePathPipe } from '../../pipes/typePath/type-path.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-pokemon-frm',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe, TranslateModule],
   templateUrl: './pokemon-frm.component.html',
   styles: ``
 })
@@ -316,7 +317,7 @@ export class PokemonFrmComponent {
     this.serviceAbilities.getAbilities().subscribe({
       next:(data)=>{
         this.aAbilities=data;
-        console.log(this.aItems);
+        console.log(this.aAbilities);
       },
       error:(err)=>{
         console.log(err);

@@ -5,10 +5,11 @@ import { TeamsService } from '../../services/teams/teams.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dialog-form',
-  imports: [MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule],
+  imports: [MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, TranslateModule],
   templateUrl: './dialog-form.component.html',
   styles: ``
 })
@@ -23,13 +24,13 @@ export class DialogFormComponent {
     if(!data){
       // if data does not exist, we are trying to create a new team so we dont display any default values
     this.frm = this.fb.group({
-      name: ["", [Validators.required, Validators.minLength(5), Validators.maxLength(45)]],
+      name: ["", [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       description: ["", [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
     });
   }else{
     // if data exists we are trying to edit a team, so we display the team's name and description as default values
     this.frm = this.fb.group({
-      name: [data.name, [Validators.required, Validators.minLength(5), Validators.maxLength(45)]],
+      name: [data.name, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       description: [data.description, [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
     });
   }

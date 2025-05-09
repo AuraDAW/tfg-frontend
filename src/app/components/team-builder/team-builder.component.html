@@ -8,8 +8,8 @@
 
 <div class="row">
     <div class="col-12">
-        <button class="btn btn-success mx-2" (click)="addPokemon()" [disabled]="aFullPokemonTeam.length>=6">Add Pokemon</button>
-        <button class="btn btn-success mx-2" (click)="editTeam()" [disabled]="aFullPokemonTeam.length>=6">Edit Team</button>
+        <button class="btn btn-success mx-2" (click)="addPokemon()" [disabled]="aFullPokemonTeam.length>=6">{{"teamBuilder.add" | translate}}</button>
+        <button class="btn btn-success mx-2" (click)="editTeam()" [disabled]="aFullPokemonTeam.length>=6">{{"teamBuilder.edit" | translate}}</button>
         @for (pokemonData of aFullPokemonTeam; track $index) {
         <div class="border my-2 shadow-sm" [ngStyle]="{position:'relative'}">
             <div class="row">
@@ -26,13 +26,13 @@
                 </div>
                 <div class="col-4 my-2">
                     <div class="form-group text-center">
-                        <small>Ability</small>
+                        <small>{{"teamBuilder.ability" | translate}}</small>
                         <select id="ability" class="form-select" disabled>
                             <option selected>{{abilityMap[pokemonData.teamInfo.ability] | titlecase}}</option>
                         </select>
                     </div>
                     <div class="form-group text-center">
-                        <small>Item</small>
+                        <small>{{"teamBuilder.item" | translate}}</small>
                         <select id="item" class="form-select" disabled>
                             <option selected>{{itemMap[pokemonData.teamInfo.item] | titlecase}}</option>
                         </select>
@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group text-center">
-                                <small>Move 1</small>
+                                <small>{{"teamBuilder.move1" | translate}}</small>
                                 <select id="move1" class="form-select" disabled>
                                     <option selected>{{moveMap[pokemonData.teamInfo.move_1] | titlecase}}</option>
                                 </select>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group text-center">
-                                <small>Move 2</small>
+                                <small>{{"teamBuilder.move2" | translate}}</small>
                                 <select id="move2" class="form-select" disabled>
                                     <option selected>{{moveMap[pokemonData.teamInfo.move_2] | titlecase}}</option>
                                 </select>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group text-center">
-                                <small>Move 3</small>
+                                <small>{{"teamBuilder.move3" | translate}}</small>
                                 <select id="move4" class="form-select" disabled>
                                     <option selected>{{moveMap[pokemonData.teamInfo.move_3] | titlecase}}</option>
                                 </select>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group text-center">
-                                <small>Move 4</small>
+                                <small>{{"teamBuilder.move4" | translate}}</small>
                                 <select id="move4" class="form-select" disabled>
                                     <option selected>{{moveMap[pokemonData.teamInfo.move_4] | titlecase}}</option>
                                 </select>
@@ -79,7 +79,7 @@
             <a href="/pokemonFrm/{{aTeams[0].id}}/{{pokemonData.teamInfo.id}}" class="stretched-link"></a>
         </div>
     } @empty{
-        <p class="text-center">This team has no Pokemon.</p>
+        <p class="text-center">{{"teamBuilder.emptyTeam" | translate}}</p>
     }
 </div>
 </div>

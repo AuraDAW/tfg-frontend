@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12 text-center mt-3 d-flex justify-content-between">
         <h2>Team Manager</h2>
-        <button class="btn btn-success" (click)="createTeam()">Create New Team</button>
+        <button class="btn btn-success" (click)="createTeam()">{{"teamManager.create" | translate}}</button>
     </div>
 </div>
 <hr>
@@ -10,9 +10,9 @@
     <div class="col-12">
         <table class="table text-center table-light my-2">
             <thead>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Actions</th>
+                <th scope="col">{{"teamManager.name" | translate}}</th>
+                <th scope="col">{{"teamManager.description" | translate}}</th>
+                <th scope="col">{{"teamManager.actions" | translate}}</th>
             </thead>
             <tbody>
                 @for (team of aTeams; track $index) {
@@ -26,7 +26,7 @@
                 </tr>
             }@empty{
                 <tr>
-                    <td colspan="3" class="text-center">No teams have been created.</td>
+                    <td colspan="3" class="text-center">{{"teamManager.noTeams" | translate}}</td>
                 </tr>
             }
             </tbody>

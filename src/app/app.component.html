@@ -12,17 +12,34 @@
 <footer><app-footer/></footer> -->
 
 <!-- app.component.html -->
-<div class="app-container bg-body-tertiary">
+ <div class="app-container bg-body-tertiary">
     <header><app-menu/></header>
   
     <main class="content container">
-      <router-outlet></router-outlet> <!-- or your main content -->
+      <router-outlet></router-outlet> 
     </main>
   
     <footer class="footer">
       <app-footer/>
     </footer>
   </div>
-  
+
+  <!-- <div class="title">
+    <h1>{{ 'demo.title' | translate }}</h1>
+    <span>Switch languages at runtime: </span>
+    <button (click)="useLanguage('en')">en</button>
+    <button (click)="useLanguage('es')">es</button>
+</div>
+<div>
+    <h2>Simple translations without parameters</h2>
+
+    <p>{{ 'demo.simple.text-with-pipe' | translate }}</p>
+
+    <p [translate]="'demo.simple.text-as-attribute'"></p>
+
+    <p translate>demo.simple.text-as-content</p>
+
+    <p>{{demo.ability.name | translate}}</p>
+</div> -->
 
 

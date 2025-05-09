@@ -18,10 +18,11 @@ import { PokemonPathPipe } from '../../pipes/pokemonPath/pokemon-path.pipe';
 import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny-path.pipe';
 import { TypesService } from '../../services/types/types.service';
 import { TypePathPipe } from '../../pipes/typePath/type-path.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-team-builder',
-  imports: [CommonModule, NgStyle, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe],
+  imports: [CommonModule, NgStyle, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe,TranslateModule],
   templateUrl: './team-builder.component.html',
   styles: ``
 })

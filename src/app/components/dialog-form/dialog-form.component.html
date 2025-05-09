@@ -1,27 +1,27 @@
-<h2 mat-dialog-title>Create a team</h2>
+<h2 mat-dialog-title>{{"dialog.title" | translate}}</h2>
 <mat-dialog-content class="row">
   <form [formGroup]="frm">
     <mat-form-field class="col-12">
-      <mat-label>Team Name</mat-label>
+      <mat-label>{{"dialog.name" | translate}}</mat-label>
       <input matInput formControlName="name">
     </mat-form-field>
     @if (nameNotRequired) {
-        <span class="text-danger fst-italic">You must input a name.</span>
+        <span class="text-danger fst-italic">{{"dialog.error.nameRequired" | translate}}</span>
     }@else if (nameWrongLength) {
-        <small class="text-danger fst-italic">The name must have between 5 and 30 caracters.</small>
+        <small class="text-danger fst-italic">{{"dialog.error.nameWrongLength" | translate}}</small>
     }
     <mat-form-field class="col-12">
-      <mat-label>Team Description</mat-label>
+      <mat-label>{{"dialog.description" | translate}}</mat-label>
       <input matInput formControlName="description">
     </mat-form-field>
     @if (descriptionNotRequired) {
-        <span class="text-danger fst-italic">You must input a description.</span>
+        <span class="text-danger fst-italic">{{"dialog.error.descriptionRequired" | translate}}</span>
     }@else if (descriptionWrongLength) {
-        <small class="text-danger fst-italic">The description must have between 5 and 150 caracters.</small>
+        <small class="text-danger fst-italic">{{"dialog.error.descriptionWrongLength" | translate}}</small>
     }
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="onSubmit()" [disabled]="frm.invalid">Submit</button>
+  <button mat-button (click)="onCancel()">{{"dialog.cancel" | translate}}</button>
+  <button mat-button (click)="onSubmit()" [disabled]="frm.invalid">{{"dialog.submit" | translate}}</button>
 </mat-dialog-actions>

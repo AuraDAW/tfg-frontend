@@ -13,7 +13,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav d-flex align-items-center">
           <li class="nav-item">
             <a
               routerLink="/home"
@@ -56,6 +56,20 @@
               >
             </li>
           }
+          <li class="nav-item position-absolute mx-2 end-0">
+            <div class="language-toggle">
+              <!-- <img [src]="'usa.svg'| logoPath" alt="English" class="img-fluid mx-1" style="width: 30px; height: 30px;"> -->
+               <span class="mx-2">EN</span>
+              
+              <mat-slide-toggle
+                [checked]="language === 'es'"
+                (change)="toggleLanguage($event.checked)">
+              </mat-slide-toggle>
+              
+              <!-- <img [src]="'esp.svg'| logoPath" alt="Español" class="img-fluid mx-1" style="width: 30px; height: 30px;"> -->
+              <span class="mx-1">ES</span>
+            </div>
+          </li>
         </ul>
       </div>
     </div>

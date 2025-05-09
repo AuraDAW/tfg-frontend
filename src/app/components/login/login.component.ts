@@ -8,10 +8,11 @@ import { User } from '../../models/user';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, TranslateModule],
   templateUrl: './login.component.html',
   styles: ``
 })
@@ -34,7 +35,7 @@ export class LoginComponent {
   get emailNotRequired(){
     return this.frm.get('email')?.errors?.['required'] && this.frm.get('email')?.touched
   }
-  get emailNotEmail(){
+  get emailWrongFormat(){
     return this.frm.get('email')?.errors?.['email']
   } 
   get passwordNotRequired(){
