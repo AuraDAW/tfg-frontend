@@ -35,6 +35,7 @@ export class PokemonFrmComponent {
   public aStatbar:Statbar[]=[];
   public teamId!:number;
   public id!:number
+  translatedAbilities: { id: number; name: string; translatedName: string }[] = [];
   // definir arrays para rellenar con datos de la BD
   public aTypes : Type[]=[];
   public aItems:Item[]=[];
@@ -43,7 +44,6 @@ export class PokemonFrmComponent {
   public aPokemonData:PokemonData[]=[];
   public aPokemonDataId:PokemonData[]=[];
   public aPokemonTypes:Type[]=[];
-
   // inyectar servicios
   private fb=inject(FormBuilder)
   private router = inject(Router)
@@ -55,6 +55,8 @@ export class PokemonFrmComponent {
   private servicePokemonData = inject(PokemonDataService)
   private servicePokemonTeam = inject(PokemonTeamService)
   private serviceTeams = inject(TeamsService)
+
+  public testId:number=1;
 
   ngOnInit(){
     this.obtainId();
