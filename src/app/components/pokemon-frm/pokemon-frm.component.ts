@@ -61,6 +61,58 @@ export class PokemonFrmComponent {
     this.validacionesFrm();
     this.obtainData();
     this.obtainDataForUpdate();
+
+    // we subscribe to the pokemonId select, so that when it changes it will execute the following methods to:
+    // 1- Reset all selects and inputs to default value 
+    // 2- Rebuild all selects (futureproofing to allow easy implementation when i make it so a pokemon can only have moves they actually learn)
+    this.frm.get('pokemonId')!.valueChanges.subscribe(pokemon => {
+      this.resetAllFields();
+      // there is no point in executing resetsAbilitiesMoves as its a placeholder for a future method
+      // it would only slow down the application (negligible tbf)
+      // this.resetsAbilitiesMoves(pokemon);
+    });
+  }
+
+  /**
+   * @description Resets all fields in the form (except pokemonId) to their default values. 
+   * Can't use frm.reset() as it also resets the pokemonId.
+   */
+  private resetAllFields(){
+    this.frm.patchValue({
+      "ability":"",
+      "item":"",
+      "level":"100",
+      "teratype":"",
+      "isShiny":"",
+      "move1":"",
+      "move2":"",
+      "move3":"",
+      "move4":"",
+      "ivhp":"31",
+      "ivatk":"31",
+      "ivspatk":"31",
+      "ivdef":"31",
+      "ivspdef":"31",
+      "ivspd":"31",
+      "evhp":"0",
+      "evatk":"0",
+      "evspatk":"0",
+      "evdef":"0",
+      "evspdef":"0",
+      "evpd":"0",
+    })
+  }
+
+  /**
+   * @description Future proofing method: Currently does not execute. It rebuilds the arrays containing the data of 
+   * abilities and moves. Later on, it will use method "getAllAbilitiesPokemon" to get all abilities belonging 
+   * to the currently selected pokemon.
+   * @param pokemonId The pokemon currently selected in the form.
+   */
+  private resetsAbilitiesMoves(pokemonId: any) {
+    // calls to method to obtain abilities and moves, later on method will be updated so it only gets those of the currently selected pokemon
+    this.obtainAbilities();
+    this.obtainMoves();
   }
 
   private obtainId(){
@@ -234,7 +286,7 @@ export class PokemonFrmComponent {
     this.serviceAbilities.getAbilities().subscribe({
       next:(data)=>{
         this.aAbilities=data;
-        // console.log(this.aItems);
+        console.log(this.aItems);
       },
       error:(err)=>{
         console.log(err);
