@@ -174,8 +174,6 @@ DROP TABLE IF EXISTS `pokemon_learns_move`;
 CREATE TABLE `pokemon_learns_move` (
   `id_pokemon` int NOT NULL,
   `id_move` int NOT NULL,
-  `method` enum('level-up','tm','tutor','egg') DEFAULT NULL,
-  `level` int DEFAULT NULL,
   PRIMARY KEY (`id_pokemon`,`id_move`),
   KEY `id_move_idx` (`id_move`),
   CONSTRAINT `fk_plm_move` FOREIGN KEY (`id_move`) REFERENCES `moves` (`id`),
@@ -311,7 +309,7 @@ CREATE TABLE `teams` (
   CONSTRAINT `pokemon_5` FOREIGN KEY (`pokemon_5`) REFERENCES `pokemon_team` (`id`),
   CONSTRAINT `pokemon_6` FOREIGN KEY (`pokemon_6`) REFERENCES `pokemon_team` (`id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,7 +318,7 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
-INSERT INTO `teams` VALUES (1,'Test Team','This team is used to test the application',1,1,2,14,13,NULL,19),(4,'Test editar equipos','El equipo ha sido editado correctamente v2',1,NULL,NULL,NULL,NULL,NULL,NULL),(5,'Testeando el userID (editado)','sorpresa',2,21,22,NULL,NULL,NULL,NULL);
+INSERT INTO `teams` VALUES (1,'Test Team','This team is used to test the application',1,1,2,14,13,NULL,19),(4,'Test editar equipos','El equipo ha sido editado correctamente v2',1,NULL,NULL,NULL,NULL,NULL,NULL),(5,'Testeando el userID (editado)','lol, lmao even',2,21,22,NULL,NULL,NULL,NULL),(8,'Empty team','This team has no pokemon',2,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -395,7 +393,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `name_UNIQUE` (`username`),
   KEY `role_idx` (`role`),
   CONSTRAINT `role` FOREIGN KEY (`role`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -404,7 +402,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Aura','aguemar696@g.educaand.es','aguemar696',1),(2,'Usuario Test','test@gmail.com','$2a$10$h9IERsHaUdLWmNGTm6HUp.y7upklRjZotVmv9MnyqH8C3YJ2BK1Oq',1),(3,NULL,'pepito@gmail.com','$2a$10$FCEBSsDyyihQ6rghVvCqs.MZUEY3ioDFdngDUAd9PAlI2wOXR/kRu',1),(4,'Pepe','pepito2@gmail.com','$2a$10$P1tgT.aqMH.vY2hUfrecg.cEjOCs4Y6VR8HWknEzLopn13N37ZnXm',1);
+INSERT INTO `users` VALUES (1,'Aura','aguemar696@g.educaand.es','aguemar696',1),(2,'Usuario Test','test@gmail.com','$2a$10$h9IERsHaUdLWmNGTm6HUp.y7upklRjZotVmv9MnyqH8C3YJ2BK1Oq',1),(3,NULL,'pepito@gmail.com','$2a$10$FCEBSsDyyihQ6rghVvCqs.MZUEY3ioDFdngDUAd9PAlI2wOXR/kRu',1),(4,'Pepe','pepito2@gmail.com','$2a$10$P1tgT.aqMH.vY2hUfrecg.cEjOCs4Y6VR8HWknEzLopn13N37ZnXm',1),(5,'Registrarse','test@registrarse','$2a$10$.A8C1dIq/8jTXseJ./qw3u8GKPvCAvpsiqV07G5M2V.4kCVUPBKGG',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -417,4 +415,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-09  8:03:17
+-- Dump completed on 2025-05-09 14:08:01
