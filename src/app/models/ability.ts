@@ -1,5 +1,7 @@
 export interface Ability {
     id:number,
-    name:string,
-    description:string
+    name_en:string,
+    description_en:string,
+    name_es:string,
+    description_es:string
 }

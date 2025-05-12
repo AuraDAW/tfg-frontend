@@ -1,7 +1,7 @@
 export interface PokemonData {
     id?:number,
     pokedex_id:number,
-    name:string,
+    name_en:string,
     image:string,
     image_shiny:string,
     type:number,
@@ -12,4 +12,5 @@ export interface PokemonData {
     base_spdef:number,
     base_spd:number,
     base_hp:number,
+    name_es:string
 }

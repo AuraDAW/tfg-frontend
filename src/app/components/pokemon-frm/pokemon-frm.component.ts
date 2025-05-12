@@ -35,7 +35,6 @@ export class PokemonFrmComponent {
   public aStatbar:Statbar[]=[];
   public teamId!:number;
   public id!:number
-  translatedAbilities: { id: number; name: string; translatedName: string }[] = [];
   // definir arrays para rellenar con datos de la BD
   public aTypes : Type[]=[];
   public aItems:Item[]=[];
@@ -298,13 +297,13 @@ export class PokemonFrmComponent {
   }
 
   /**
-   * @description Calls to serviceItems, obtains all items and stores them in aITems array.
+   * @description Calls to serviceItems, obtains all items and stores them in aItems array.
    */
   private obtainItems(){
     this.serviceItems.getItems().subscribe({
       next:(data)=>{
         this.aItems=data;
-        // console.log(this.aItems);
+        console.log("items",this.aItems);
       },
       error:(err)=>{
         console.log(err);

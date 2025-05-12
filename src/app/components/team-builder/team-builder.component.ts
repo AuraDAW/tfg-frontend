@@ -31,10 +31,6 @@ export class TeamBuilderComponent {
   private userId!:number;
   private teamId!:number
   constructor(private dialog: MatDialog) {}
-  // definimos estos mapas para almacenar el id de un movimiento/habilidad/item y su nombre, para poder mostrarlo en pantalla
-  abilityMap: { [id: number]: string } = {};
-  itemMap: { [id: number]: string } = {};
-  moveMap: { [id: number]: string } = {};
   // definir arrays para rellenar con datos de la BD
   public aTeams:Team[]=[];
   public aPokemonTeamIds:number[]=[];
@@ -47,9 +43,6 @@ export class TeamBuilderComponent {
   private serviceTeams = inject(TeamsService);
   private pokemonTeamService = inject(PokemonTeamService);
   private pokemonDataService = inject(PokemonDataService)
-  private serviceItems = inject(ItemsService)
-  private serviceAbilities = inject(AbilitiesService)
-  private serviceMoves = inject(MovesService)
   private serviceTypes = inject(TypesService)
 
  ngOnInit(){
@@ -58,7 +51,6 @@ export class TeamBuilderComponent {
       this.teamId = parseInt(params.get("teamId")!);
     })
     this.obtainTeamInfo();
-    this.loadMovesAbilitiesItems();
   }
 
   /**
@@ -157,35 +149,6 @@ export class TeamBuilderComponent {
       },
       error: (err) => {
         console.error('Error fetching Pokémon or Tera Type data:', err);
-      }
-    });
-  }
-  /**
-   * @description Obtains all moves, abilities and items and stores into maps to simplify the display in the website
-   */
-  private loadMovesAbilitiesItems(): void {
-    this.serviceAbilities.getAbilities().subscribe({
-      next: (abilities) => {
-        abilities.forEach(ability => {
-          this.abilityMap[ability.id] = ability.name;
-        });
-      }
-    });
-    // console.log("abilityMap",this.abilityMap);
-
-    this.serviceItems.getItems().subscribe({
-      next: (items) => {
-        items.forEach(item => {
-          this.itemMap[item.id] = item.name;
-        });
-      }
-    });
-
-    this.serviceMoves.getMoves().subscribe({
-      next: (moves) => {
-        moves.forEach(move => {
-          this.moveMap[move.id] = move.name;
-        });
       }
     });
   }

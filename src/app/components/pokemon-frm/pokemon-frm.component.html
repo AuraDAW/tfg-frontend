@@ -25,7 +25,7 @@
             <select id="pokemonId" class="form-select" formControlName="pokemonId" (change)="onChangeEvent($event)" #inputElement>
                 <option value="" selected>{{'pokemonFrm.select.pokemon' | translate}}</option>
                 @for (data of aPokemonData; track $index){
-                    <option value={{data.id}}>{{data.name | titlecase}}</option>
+                    <option value={{data.id}}>{{`pokemonData.name.${data.id}` | translate | titlecase}}</option>
                 }
             </select>
         </div>
@@ -45,7 +45,7 @@
             <select id="ability" class="form-select" formControlName="ability">
                 <option value="" selected>{{'pokemonFrm.select.ability' | translate}}</option>
                 @for (ability of aAbilities; track $index) {
-                    <option value={{ability.id}}>{{`abilities.id${ability.id}.name` | translate}}</option>
+                     <option value={{ability.id}}>{{`abilities.name.${ability.id}` | translate | titlecase}}</option>
                 }
             </select>
         </div>
@@ -54,7 +54,7 @@
             <select id="item" class="form-select" formControlName="item">
                 <option value="" selected>{{'pokemonFrm.select.item' | translate}}</option>
                 @for(item of aItems;track $index){
-                    <option value={{item.id}}>{{item.name | titlecase}}</option>
+                    <option value={{item.id}}>{{`items.name.${item.id}` | translate | titlecase}}</option>
                 }
             </select>
         </div>
@@ -68,7 +68,7 @@
                 <select id="teratype" class="form-select" formControlName="teratype">
                     <option value="" selected>{{'pokemonFrm.select.tera' | translate}}</option>
                     @for (type of aTypes; track $index){
-                        <option value={{type.id}}>{{type.name | titlecase}}</option>
+                        <option value={{type.id}}>{{`types.name.${type.id}` | translate | titlecase}}</option>
                     }
                 </select>
             </div>
@@ -86,7 +86,7 @@
                 <select id="move1" class="form-select" formControlName="move1">
                     <option value="" selected>{{'pokemonFrm.move1' | translate}}</option>
                     @for (move of aMoves; track $index){
-                        <option value={{move.id}}>{{move.name | titlecase}}</option>
+                        <option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</option>
                     }
                 </select>
             </div>
@@ -94,7 +94,7 @@
                 <select id="move2" class="form-select" formControlName="move2">
                     <option value="" selected>{{'pokemonFrm.move2' | translate}}</option>
                     @for (move of aMoves; track $index){
-                        <option value={{move.id}}>{{move.name | titlecase}}</option>
+                        <option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</option>
                     }
                 </select>
             </div>
@@ -102,7 +102,7 @@
                 <select id="move3" class="form-select" formControlName="move3">
                     <option value="" selected>{{'pokemonFrm.move3' | translate}}</option>
                     @for (move of aMoves; track $index){
-                        <option value={{move.id}}>{{move.name | titlecase}}</option>
+                        <option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</option>
                     }
                 </select>
             </div>
@@ -110,7 +110,7 @@
                 <select id="move4" class="form-select" formControlName="move4">
                     <option value="" selected>{{'pokemonFrm.move4' | translate}}</option>
                     @for (move of aMoves; track $index){
-                        <option value={{move.id}}>{{move.name | titlecase}}</option>
+                        <option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</option>
                     }
                 </select>
             </div>
