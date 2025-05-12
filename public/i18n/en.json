@@ -28,6 +28,8 @@
 	"dialog.name": "Name",
 	"dialog.submit": "Submit",
 	"dialog.title": "Create a team",
+	"footer.designed": "Designed By ",
+	"footer.rights": "All Rights Reserved ",
 	"home.main.text": "Welcome to the Pokemon Team Manager & Builder. This website allows you to create your own Pokemon Teams and export them to share with people. It also contains useful information such as relevant news about the competitive scene and some example teams.",
 	"home.main.title2": "Example Teams",
 	"home.main.title3": "Useful Links",
