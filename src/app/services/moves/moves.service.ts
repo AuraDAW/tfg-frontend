@@ -31,6 +31,12 @@ private url=environment.apiUrl;
     )
   }
 
+  getPokemonMoves(id:number):Observable<Move[]>{
+    return this.http.get<Move[]>(`${this.url}/moves/pokemonMoves/${id}`).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";
     if(err.error instanceof ErrorEvent ){

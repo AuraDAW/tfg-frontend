@@ -70,7 +70,7 @@ export class PokemonFrmComponent {
       this.resetAllFields();
       // there is no point in executing resetsAbilitiesMoves as its a placeholder for a future method
       // it would only slow down the application (negligible tbf)
-      // this.resetsAbilitiesMoves(pokemon);
+      this.resetsAbilitiesMoves(pokemon);
     });
   }
 
@@ -112,8 +112,9 @@ export class PokemonFrmComponent {
    */
   private resetsAbilitiesMoves(pokemonId: any) {
     // calls to method to obtain abilities and moves, later on method will be updated so it only gets those of the currently selected pokemon
-    this.obtainAbilities();
-    this.obtainMoves();
+    console.log("pokemonId en resetsAbilitiesMoves", pokemonId);
+    this.obtainAbilities(pokemonId);
+    this.obtainMoves(pokemonId);
   }
 
   /**
@@ -291,8 +292,9 @@ export class PokemonFrmComponent {
   private obtainData(){
     this.obtainTypes();
     this.obtainItems();
-    this.obtainAbilities();
-    this.obtainMoves();
+    // no mostramos movimientos ni habilidades hasta haber seleccionado un Pokemon
+    // this.obtainAbilities();
+    // this.obtainMoves();
     this.obtainAllPokemonData();
   }
 
@@ -329,8 +331,8 @@ export class PokemonFrmComponent {
   /**
    * @description Calls to serviceAbilities, obtains all abilities and stores them in aAbilities array.
    */
-  private obtainAbilities(){
-    this.serviceAbilities.getAbilities().subscribe({
+  private obtainAbilities(pokemonId:number){
+    this.serviceAbilities.getPokemonAbilities(pokemonId).subscribe({
       next:(data)=>{
         this.aAbilities=data;
         console.log(this.aAbilities);
@@ -344,8 +346,8 @@ export class PokemonFrmComponent {
   /**
    * @description Calls to serviceMoves, obtains all moves and stores them in aMoves array.
    */
-  private obtainMoves(){
-    this.serviceMoves.getMoves().subscribe({
+  private obtainMoves(pokemonId:number){
+    this.serviceMoves.getPokemonMoves(pokemonId).subscribe({
       next:(data)=>{
         this.aMoves=data;
         // console.log(this.aItems);

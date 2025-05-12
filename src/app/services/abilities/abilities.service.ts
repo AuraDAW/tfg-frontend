@@ -32,6 +32,12 @@ export class AbilitiesService {
     )
   }
 
+  getPokemonAbilities(id:number):Observable<Ability[]>{
+    return this.http.get<Ability[]>(`${this.url}/abilities/pokemonAbilities/${id}`).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";
     if(err.error instanceof ErrorEvent ){
