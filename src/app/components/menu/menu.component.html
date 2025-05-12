@@ -57,8 +57,11 @@
             </li>
           }
           <li class="nav-item position-absolute mx-2 end-0">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <span><i class="fa-solid fa-gear"></i></span>
+          </button>
+          <mat-menu #menu="matMenu">
             <div class="language-toggle">
-              <!-- <img [src]="'usa.svg'| logoPath" alt="English" class="img-fluid mx-1" style="width: 30px; height: 30px;"> -->
                <span class="mx-2">EN</span>
               
               <mat-slide-toggle
@@ -66,9 +69,15 @@
                 (change)="toggleLanguage($event.checked)">
               </mat-slide-toggle>
               
-              <!-- <img [src]="'esp.svg'| logoPath" alt="Español" class="img-fluid mx-1" style="width: 30px; height: 30px;"> -->
               <span class="mx-1">ES</span>
             </div>
+            <button mat-menu-item (click)="openDialog()">
+              <div class="d-flex justify-content-center align-items-center">
+              <i class="fa-solid fa-circle-info fa-2x mx-2"></i>
+              <span>{{"menu.help" | translate | titlecase}}</span>
+              </div>
+            </button>
+          </mat-menu>
           </li>
         </ul>
       </div>

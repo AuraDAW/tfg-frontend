@@ -2,12 +2,15 @@ import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { LogoPathPipe } from '../../pipes/logoPath/logo-path.pipe';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { DialogHelpComponent } from '../dialog-help/dialog-help.component';
 @Component({
   selector: 'app-menu',
-  imports: [RouterLink, RouterLinkActive, MatSlideToggleModule],
+  imports: [RouterLink, RouterLinkActive, MatSlideToggleModule, MatButtonModule, MatMenuModule, CommonModule, TranslateModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
@@ -18,12 +21,12 @@ export class MenuComponent {
   private serviceAuth = inject(AuthService)
   private router = inject(Router)
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, private dialog: MatDialog) {
     this.translate.addLangs(['en', 'es']); //adds possible translations
     this.translate.setDefaultLang('en'); //default translation if none is found
     const saved = localStorage.getItem('language'); //gets currently set language from localStorage, in case user reloads app with f5
     this.language = saved === 'es' ? 'es' : 'en'; //sets this.language to the one obtained from localStorage, or "en" if none was set
-    this.translate.use(this.language) 
+    this.translate.use(this.language); 
   }
   
   toggleLanguage(isSpanish: boolean) {
@@ -42,6 +45,13 @@ export class MenuComponent {
 
   ngOnChanges(){
     this.isAuthenticated=this.serviceAuth.isLoggedIn();
+  }
+
+  /**
+   * @description Opens the "help" dialog window.
+   */
+  openDialog(){
+    this.dialog.open(DialogHelpComponent);
   }
 
   /**
