@@ -10,7 +10,7 @@ import { Move } from '../../models/move';
 import { MovesService } from '../../services/moves/moves.service';
 import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.service';
 import { PokemonData } from '../../models/pokemon-data';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Statbar } from '../../models/statbar';
 import { PokemonTeam } from '../../models/pokemon-team';
@@ -192,7 +192,22 @@ export class PokemonFrmComponent {
       ivspdef:['31', [Validators.min(0), Validators.max(31)]],
       evspd:['0', [Validators.min(0), Validators.max(252)]],
       ivspd:['31', [Validators.min(0), Validators.max(31)]],
-    })
+    }, {validators:[this.EVTotalValidator()]})
+  }
+
+  private EVTotalValidator(){
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+    const controls = formGroup as FormGroup;
+    const fields = ['evhp', 'evatk', 'evdef', 'evspatk', 'evspdef', 'evspd'];
+
+    const total = fields.reduce((sum, field) => {
+      const control = controls.get(field);
+      const value = control ? parseInt(control.value, 10) || 0 : 0;
+      return sum + value;
+    }, 0);
+
+    return total > 510 ? { evTotalExceeded: true } : null;
+  };
   }
 
   /**
