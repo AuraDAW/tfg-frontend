@@ -26,6 +26,7 @@ export class TeamManagerComponent {
   constructor(private dialog: MatDialog) {}
 
   ngOnInit(){
+    console.log("teamManager is logged",this.serviceAuth.isLoggedIn());
     //if method returns anything other than null, then token is real and returned the user id
     //thus we can use the ! operator to specify it will never be null
     if(this.serviceAuth.getUserIdFromToken()!=null){

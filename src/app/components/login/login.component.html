@@ -1,7 +1,7 @@
 <form [formGroup]="frm" autocomplete="off" (submit)="login()">
 <div class="row">
     <div class="col-12 mt-3 d-flex justify-content-between">
-        <h2>Login</h2>
+        <h2>{{"login.login" | translate}}</h2>
     </div>
 </div>
 <hr>
@@ -26,7 +26,7 @@
             }
     </div>
     <div class="col-12 my-2 text-center">
-        <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Login</button>
+        <button type="submit" class="btn btn-success" [disabled]="frm.invalid">{{"login.login"|translate}}</button>
         <p class="my-2">{{"login.text" | translate}}<a href="/register" class="link-underline link-underline-opacity-0">{{"login.link" | translate}}</a></p>
     </div>
     </div>

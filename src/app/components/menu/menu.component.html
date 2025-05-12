@@ -33,7 +33,7 @@
               >Team Manager</a
             >
           </li>
-          @if(isAuthenticated){
+          @if(isLoggedIn$ | async){
             <li class="nav-item">
               <a
                 routerLink="/#"

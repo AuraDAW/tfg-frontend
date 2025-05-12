@@ -8,6 +8,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { DialogHelpComponent } from '../dialog-help/dialog-help.component';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-menu',
   imports: [RouterLink, RouterLinkActive, MatSlideToggleModule, MatButtonModule, MatMenuModule, CommonModule, TranslateModule],
@@ -15,6 +16,7 @@ import { DialogHelpComponent } from '../dialog-help/dialog-help.component';
   styleUrl: './menu.component.css'
 })
 export class MenuComponent {
+  isLoggedIn$!: Observable<boolean>;
   public language: 'en' | 'es' = 'en';
   public isAuthenticated!:boolean;
   public userId!:number;
@@ -35,18 +37,11 @@ export class MenuComponent {
     localStorage.setItem('language', this.language); // Optional: remember language
   }
   ngOnInit(){
-    //if method returns anything other than null, then token is real and returned the user id
-    //thus we can use the ! operator to specify it will never be null
-    if(this.serviceAuth.getUserIdFromToken()!=null){
-      this.userId = this.serviceAuth.getUserIdFromToken()!;
+    this.isLoggedIn$ = this.serviceAuth.isLoggedIn$;
+    if (this.serviceAuth.isLoggedIn()) {
+      this.serviceAuth.startTokenExpirationWatcher();
     }
-    this.isAuthenticated=this.serviceAuth.isLoggedIn();
   }
-
-  ngOnChanges(){
-    this.isAuthenticated=this.serviceAuth.isLoggedIn();
-  }
-
   /**
    * @description Opens the "help" dialog window.
    */
