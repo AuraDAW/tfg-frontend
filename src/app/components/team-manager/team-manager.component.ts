@@ -19,6 +19,7 @@ export class TeamManagerComponent {
   // definir variables
   public aTeams:Team[]=[];
   public userId!:number;
+  public userRole!:number;
   // definir servicios
   private router = inject(Router)
   private serviceTeams = inject(TeamsService);
@@ -31,14 +32,31 @@ export class TeamManagerComponent {
     //thus we can use the ! operator to specify it will never be null
     if(this.serviceAuth.getUserIdFromToken()!=null){
       this.userId = this.serviceAuth.getUserIdFromToken()!;
+      this.userRole = this.serviceAuth.getRoleFromToken()!;
     }
-    this.showAllTeams();
+    //if user is admin show all teams, if user is not admin show only their teams
+    if(this.userRole==2){
+      this.showAllTeams();
+    }else{
+      this.showTeamsUser()
+    }
+
   }
 
+  private showAllTeams(){
+    this.serviceTeams.getTeams().subscribe({
+      next:(data)=>{
+        this.aTeams=data;
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
+  }
   /**
    * @description Shows all teams that belong to the currently logged in user.
    */
-  private showAllTeams(){
+  private showTeamsUser(){
     this.serviceTeams.getTeamsUser(this.userId).subscribe({
       next:(data)=>{
         this.aTeams=data;
@@ -76,7 +94,7 @@ export class TeamManagerComponent {
         this.serviceTeams.postPokemonTeam(team).subscribe({
           next: (data) => {
             Swal.fire('El equipo ha sido añadido', "", "success")
-            this.showAllTeams();
+            this.showTeamsUser();
           },
           error: (err) => {
             console.log(err);
@@ -110,7 +128,7 @@ export class TeamManagerComponent {
         this.serviceTeams.deleteTeam(team.id!).subscribe({
           next:(data)=>{
             Swal.fire(`${data.message}`,"","success")
-            this.showAllTeams() //actualizamos la tabla
+            this.showTeamsUser() //actualizamos la tabla
           },
           error:(err)=>{
             Swal.fire(`${err.message}`,"","error")

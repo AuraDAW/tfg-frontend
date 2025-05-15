@@ -22,6 +22,7 @@ export class MenuComponent {
   public userId!:number;
   private serviceAuth = inject(AuthService)
   private router = inject(Router)
+  public role!:number
 
   constructor(private translate: TranslateService, private dialog: MatDialog) {
     this.translate.addLangs(['en', 'es']); //adds possible translations
@@ -40,7 +41,9 @@ export class MenuComponent {
     this.isLoggedIn$ = this.serviceAuth.isLoggedIn$;
     if (this.serviceAuth.isLoggedIn()) {
       this.serviceAuth.startTokenExpirationWatcher();
+      this.role = this.serviceAuth.getRoleFromToken()!;
     }
+    console.log("role", this.role);
   }
   /**
    * @description Opens the "help" dialog window.
@@ -57,4 +60,5 @@ export class MenuComponent {
     this.serviceAuth.logout();
     this.router.navigateByUrl("/home")
   }
+
 }

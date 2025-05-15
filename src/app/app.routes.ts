@@ -48,6 +48,11 @@ export const routes: Routes = [
         loadComponent:()=>import("./components/register/register.component").then(c=>c.RegisterComponent)
     },
     {
+        // admin panel
+        path:"adminPanel",
+        loadComponent:()=>import("./components/adminpanel/adminpanel.component").then(c=>c.AdminpanelComponent)
+    },
+    {
         // 404
         path:"**",
         loadComponent:()=>import("./components/c404/c404.component").then(c=>c.C404Component)

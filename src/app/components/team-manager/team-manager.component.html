@@ -10,6 +10,9 @@
     <div class="col-12">
         <table class="table text-center table-light my-2">
             <thead>
+                @if (userRole==2) {
+                    <th scope="col">User</th>
+                }
                 <th scope="col">{{"teamManager.name" | translate}}</th>
                 <th scope="col">{{"teamManager.description" | translate}}</th>
                 <th scope="col">{{"teamManager.actions" | translate}}</th>
@@ -17,6 +20,9 @@
             <tbody>
                 @for (team of aTeams; track $index) {
                 <tr>
+                    @if (userRole==2) {
+                        <td>{{team.user_id}}</td>
+                    }
                     <td>{{team.name}}</td>
                     <td>{{team.description}}</td>
                     <td class="">

@@ -58,7 +58,7 @@ export class AuthService {
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
 
     this.loggedIn.next(true); //notify to observable that user is logged in (because token was just set)
-    console.log('Expires at:', new Date(expiresAt).toLocaleString());
+    // console.log('Expires at:', new Date(expiresAt).toLocaleString());
     this.startTokenExpirationWatcher();
   }
 
@@ -78,8 +78,8 @@ export class AuthService {
   public isLoggedIn() {
     const token = localStorage.getItem('id_token');
     const expired = this.isTokenExpired();
-    console.log('Token:', token);
-    console.log('Expired:', expired);
+    // console.log('Token:', token);
+    // console.log('Expired:', expired);
     return token !== null && !expired;
   }
   /**
@@ -104,7 +104,7 @@ export class AuthService {
       return true; //if no token then user is obviously logged out
     }
     const abc =  moment().valueOf() > expiration;
-    console.log(abc);
+    // console.log(abc);
     return abc;
   }
 
@@ -147,6 +147,26 @@ export class AuthService {
       // to fix this, i created an interface with everything the payload should return so i can obtain userId without issue
       const decodedToken = jwtDecode<JWTCustomPayload>(token)
       return decodedToken.userId;
+    }catch(error){
+      console.log(error);
+      return null;
+    }
+  }
+  /**
+   * @description OObtains the token from localStorage, if it exists it will decode it and obtain the role.
+   * @returns the role's id
+   */
+  getRoleFromToken(){
+    const token = localStorage.getItem("id_token");
+    // if token hasnt been set, return null
+    if(!token){
+      return null;
+    }
+    try{
+      // jwtDecode returns a JWTPayload object, which does not have custom attributes so you cannot obtain userId. 
+      // to fix this, i created an interface with everything the payload should return so i can obtain userId without issue
+      const decodedToken = jwtDecode<JWTCustomPayload>(token)
+      return decodedToken.role;
     }catch(error){
       console.log(error);
       return null;
