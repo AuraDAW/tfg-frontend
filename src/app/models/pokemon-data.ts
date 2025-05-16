@@ -12,5 +12,6 @@ export interface PokemonData {
     base_spdef:number,
     base_spd:number,
     base_hp:number,
-    name_es:string
+    name_es:string,
+    entityType?:"pokemonData"
 }

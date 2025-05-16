@@ -53,6 +53,16 @@ export const routes: Routes = [
         loadComponent:()=>import("./components/adminpanel/adminpanel.component").then(c=>c.AdminpanelComponent)
     },
     {
+        // create new pokemonData
+        path:"adminPokemon",
+        loadComponent:()=>import("./components/admin-pokemon/admin-pokemon.component").then(c=>c.AdminPokemonComponent)
+    },
+    {
+        // edit existing pokemonData
+        path:"adminPokemon/:id",
+        loadComponent:()=>import("./components/admin-pokemon/admin-pokemon.component").then(c=>c.AdminPokemonComponent)
+    },
+    {
         // 404
         path:"**",
         loadComponent:()=>import("./components/c404/c404.component").then(c=>c.C404Component)

@@ -6,5 +6,6 @@ export interface Move {
     power:number,
     accuracy:number,
     name_es:string,
-    description_es:string
+    description_es:string,
+    entityType?:"move"
 }

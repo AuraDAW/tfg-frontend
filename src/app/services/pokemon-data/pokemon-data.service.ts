@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { PokemonData } from '../../models/pokemon-data';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Move } from '../../models/move';
 import { environment } from '../../../environments/environment';
@@ -38,6 +38,15 @@ private url=environment.apiUrl;
    */
   getPokemonDataFromTeam(id:number):Observable<PokemonData[]>{
     return this.http.get<PokemonData[]>(`${this.url}/pokemonData/getData/${id}`).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  postPokemonData(pokemon:PokemonData):Observable<{id:Number}>{
+    const headers = new HttpHeaders({
+      'Content-Type':'application/json'
+    })
+    return this.http.post<{id:Number}>(`${this.url}/pokemonData`,pokemon,{headers}).pipe(
       catchError(this.handleError)
     )
   }

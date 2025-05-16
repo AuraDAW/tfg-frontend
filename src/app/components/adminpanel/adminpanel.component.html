@@ -1,3 +1,4 @@
+<form [formGroup]="frm" autocomplete="off">
 <div class="row">
     <div class="col-12 text-center mt-3 d-flex justify-content-between">
         <h2>Admin Panel</h2>
@@ -7,6 +8,38 @@
 
 <div class="row">
     <div class="col-12">
-        
+        <div class="col-4 mb-3">
+            <div class="form-group my-2">
+                <select id="selectElement" class="form-select" formControlName="selectElement" (change)="onChangeEvent($event)">
+                    <option value="" selected>Select what to view</option>
+                    <option value="1">Pokemon</option>
+                    <option value="2">Moves</option>
+                    <option value="3">Items</option>
+                    <option value="4">Abilities</option>
+                    <option value="5">Users</option>
+                </select>
+            </div>
+        </div>
+        <table class="table text-center table-light my-2">
+            <thead>
+                <th scope="col">{{"teamManager.name" | translate}}</th>
+                <th scope="col">{{"teamManager.actions" | translate}}</th>
+            </thead>
+            <tbody>
+                @for (element of aCurrentArray; track $index) {
+                <tr>
+                    <td>{{element.name_en}}</td>
+                    <td class="">
+                        <a class="pointer m-2" [ngStyle]="{color: '#1f516f'}" (click)="editElement(element)"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="pointer m-2" [ngStyle]="{color: '#e15639'}" ><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+            }@empty{
+                <tr>
+                    <td colspan="3" class="text-center">{{"teamManager.noTeams" | translate}}</td>
+                </tr>
+            }
+            </tbody>
+        </table>
     </div>
 </div>

@@ -4,5 +4,6 @@ export interface Item {
     description_en:string,
     image:string,
     name_es:string,
-    description_es:string
+    description_es:string,
+    entityType?:"item"
 }

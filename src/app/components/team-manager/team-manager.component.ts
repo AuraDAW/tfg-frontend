@@ -40,7 +40,6 @@ export class TeamManagerComponent {
     }else{
       this.showTeamsUser()
     }
-
   }
 
   private showAllTeams(){

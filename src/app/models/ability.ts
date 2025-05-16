@@ -3,5 +3,6 @@ export interface Ability {
     name_en:string,
     description_en:string,
     name_es:string,
-    description_es:string
+    description_es:string,
+    entityType?:"ability"
 }
