@@ -22,8 +22,7 @@
         }
         <div class="form-group mb-3 text-center">
             <label for="pokemonId" class=""><small>Pokemon</small></label>
-            <select id="pokemonId" class="form-select" formControlName="pokemonId" (change)="onChangeEvent($event)" #inputElement 
-            [matAutocomplete]="auto">
+            <select id="pokemonId" class="form-select" formControlName="pokemonId" (change)="onChangeEvent($event)" #inputElement>
                 <option value="" selected>{{'pokemonFrm.select.pokemon' | translate}}</option>
                 @for (data of aPokemonData; track $index){
                     <option value={{data.id}}>{{`pokemonData.name.${data.id}` | translate | titlecase}}</option>
