@@ -62,7 +62,7 @@ export const routes: Routes = [
         path:"adminPokemon/:id",
         loadComponent:()=>import("./components/admin-pokemon/admin-pokemon.component").then(c=>c.AdminPokemonComponent)
     },
-        {
+    {
         // create new move
         path:"adminMoves",
         loadComponent:()=>import("./components/admin-move/admin-move.component").then(c=>c.AdminMoveComponent)
@@ -71,6 +71,26 @@ export const routes: Routes = [
         // edit existing move
         path:"adminMoves/:id",
         loadComponent:()=>import("./components/admin-move/admin-move.component").then(c=>c.AdminMoveComponent)
+    },
+    {
+        // create new item
+        path:"adminItems",
+        loadComponent:()=>import("./components/admin-item/admin-item.component").then(c=>c.AdminItemComponent)
+    },
+    {
+        // edit existing item
+        path:"adminItems/:id",
+        loadComponent:()=>import("./components/admin-item/admin-item.component").then(c=>c.AdminItemComponent)
+    },
+    {
+        // create new ability
+        path:"adminAbilities",
+        loadComponent:()=>import("./components/admin-ability/admin-ability.component").then(c=>c.AdminAbilityComponent)
+    },
+    {
+        // edit existing ability
+        path:"adminAbilities/:id",
+        loadComponent:()=>import("./components/admin-ability/admin-ability.component").then(c=>c.AdminAbilityComponent)
     },
     {
         // 404

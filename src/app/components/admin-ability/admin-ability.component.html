@@ -1,0 +1,27 @@
+<form [formGroup]="frm" autocomplete="off" (submit)="saveAbility()">
+    <div class="row">
+        <div class="col-12 text-center mt-3 d-flex justify-content-between">
+            <h2>Create Ability</h2>
+            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Save</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row ">
+        <mat-form-field class="col-12">
+            <mat-label>Ability English Name</mat-label>
+            <input matInput formControlName="name_en">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Ability Spanish Name</mat-label>
+            <input matInput formControlName="name_es">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Ability English Description</mat-label>
+            <input matInput formControlName="description_en">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Ability Spanish Description</mat-label>
+            <input matInput formControlName="description_es">
+        </mat-form-field>
+    </div>
+</form>

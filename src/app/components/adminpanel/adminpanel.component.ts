@@ -196,10 +196,10 @@ export class AdminpanelComponent {
       this.router.navigateByUrl(`/adminMoves/${element.id}`);
     }else if(this.isItem(element)){
       console.log("it's an item");
-      // this.router.navigateByUrl("/home");
+      this.router.navigateByUrl(`adminItems/${element.id}`);
     }else if(this.isAbility(element)){
       console.log("it's an ability");
-      // this.router.navigateByUrl("/home");
+      this.router.navigateByUrl(`adminAbilities/${element.id}`);
     }else{
       console.log("Error. No type was found.");
     }
