@@ -148,6 +148,7 @@
 	"teamBuilder.move2": "Movimiento 2",
 	"teamBuilder.move3": "Movimiento 3",
 	"teamBuilder.move4": "Movimiento 4",
+	"teamBuilder.export":"Exportar",
 	"teamManager.actions": "Acciones",
 	"teamManager.create": "Crear un nuevo equipo",
 	"teamManager.description": "Descripción",

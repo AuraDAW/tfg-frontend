@@ -9,7 +9,8 @@
 <div class="row">
     <div class="col-12">
         <button class="btn btn-success mx-2" (click)="addPokemon()" [disabled]="aFullPokemonTeam.length>=6">{{"teamBuilder.add" | translate}}</button>
-        <button class="btn btn-success mx-2" (click)="editTeam()" [disabled]="aFullPokemonTeam.length>=6">{{"teamBuilder.edit" | translate}}</button>
+        <button class="btn btn-success mx-2" (click)="editTeam()">{{"teamBuilder.edit" | translate}}</button>
+        <button class="btn btn-success mx-2" (click)="exportTeam()">{{"teamBuilder.export" | translate}}</button>
         @for (pokemonData of aFullPokemonTeam; track $index) {
         <div class="border my-2 shadow-sm" [ngStyle]="{position:'relative'}">
             <div class="row">

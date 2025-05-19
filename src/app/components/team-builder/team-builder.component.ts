@@ -41,8 +41,9 @@ export class TeamBuilderComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private serviceTeams = inject(TeamsService);
-  private pokemonTeamService = inject(PokemonTeamService);
-  private pokemonDataService = inject(PokemonDataService)
+  private servicePokemonTeam = inject(PokemonTeamService);
+  private servicePokemonData = inject(PokemonDataService)
+  private serviceAbilities = inject(AbilitiesService)
   private serviceTypes = inject(TypesService)
 
  ngOnInit(){
@@ -84,7 +85,7 @@ export class TeamBuilderComponent {
    */
   private obtainPokemonTeamInfo(){
     // maps each id to a pokemonTeamService call
-    const requests = this.aPokemonTeamIds.map(id => this.pokemonTeamService.getPokemonTeamId(id));
+    const requests = this.aPokemonTeamIds.map(id => this.servicePokemonTeam.getPokemonTeamId(id));
     // subscribes to all requests in the "requests" map, so it can obtain the data of all pokemonIds
     forkJoin(requests).subscribe({
       next: (results) => {
@@ -106,7 +107,7 @@ export class TeamBuilderComponent {
   private obtainPokemonData() {
     // creates map with all requests to get pokemonData of each pokemon in the team
     const baseDataRequests = this.aPokemonTeamInfo.map(info =>
-      this.pokemonDataService.getPokemonDataFromTeam(info.id_pokemon!)
+      this.servicePokemonData.getPokemonDataFromTeam(info.id_pokemon!)
     );
     // map of requests to serviceTypes to obtain type data of the teratype of each pokemon in the team 
     const teraTypeRequests = this.aPokemonTeamInfo.map(info =>
@@ -197,5 +198,51 @@ export class TeamBuilderComponent {
         }
       });
   }
+
+  exportTeam() {
+    const test = this.generateShowdownTeam(this.aFullPokemonTeam);
+    // console.log(test);
+  }
+
+  private generateShowdownTeam = (fullPokemonTeamData: any[]) => {
+    return fullPokemonTeamData.map(pokemonData => {
+      // Extract base data and team data
+      const baseData = pokemonData.baseData;
+      const teamInfo = pokemonData.teamInfo;
+      let ability;
+
+      // Construct EVs from teamInfo
+      const evs = [
+        { stat: 'HP', value: teamInfo.ev_hp },
+        { stat: 'Atk', value: teamInfo.ev_atk },
+        { stat: 'Def', value: teamInfo.ev_def },
+        { stat: 'SpA', value: teamInfo.ev_spatk },
+        { stat: 'SpD', value: teamInfo.ev_spdef },
+        { stat: 'Spe', value: teamInfo.ev_spd }
+      ].filter(ev => ev.value > 0); // Only include EVs with non-zero values
+
+      // Get the moves (from move ids)
+      const moves = [
+        pokemonData.baseData.name_en === "Cinccino" ? "Tail Slap" : "Move 1",  // Example move lookup
+        pokemonData.baseData.name_en === "Cinccino" ? "Knock Off" : "Move 2",
+        "Move 3", // Default for now
+        "Move 4"  // Default for now
+      ];
+
+      const abilityId = pokemonData.teamInfo.ability;
+      
+      // Get item from teamInfo (Example: 3 could be mapped to "Focus Sash")
+      const item = "Focus Sash"; // This should be mapped from item ID 3
+
+       console.log("ability right before formatting data",ability);
+      // Format the Pokemon's data into Showdown format
+      return `${baseData.name_en} @ ${item}
+Ability: ${ability}
+Level: ${teamInfo.level}
+EVs: ${evs.map(ev => `${ev.value} ${ev.stat}`).join(' / ')}
+Serious Nature
+${moves.map(move => `- ${move}`).join('\n')}\n`;
+    }).join('\n');
+  };
 }
 
