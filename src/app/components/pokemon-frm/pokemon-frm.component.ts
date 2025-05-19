@@ -196,6 +196,10 @@ export class PokemonFrmComponent {
     }, {validators:[this.EVTotalValidator()]})
   }
 
+  /**
+   * @description Method that will sum all EV values to check if the sum is equal or lower than 510
+   * @returns boolean, true if total EV are less or equal to 510
+   */
   private EVTotalValidator(){
     return (formGroup: AbstractControl): ValidationErrors | null => {
     const controls = formGroup as FormGroup;

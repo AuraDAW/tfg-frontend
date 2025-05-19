@@ -139,20 +139,33 @@ export class AdminPokemonComponent {
     if(!this.id){ //if id does not exist, then we are trying to create a new pokemon
       this.addPokemon(pokemonToAdd);
     }else{
-      // this.updatePokemon(pokemonToAdd);
+      this.updatePokemon(pokemonToAdd);
     }
   }
 
   private addPokemon(pokemon:PokemonData){
-      this.servicePokemonData.postPokemonData(pokemon).subscribe({
-        next:(data)=>{
-              Swal.fire('The pokemon has been added', "","success");
-              this.frm.reset();
-              this.router.navigateByUrl(`/adminPanel`);
-            },
-        error:(err)=>{
-          console.log(err);
-        }
-      });
-    }
+    this.servicePokemonData.postPokemonData(pokemon).subscribe({
+      next:(data)=>{
+        Swal.fire('The pokemon has been added', "","success");
+        this.frm.reset();
+        this.router.navigateByUrl(`/adminPanel`);
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    });
+  }
+
+  private updatePokemon(pokemon:PokemonData){
+    this.servicePokemonData.updatePokemonTeam(pokemon).subscribe({
+      next:(data)=>{
+        Swal.fire('The pokemon has been updated',"","success");
+        this.frm.reset();
+        this.router.navigateByUrl('/adminPanel')
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
+  }
 }

@@ -50,6 +50,15 @@ private url=environment.apiUrl;
       catchError(this.handleError)
     )
   }
+  
+  updatePokemonTeam(pokemon:PokemonData):Observable<{message:string}>{
+    const headers= new HttpHeaders({
+      'Content-Type'  : 'application/json'
+    })
+    return this.http.put<{message:string}>(`${this.url}/pokemonData/${pokemon.id}`,pokemon, {headers}).pipe(
+      catchError(this.handleError)
+    )
+  }
 
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";
