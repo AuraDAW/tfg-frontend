@@ -13,6 +13,7 @@ import { MovesService } from '../../services/moves/moves.service';
 import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.service';
 import { User } from '../../models/user';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsersService } from '../../services/users/users.service';
 
 @Component({
   selector: 'app-adminpanel',
@@ -28,7 +29,7 @@ export class AdminpanelComponent {
   public aPokemonData:PokemonData[]=[];
   public aUsers:User[]=[];
   public aCurrentArray:any[]=[];
-  private selectedOption!:Number;
+  public selectedOption!:Number;
   // inyectar servicios
   private fb=inject(FormBuilder)
   private router = inject(Router)
@@ -36,12 +37,14 @@ export class AdminpanelComponent {
   private serviceAbilities = inject(AbilitiesService)
   private serviceMoves = inject(MovesService)
   private servicePokemonData = inject(PokemonDataService)
+  private serviceUsers = inject(UsersService)
 
   ngOnInit(){
     this.loadItems();
     this.loadAbilities();
     this.loadMoves();
     this.loadPokemonData();
+    this.loadUsers();
     this.frm = this.fb.group({
       selectElement:[""]
     });
@@ -112,6 +115,21 @@ export class AdminpanelComponent {
       }
     })
   }
+
+  private loadUsers(){
+    this.serviceUsers.getUsers().subscribe({
+      next:(data)=>{
+        this.aUsers=data;
+        // add entityType to each user so we may know later if it's a user to send to correct urls
+        this.aUsers.forEach(element=>{
+          element.entityType="user";
+        })
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
+  }
   
   private currentArray(): any[] {
     switch (this.selectedOption) {
@@ -133,6 +151,35 @@ export class AdminpanelComponent {
       default:
         console.log("default");
         return [];
+    }
+  }
+  /**
+   * @description Redirects to the adminElement of the appropiate type to create a new element: adminPokemon if pokemons are selected to create a new Pokemon, adminMoves to create a new move, etc.
+   */
+  createElement(){
+    switch (this.selectedOption) {
+      case 1:
+        console.log("crear pokemon");
+        this.router.navigateByUrl('/adminPokemon');
+        break;
+      case 2:
+        console.log("crear moves");
+        this.router.navigateByUrl('/adminPanel');
+        break;
+      case 3:
+        console.log("crear items");
+        this.router.navigateByUrl('/adminPanel');
+        break;
+      case 4:
+        console.log("crear abilities");
+        this.router.navigateByUrl('/adminPanel');
+        break;
+      case 5:
+        console.log("crear users");
+        this.router.navigateByUrl('/register');
+        break;
+      default:
+        console.log("no option chosen");
     }
   }
 

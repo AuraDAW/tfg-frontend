@@ -2,6 +2,7 @@
 <div class="row">
     <div class="col-12 text-center mt-3 d-flex justify-content-between">
         <h2>Admin Panel</h2>
+        <button class="btn btn-success" (click)="createElement()">Create</button>
     </div>
 </div>
 <hr>
@@ -28,7 +29,11 @@
             <tbody>
                 @for (element of aCurrentArray; track $index) {
                 <tr>
-                    <td>{{element.name_en}}</td>
+                    @if (selectedOption===5) {
+                        <td>{{element.username}}</td>
+                    }@else {
+                        <td>{{element.name_en}}</td>
+                    }
                     <td class="">
                         <a class="pointer m-2" [ngStyle]="{color: '#1f516f'}" (click)="editElement(element)"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a class="pointer m-2" [ngStyle]="{color: '#e15639'}" ><i class="fa-solid fa-trash"></i></a>
@@ -36,7 +41,7 @@
                 </tr>
             }@empty{
                 <tr>
-                    <td colspan="3" class="text-center">{{"teamManager.noTeams" | translate}}</td>
+                    <td colspan="3" class="text-center">No option was selected.</td>
                 </tr>
             }
             </tbody>
