@@ -10,7 +10,7 @@ import { Move } from '../../models/move';
 import { MovesService } from '../../services/moves/moves.service';
 import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.service';
 import { PokemonData } from '../../models/pokemon-data';
-import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Statbar } from '../../models/statbar';
 import { PokemonTeam } from '../../models/pokemon-team';
@@ -20,15 +20,17 @@ import { TeamsService } from '../../services/teams/teams.service';
 import { PokemonPathPipe } from '../../pipes/pokemonPath/pokemon-path.pipe';
 import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny-path.pipe';
 import { TypePathPipe } from '../../pipes/typePath/type-path.pipe';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import { AutocompleteSelectComponent } from "../autocomplete-select/autocomplete-select.component";
 
 @Component({
   selector: 'app-pokemon-frm',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe, TranslateModule,
-    MatInputModule, MatFormFieldModule, MatSelectModule],
+    MatInputModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, AutocompleteSelectComponent],
   templateUrl: './pokemon-frm.component.html',
   styles: ``
 })
@@ -60,7 +62,7 @@ export class PokemonFrmComponent {
   private servicePokemonTeam = inject(PokemonTeamService)
   private serviceTeams = inject(TeamsService)
 
-  public testId:number=1;
+  constructor(private translate: TranslateService){}
 
   ngOnInit(){
     this.obtainId();
@@ -72,7 +74,6 @@ export class PokemonFrmComponent {
     // 1- Reset all selects and inputs to default value 
     // 2- Rebuild all selects (futureproofing to allow easy implementation when i make it so a pokemon can only have moves they actually learn)
     this.frm.get('pokemonId')!.valueChanges.subscribe(pokemon => {
-      console.log("pokemon selected",pokemon);
       this.resetAllFields();
       // there is no point in executing resetsAbilitiesMoves as its a placeholder for a future method
       // it would only slow down the application (negligible tbf)
@@ -118,7 +119,6 @@ export class PokemonFrmComponent {
    */
   private resetsAbilitiesMoves(pokemonId: any) {
     // calls to method to obtain abilities and moves, later on method will be updated so it only gets those of the currently selected pokemon
-    console.log("pokemonId en resetsAbilitiesMoves", pokemonId);
     this.obtainAbilities(pokemonId);
     this.obtainMoves(pokemonId);
   }
@@ -395,6 +395,7 @@ export class PokemonFrmComponent {
    */
   private obtainPokemonDataId(){
     this.selectedPokemon = this.frm.get("pokemonId")?.value;
+    console.log(this.selectedPokemon);
     if(this.selectedPokemon){
       this.servicePokemonData.getPokemonDataId(this.selectedPokemon).subscribe({
         next:(data)=>{
@@ -460,9 +461,9 @@ export class PokemonFrmComponent {
 
       this.aStatbar.push(stat)
     }
-
-    // console.log(this.aStatbar);
   }
-
-
+  // Getter to cast the control to FormControl
+  get pokemonControl(): FormControl {
+    return this.frm.get('pokemonId') as FormControl;
+  }
 }

@@ -20,18 +20,6 @@
         }@else {
             <img src="assets/images/pokemon/pokeball.png" class="img-fluid mx-auto d-block">
         }
-        <!-- <div class="form-group mb-3 text-center">
-            <label for="pokemonId" class=""><small>Pokemon</small></label>
-            <select id="pokemonId" class="form-select" formControlName="pokemonId" (change)="onChangeEvent($event)" #inputElement>
-                <option value="" selected>{{'pokemonFrm.select.pokemon' | translate}}</option>
-                @for (data of aPokemonData; track $index){
-                    <option value={{data.id}}>{{`pokemonData.name.${data.id}` | translate | titlecase}}</option>
-                }
-            </select>
-            @if (this.frm.get('pokemonId')?.errors?.['required'] && this.frm.get('pokemonId')?.touched) {
-                <span class="text-danger fst-italic text">{{"pokemonFrm.error.noPokemon" | translate}}</span>
-            }
-        </div> -->
         <div class="form-group mb-3 text-center">
             <mat-form-field appearance="fill" class="w-100">
             <mat-label>Pokemon</mat-label>
@@ -46,6 +34,17 @@
             }
             </mat-form-field>
         </div>
+        <!-- <div class="form-group mb-3 text-center">
+            
+                <mat-label>Pokemon</mat-label>
+                <app-autocomplete-select [label]="'Pokemon'" [control]="pokemonControl" [options]="aPokemonData" [optionValueKey]="'id'"
+                    [entityKey]="'pokemonData'" (optionSelected)="onChangeEvent($event)" >
+                </app-autocomplete-select>
+                @if (this.frm.get('pokemonId')?.errors?.['required'] && this.frm.get('pokemonId')?.touched) {
+                <span class="text-danger fst-italic text">{{"pokemonFrm.error.noPokemon" | translate}}</span>
+                }
+            
+        </div> -->
         <div class="d-flex justify-content-center mb-2">
             @if(selectedPokemon){
                 @for (type of aPokemonTypes; track $index) {
