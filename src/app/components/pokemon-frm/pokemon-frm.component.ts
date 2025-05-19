@@ -21,11 +21,14 @@ import { PokemonPathPipe } from '../../pipes/pokemonPath/pokemon-path.pipe';
 import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny-path.pipe';
 import { TypePathPipe } from '../../pipes/typePath/type-path.pipe';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+
 @Component({
   selector: 'app-pokemon-frm',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe, TranslateModule,
-    MatAutocompleteModule],
+    MatInputModule, MatFormFieldModule, MatSelectModule],
   templateUrl: './pokemon-frm.component.html',
   styles: ``
 })
@@ -69,6 +72,7 @@ export class PokemonFrmComponent {
     // 1- Reset all selects and inputs to default value 
     // 2- Rebuild all selects (futureproofing to allow easy implementation when i make it so a pokemon can only have moves they actually learn)
     this.frm.get('pokemonId')!.valueChanges.subscribe(pokemon => {
+      console.log("pokemon selected",pokemon);
       this.resetAllFields();
       // there is no point in executing resetsAbilitiesMoves as its a placeholder for a future method
       // it would only slow down the application (negligible tbf)
@@ -341,7 +345,6 @@ export class PokemonFrmComponent {
     this.serviceAbilities.getPokemonAbilities(pokemonId).subscribe({
       next:(data)=>{
         this.aAbilities=data;
-        console.log(this.aAbilities);
       },
       error:(err)=>{
         console.log(err);
@@ -383,7 +386,7 @@ export class PokemonFrmComponent {
    * @description Method that receives an event when changing the selected pokemon and obtains various data
    * @param $event change event when user selects a different pokemon
    */
-  onChangeEvent($event: Event) {
+  onChangeEvent($event: MatSelectChange) {
     this.obtainPokemonDataId();
   }
 

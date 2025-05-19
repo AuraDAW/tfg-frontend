@@ -20,7 +20,7 @@
         }@else {
             <img src="assets/images/pokemon/pokeball.png" class="img-fluid mx-auto d-block">
         }
-        <div class="form-group mb-3 text-center">
+        <!-- <div class="form-group mb-3 text-center">
             <label for="pokemonId" class=""><small>Pokemon</small></label>
             <select id="pokemonId" class="form-select" formControlName="pokemonId" (change)="onChangeEvent($event)" #inputElement>
                 <option value="" selected>{{'pokemonFrm.select.pokemon' | translate}}</option>
@@ -31,6 +31,20 @@
             @if (this.frm.get('pokemonId')?.errors?.['required'] && this.frm.get('pokemonId')?.touched) {
                 <span class="text-danger fst-italic text">{{"pokemonFrm.error.noPokemon" | translate}}</span>
             }
+        </div> -->
+        <div class="form-group mb-3 text-center">
+            <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Pokemon</mat-label>
+            <mat-select id="pokemonId" formControlName="pokemonId" (selectionChange)="onChangeEvent($event)" #inputElement>
+                <mat-option value="" selected>{{'pokemonFrm.select.pokemon' | translate}}</mat-option>
+                @for (data of aPokemonData; track $index){
+                <mat-option value={{data.id}}>{{`pokemonData.name.${data.id}` | translate | titlecase}}</mat-option>
+                }
+            </mat-select>
+            @if (this.frm.get('pokemonId')?.errors?.['required'] && this.frm.get('pokemonId')?.touched) {
+            <span class="text-danger fst-italic text">{{"pokemonFrm.error.noPokemon" | translate}}</span>
+            }
+            </mat-form-field>
         </div>
         <div class="d-flex justify-content-center mb-2">
             @if(selectedPokemon){
@@ -44,45 +58,53 @@
     </div>
     <div class="col-4 border border-black mt-2">
         <div class="form-group text-center">
-            <label for="ability" class=""><small>{{'pokemonFrm.ability' | translate}}</small></label>
-            <select id="ability" class="form-select" formControlName="ability">
-                <option value="" selected>{{'pokemonFrm.select.ability' | translate}}</option>
+            <mat-form-field appearance="fill" class="w-100 mt-2">
+            <mat-label>{{'pokemonFrm.ability' | translate}}</mat-label>
+            <mat-select id="ability" formControlName="ability">
+                <mat-option value="" selected>{{'pokemonFrm.select.ability' | translate}}</mat-option>
                 @for (ability of aAbilities; track $index) {
-                     <option value={{ability.id}}>{{`abilities.name.${ability.id}` | translate | titlecase}}</option>
+                     <mat-option value={{ability.id}}>{{`abilities.name.${ability.id}` | translate | titlecase}}</mat-option>
                 }
-            </select>
+            </mat-select>
             @if (this.frm.get('ability')?.errors?.['required'] && this.frm.get('ability')?.touched) {
                 <span class="text-danger fst-italic text">{{"pokemonFrm.error.noAbility" | translate}}</span>
             }
+            </mat-form-field>
         </div>
         <div class="form-group text-center">
-            <label for="item" class=""><small>{{'pokemonFrm.item' | translate}}</small></label>
-            <select id="item" class="form-select" formControlName="item">
-                <option value="" selected>{{'pokemonFrm.select.item' | translate}}</option>
+            <mat-form-field appearance="fill" class="w-100">
+            <mat-label>{{'pokemonFrm.item' | translate}}</mat-label>
+            <mat-select id="item" formControlName="item">
+                <mat-option value="" selected>{{'pokemonFrm.select.item' | translate}}</mat-option>
                 @for(item of aItems;track $index){
-                    <option value={{item.id}}>{{`items.name.${item.id}` | translate | titlecase}}</option>
+                    <mat-option value={{item.id}}>{{`items.name.${item.id}` | translate | titlecase}}</mat-option>
                 }
-            </select>
+            </mat-select>
             @if (this.frm.get('item')?.errors?.['required'] && this.frm.get('item')?.touched) {
                 <span class="text-danger fst-italic text">{{"pokemonFrm.error.noItem" | translate}}</span>
             }
+            </mat-form-field>
         </div>
         <div class="d-flex justify-content-center mb-2 text-center">
             <div class="form-group me-2">
-                <label for="level"><small>{{'pokemonFrm.level' | translate}}</small></label>
-                <input type="number" class="form-control" id="level" formControlName="level" min="1" max="100">
+                <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{'pokemonFrm.level' | translate}}</mat-label>
+                <input type="number" matInput id="level" formControlName="level" min="1" max="100">
+                </mat-form-field>
             </div>
             <div class="form-group">
-                <label for="teratype" class=""><small>{{'pokemonFrm.tera' | translate}}</small></label>
-                <select id="teratype" class="form-select" formControlName="teratype">
-                    <option value="" selected>{{'pokemonFrm.select.tera' | translate}}</option>
+                <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{'pokemonFrm.tera' | translate}}</mat-label>
+                <mat-select id="teratype" formControlName="teratype">
+                    <mat-option value="" selected>{{'pokemonFrm.select.tera' | translate}}</mat-option>
                     @for (type of aTypes; track $index){
-                        <option value={{type.id}}>{{`types.name.${type.id}` | translate | titlecase}}</option>
+                        <mat-option value={{type.id}}>{{`types.name.${type.id}` | translate | titlecase}}</mat-option>
                     }
-                </select>
+                </mat-select>
                 @if (this.frm.get('teratype')?.errors?.['required'] && this.frm.get('teratype')?.touched) {
                     <span class="text-danger fst-italic text">{{"pokemonFrm.error.noTera" | translate}}</span>
                 }
+                </mat-form-field>
             </div>
         </div>
         <div class="d-flex justify-content-center">
@@ -95,48 +117,56 @@
     <div class="col-5 border border-info mt-2">
         <div class="d-flex flex-column">
             <div class="form-group my-2">
-                <select id="move1" class="form-select" formControlName="move1">
-                    <option value="" selected>{{'pokemonFrm.move1' | translate}}</option>
+                <mat-form-field appearance="fill" class="w-100">
+                <mat-select id="move1" formControlName="move1">
+                    <mat-option value="" selected>{{'pokemonFrm.move1' | translate}}</mat-option>
                     @for (move of aMoves; track $index){
-                        <option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</option>
+                        <mat-option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
                     }
-                </select>
+                </mat-select>
                 @if (this.frm.get('move1')?.errors?.['required'] && this.frm.get('move1')?.touched) {
                 <span class="text-danger fst-italic text">{{"pokemonFrm.error.noMove" | translate}}</span>
             }
+                </mat-form-field>
             </div>
-            <div class="form-group my-2">
-                <select id="move2" class="form-select" formControlName="move2">
-                    <option value="" selected>{{'pokemonFrm.move2' | translate}}</option>
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="w-100">
+                <mat-select id="move2" formControlName="move2">
+                    <mat-option value="" selected>{{'pokemonFrm.move2' | translate}}</mat-option>
                     @for (move of aMoves; track $index){
-                        <option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</option>
+                        <mat-option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
                     }
-                </select>
+                </mat-select>
                 @if (this.frm.get('move2')?.errors?.['required'] && this.frm.get('move2')?.touched) {
                 <span class="text-danger fst-italic text">{{"pokemonFrm.error.noMove" | translate}}</span>
             }
+                </mat-form-field>
             </div>
-            <div class="form-group my-2">
-                <select id="move3" class="form-select" formControlName="move3">
-                    <option value="" selected>{{'pokemonFrm.move3' | translate}}</option>
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="w-100">
+                <mat-select id="move3" formControlName="move3">
+                    <mat-option value="" selected>{{'pokemonFrm.move3' | translate}}</mat-option>
                     @for (move of aMoves; track $index){
-                        <option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</option>
+                        <mat-option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
                     }
-                </select>
+                </mat-select>
                 @if (this.frm.get('move3')?.errors?.['required'] && this.frm.get('move3')?.touched) {
                 <span class="text-danger fst-italic text">{{"pokemonFrm.error.noMove" | translate}}</span>
             }
+                </mat-form-field>
             </div>
-            <div class="form-group my-2">
-                <select id="move4" class="form-select" formControlName="move4">
-                    <option value="" selected>{{'pokemonFrm.move4' | translate}}</option>
+            <div class="form-group">
+                <mat-form-field appearance="fill" class="w-100">
+                <mat-select id="move4" formControlName="move4">
+                    <mat-option value="" selected>{{'pokemonFrm.move4' | translate}}</mat-option>
                     @for (move of aMoves; track $index){
-                        <option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</option>
+                        <mat-option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
                     }
-                </select>
+                </mat-select>
                 @if (this.frm.get('move4')?.errors?.['required'] && this.frm.get('move4')?.touched) {
                 <span class="text-danger fst-italic text">{{"pokemonFrm.error.noMove" | translate}}</span>
             }
+                </mat-form-field>
             </div>
         </div>
     </div>
