@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
 @Pipe({
-  name: 'logoPath'
+  name: 'itemPath'
 })
-export class LogoPathPipe implements PipeTransform {
+export class ItemPathPipe implements PipeTransform {
 
   transform(fileName: string): string {
     if(!fileName){

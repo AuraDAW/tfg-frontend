@@ -7,11 +7,11 @@ import { environment } from '../../../environments/environment';
 export class PokemonShinyPathPipe implements PipeTransform {
 
   transform(fileName: string): string {
-      if(!fileName){
-        // if fileName does not exist, return empty string
-        return "";
-      }
-      return `${environment.pokemonShinyBasePath}${fileName}`;
+    if(!fileName){
+      // if fileName does not exist, return empty string
+      return "";
     }
+    return `${environment.pokemonShinyBasePath}${fileName}`;
+  }
 
 }

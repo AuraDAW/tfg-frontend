@@ -21,9 +21,11 @@ import { PokemonPathPipe } from '../../pipes/pokemonPath/pokemon-path.pipe';
 import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny-path.pipe';
 import { TypePathPipe } from '../../pipes/typePath/type-path.pipe';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @Component({
   selector: 'app-pokemon-frm',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe, TranslateModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe, TranslateModule,
+    MatAutocompleteModule],
   templateUrl: './pokemon-frm.component.html',
   styles: ``
 })
