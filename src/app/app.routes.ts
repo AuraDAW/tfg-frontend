@@ -62,6 +62,16 @@ export const routes: Routes = [
         path:"adminPokemon/:id",
         loadComponent:()=>import("./components/admin-pokemon/admin-pokemon.component").then(c=>c.AdminPokemonComponent)
     },
+        {
+        // create new move
+        path:"adminMoves",
+        loadComponent:()=>import("./components/admin-move/admin-move.component").then(c=>c.AdminMoveComponent)
+    },
+    {
+        // edit existing move
+        path:"adminMoves/:id",
+        loadComponent:()=>import("./components/admin-move/admin-move.component").then(c=>c.AdminMoveComponent)
+    },
     {
         // 404
         path:"**",

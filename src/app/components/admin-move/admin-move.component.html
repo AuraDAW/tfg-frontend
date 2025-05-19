@@ -1,0 +1,44 @@
+<form [formGroup]="frm" autocomplete="off" (submit)="saveMove()">
+    <div class="row">
+        <div class="col-12 text-center mt-3 d-flex justify-content-between">
+            <h2>Create Move</h2>
+            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Save</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row ">
+        <mat-form-field class="col-12">
+            <mat-label>Move English Name</mat-label>
+            <input matInput formControlName="name_en">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Move Spanish Name</mat-label>
+            <input matInput formControlName="name_es">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Move English Description</mat-label>
+            <input matInput formControlName="description_en">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Move Spanish Description</mat-label>
+            <input matInput formControlName="description_es">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option value="">Placeholder Type 1</mat-option>
+                @for (type of aTypes; track $index) {
+                <mat-option [value]="type.id">{{`types.name.${type.id}` | translate | titlecase}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Power</mat-label>
+            <input type="number" matInput formControlName="power">
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Accuracy</mat-label>
+            <input type="number" matInput formControlName="accuracy">
+        </mat-form-field>
+    </div>
+</form>

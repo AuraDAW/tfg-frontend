@@ -38,6 +38,24 @@ export class AbilitiesService {
     )
   }
 
+    postAbility(ability:Ability):Observable<{id:Number}>{
+      const headers = new HttpHeaders({
+        'Content-Type':'application/json'
+      })
+      return this.http.post<{id:Number}>(`${this.url}/abilities`,ability,{headers}).pipe(
+        catchError(this.handleError)
+      )
+    }
+    
+    updateAbility(ability:Ability):Observable<{message:string}>{
+      const headers= new HttpHeaders({
+        'Content-Type'  : 'application/json'
+      })
+      return this.http.put<{message:string}>(`${this.url}/abilities/${ability.id}`,ability, {headers}).pipe(
+        catchError(this.handleError)
+      )
+    }
+
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";
     if(err.error instanceof ErrorEvent ){

@@ -164,15 +164,15 @@ export class AdminpanelComponent {
         break;
       case 2:
         console.log("crear moves");
-        this.router.navigateByUrl('/adminPanel');
+        this.router.navigateByUrl('/adminMoves');
         break;
       case 3:
         console.log("crear items");
-        this.router.navigateByUrl('/adminPanel');
+        this.router.navigateByUrl('/adminItems');
         break;
       case 4:
         console.log("crear abilities");
-        this.router.navigateByUrl('/adminPanel');
+        this.router.navigateByUrl('/adminAbilities');
         break;
       case 5:
         console.log("crear users");
@@ -193,7 +193,7 @@ export class AdminpanelComponent {
       this.router.navigateByUrl(`/adminPokemon/${element.id}`)
     }else if(this.isMove(element)){
       console.log("its a move");
-      // this.router.navigateByUrl("/home");
+      this.router.navigateByUrl(`/adminMoves/${element.id}`);
     }else if(this.isItem(element)){
       console.log("it's an item");
       // this.router.navigateByUrl("/home");

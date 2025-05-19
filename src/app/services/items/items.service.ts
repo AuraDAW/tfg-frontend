@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Item } from '../../models/item';
@@ -27,6 +27,24 @@ export class ItemsService {
    */
   getItem(id:number):Observable<Item[]>{
     return this.http.get<Item[]>(`${this.url}/items/${id}`).pipe(
+      catchError(this.handleError)
+    )
+  }
+  
+  postItem(item: Item): Observable<{ id: Number }> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.post<{ id: Number }>(`${this.url}/items`, item, { headers }).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  updateItem(item: Item): Observable<{ message: string }> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    return this.http.put<{ message: string }>(`${this.url}/items/${item.id}`, item, { headers }).pipe(
       catchError(this.handleError)
     )
   }
