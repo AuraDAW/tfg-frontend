@@ -1,36 +1,37 @@
-import { CommonModule, NgStyle } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Router, ActivatedRoute } from '@angular/router';
+import { forkJoin, firstValueFrom } from 'rxjs';
+import Swal from 'sweetalert2';
+import { PokemonData } from '../../models/pokemon-data';
 import { PokemonTeam } from '../../models/pokemon-team';
 import { Team } from '../../models/team';
-import { TeamsService } from '../../services/teams/teams.service';
-import { PokemonTeamService } from '../../services/pokemon-team/pokemon-team.service';
-import { firstValueFrom, forkJoin, Observable } from 'rxjs';
-import { PokemonData } from '../../models/pokemon-data';
-import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.service';
-import { ItemsService } from '../../services/items/items.service';
 import { AbilitiesService } from '../../services/abilities/abilities.service';
+import { ItemsService } from '../../services/items/items.service';
 import { MovesService } from '../../services/moves/moves.service';
+import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.service';
+import { PokemonTeamService } from '../../services/pokemon-team/pokemon-team.service';
+import { TeamsService } from '../../services/teams/teams.service';
+import { TypesService } from '../../services/types/types.service';
+import { DialogExportComponent } from '../dialog-export/dialog-export.component';
 import { DialogFormComponent } from '../dialog-form/dialog-form.component';
-import { MatDialog } from '@angular/material/dialog';
-import Swal from 'sweetalert2';
+import { CommonModule, NgStyle } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { PokemonPathPipe } from '../../pipes/pokemonPath/pokemon-path.pipe';
 import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny-path.pipe';
-import { TypesService } from '../../services/types/types.service';
 import { TypePathPipe } from '../../pipes/typePath/type-path.pipe';
-import { TranslateModule } from '@ngx-translate/core';
-import { DialogExportComponent } from '../dialog-export/dialog-export.component';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
-  selector: 'app-team-builder',
+  selector: 'app-team-viewer',
   imports: [CommonModule, NgStyle, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe,TranslateModule],
-  templateUrl: './team-builder.component.html',
+  templateUrl: './team-viewer.component.html',
   styles: ``
 })
-export class TeamBuilderComponent {
-  // definir variables
-  private userId!:number;
-  private teamId!:number
+export class TeamViewerComponent {
+// definir variables
+  private teamId!:number;
+  public role!:number;
   constructor(private dialog: MatDialog) {}
   // definir arrays para rellenar con datos de la BD
   public aTeams:Team[]=[];
@@ -49,13 +50,16 @@ export class TeamBuilderComponent {
   private serviceTypes = inject(TypesService)
   private serviceItems = inject(ItemsService)
   private serviceMoves = inject(MovesService)
+  private serviceAuth = inject(AuthService)
 
  ngOnInit(){
     this.activatedRoute.paramMap.subscribe(params=>{
-      this.userId = parseInt(params.get("userId")!);
       this.teamId = parseInt(params.get("teamId")!);
     })
     this.obtainTeamInfo();
+    if (this.serviceAuth.isLoggedIn()) {
+      this.role = this.serviceAuth.getRoleFromToken()!;
+    }
   }
 
   /**
@@ -158,49 +162,8 @@ export class TeamBuilderComponent {
     });
   }
 
-  /**
-   * @description Redirects to the form to add a new Pokemon
-   */
-  addPokemon(){
-    this.router.navigateByUrl(`/pokemonFrm/${this.teamId}`);
-  }
-
-  /**
-   * @description Shows a modal window with the team's name and description, so the user can change it.
-   */
-  editTeam(){
-    const dialogRef = this.dialog.open(DialogFormComponent, {
-      data:{name:this.aTeams[0].name,description:this.aTeams[0].description}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-          // if result exists, execute if (should always execute since you cannot submit without having validated and data is required for validation)
-          if (result) {
-            // must add all data to interface even if method will only care about name and description
-            const team:Team={
-              id:this.aTeams[0].id,
-              name:result.name,
-              description:result.description,
-              user_id:this.aTeams[0].user_id,
-              pokemon_1:this.aTeams[0].pokemon_1,
-              pokemon_2:this.aTeams[0].pokemon_2,
-              pokemon_3:this.aTeams[0].pokemon_3,
-              pokemon_4:this.aTeams[0].pokemon_4,
-              pokemon_5:this.aTeams[0].pokemon_5,
-              pokemon_6:this.aTeams[0].pokemon_6 
-            }
-            // console.log(team);
-            this.serviceTeams.updatePokemonTeam(team).subscribe({
-              next:(data)=>{
-                Swal.fire("The team has been updated","","success")
-                this.router.navigate([this.router.url]);
-              },
-              error:(err)=>{
-                console.log(err);
-              }
-            })
-        }
-      });
+  favoriteTeam(){
+    console.log("equipo super favorito");
   }
 
   async exportTeam() {
@@ -262,5 +225,3 @@ this.aExport.push(exportString);
     };
   };
 }
-
-

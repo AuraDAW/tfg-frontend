@@ -26,6 +26,12 @@ export const routes: Routes = [
         canActivate:[authGuard]
     },
     {
+        // team viewer de un equipo existente (para ver)
+        path:"teamViewer/:teamId",
+        loadComponent:()=>import("./components/team-viewer/team-viewer.component").then(c=>c.TeamViewerComponent),
+        canActivate:[authGuard]
+    },
+    {
         // añadiendo pokemon a un equipo
         path:"pokemonFrm/:teamId",
         loadComponent:()=>import("./components/pokemon-frm/pokemon-frm.component").then(c=>c.PokemonFrmComponent),
@@ -50,52 +56,62 @@ export const routes: Routes = [
     {
         // admin panel
         path:"adminPanel",
-        loadComponent:()=>import("./components/adminpanel/adminpanel.component").then(c=>c.AdminpanelComponent)
+        loadComponent:()=>import("./components/adminpanel/adminpanel.component").then(c=>c.AdminpanelComponent),
+        canActivate:[authGuard]
     },
     {
         // create new pokemonData
         path:"adminPokemon",
-        loadComponent:()=>import("./components/admin-pokemon/admin-pokemon.component").then(c=>c.AdminPokemonComponent)
+        loadComponent:()=>import("./components/admin-pokemon/admin-pokemon.component").then(c=>c.AdminPokemonComponent),
+        canActivate:[authGuard]
     },
     {
         // edit existing pokemonData
         path:"adminPokemon/:id",
-        loadComponent:()=>import("./components/admin-pokemon/admin-pokemon.component").then(c=>c.AdminPokemonComponent)
+        loadComponent:()=>import("./components/admin-pokemon/admin-pokemon.component").then(c=>c.AdminPokemonComponent),
+        canActivate:[authGuard]
     },
     {
         // create new move
         path:"adminMoves",
-        loadComponent:()=>import("./components/admin-move/admin-move.component").then(c=>c.AdminMoveComponent)
+        loadComponent:()=>import("./components/admin-move/admin-move.component").then(c=>c.AdminMoveComponent),
+        canActivate:[authGuard]
     },
     {
         // edit existing move
         path:"adminMoves/:id",
-        loadComponent:()=>import("./components/admin-move/admin-move.component").then(c=>c.AdminMoveComponent)
+        loadComponent:()=>import("./components/admin-move/admin-move.component").then(c=>c.AdminMoveComponent),
+        canActivate:[authGuard]
     },
     {
         // create new item
         path:"adminItems",
-        loadComponent:()=>import("./components/admin-item/admin-item.component").then(c=>c.AdminItemComponent)
+        loadComponent:()=>import("./components/admin-item/admin-item.component").then(c=>c.AdminItemComponent),
+        canActivate:[authGuard]
     },
     {
         // edit existing item
         path:"adminItems/:id",
-        loadComponent:()=>import("./components/admin-item/admin-item.component").then(c=>c.AdminItemComponent)
+        loadComponent:()=>import("./components/admin-item/admin-item.component").then(c=>c.AdminItemComponent),
+        canActivate:[authGuard]
     },
     {
         // create new ability
         path:"adminAbilities",
-        loadComponent:()=>import("./components/admin-ability/admin-ability.component").then(c=>c.AdminAbilityComponent)
+        loadComponent:()=>import("./components/admin-ability/admin-ability.component").then(c=>c.AdminAbilityComponent),
+        canActivate:[authGuard]
     },
     {
         // edit existing ability
         path:"adminAbilities/:id",
-        loadComponent:()=>import("./components/admin-ability/admin-ability.component").then(c=>c.AdminAbilityComponent)
+        loadComponent:()=>import("./components/admin-ability/admin-ability.component").then(c=>c.AdminAbilityComponent),
+        canActivate:[authGuard]
     },
     {
         // add possible abilities and moves to a pokemon
         path:"adminAbilitiesMovesPokemon",
-        loadComponent:()=>import("./components/add-abilities-moves-pokemon/add-abilities-moves-pokemon.component").then(c=>c.AddAbilitiesMovesPokemonComponent)
+        loadComponent:()=>import("./components/add-abilities-moves-pokemon/add-abilities-moves-pokemon.component").then(c=>c.AddAbilitiesMovesPokemonComponent),
+        canActivate:[authGuard]
     },
     {
         // 404

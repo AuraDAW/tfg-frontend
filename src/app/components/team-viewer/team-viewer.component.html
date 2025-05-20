@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-12 mt-3 d-flex flex-column justify-content-between">
+        <h2>{{aTeams[0].name}}</h2>
+        <span>{{aTeams[0].description}}</span>
+    </div>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-12">
+        @if(role==2){
+            <button class="btn btn-success mx-2" (click)="favoriteTeam()">Favorite</button>
+        }
+        <button class="btn btn-success mx-2" (click)="exportTeam()">{{"teamBuilder.export" | translate}}</button>
+        @for (pokemonData of aFullPokemonTeam; track $index) {
+        <div class="border my-2 shadow-sm">
+            <div class="row">
+                <div class="col-2 text-center my-2">
+                    @if (pokemonData.teamInfo.is_shiny) {
+                        <img [src]="pokemonData.baseData.image_shiny | pokemonShinyPath" class="img-fluid mx-auto d-block">
+                    }@else{
+                        <img [src]="pokemonData.baseData.image | pokemonPath" class="img-fluid mx-auto d-block">
+                    }
+                    <div class="d-inline-flex justify-content-center align-items-center">
+                        <option selected>{{`pokemonData.name.${pokemonData.baseData.id}` | translate | titlecase}}</option>
+                        <img [src]="pokemonData.teraTypeImage | typePath" class="img-fluid d-block" style="width: 30px; height: 30px;">
+                    </div>
+                </div>
+                <div class="col-4 my-2">
+                    <div class="form-group text-center">
+                        <small>{{"teamBuilder.ability" | translate}}</small>
+                        <select id="ability" class="form-select" disabled>
+                            <option selected>{{`abilities.name.${pokemonData.teamInfo.ability}` | translate | titlecase}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group text-center">
+                        <small>{{"teamBuilder.item" | translate}}</small>
+                        <select id="item" class="form-select" disabled>
+                            <option selected>{{`items.name.${pokemonData.teamInfo.item}` | translate | titlecase}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-6 my-2">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group text-center">
+                                <small>{{"teamBuilder.move1" | translate}}</small>
+                                <select id="move1" class="form-select" disabled>
+                                    <option selected>{{`moves.name.${pokemonData.teamInfo.move_1}` | translate | titlecase}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group text-center">
+                                <small>{{"teamBuilder.move2" | translate}}</small>
+                                <select id="move2" class="form-select" disabled>
+                                    <option selected>{{`moves.name.${pokemonData.teamInfo.move_2}` | translate | titlecase}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group text-center">
+                                <small>{{"teamBuilder.move3" | translate}}</small>
+                                <select id="move4" class="form-select" disabled>
+                                    <option selected>{{`moves.name.${pokemonData.teamInfo.move_3}` | translate | titlecase}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group text-center">
+                                <small>{{"teamBuilder.move4" | translate}}</small>
+                                <select id="move4" class="form-select" disabled>
+                                    <option selected>{{`moves.name.${pokemonData.teamInfo.move_4}` | translate | titlecase}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @empty{
+        <p class="text-center">{{"teamBuilder.emptyTeam" | translate}}</p>
+    }
+</div>
+</div>

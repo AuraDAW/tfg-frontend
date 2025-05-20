@@ -43,7 +43,6 @@ export class MenuComponent {
       this.serviceAuth.startTokenExpirationWatcher();
       this.role = this.serviceAuth.getRoleFromToken()!;
     }
-    console.log("role", this.role);
   }
   /**
    * @description Opens the "help" dialog window.

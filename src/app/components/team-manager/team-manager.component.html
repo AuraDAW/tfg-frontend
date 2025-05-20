@@ -26,9 +26,13 @@
                     <td>{{team.name}}</td>
                     <td>{{team.description}}</td>
                     <td class="">
+                        @if(userRole==2){
+                            <a class="pointer m-2" [ngStyle]="{color: '#1f516f'}" (click)="viewTeam(team)"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        }@else{
                         <a class="pointer m-2" [ngStyle]="{color: '#1f516f'}" (click)="editTeam(team)"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a class="pointer m-2" [ngStyle]="{color: '#e15639'}" (click)="deleteTeam(team)"><i class="fa-solid fa-trash"></i></a>
-                    </td>
+                    }
+                </td>
                 </tr>
             }@empty{
                 <tr>

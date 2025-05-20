@@ -111,6 +111,10 @@ export class TeamManagerComponent {
     this.router.navigateByUrl(`/teamBuilder/${team.user_id}/${team.id}`)
   }
 
+  viewTeam(team:Team){
+    this.router.navigateByUrl(`/teamViewer/${team.id}`)
+  }
+
   /**
    * @description Shows a modal window (sweetAlert), on submit it deletes the team whose delete icon was clicked.
    * @param team The team to delete.
