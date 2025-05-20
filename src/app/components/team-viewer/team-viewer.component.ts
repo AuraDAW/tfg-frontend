@@ -32,6 +32,7 @@ export class TeamViewerComponent {
 // definir variables
   private teamId!:number;
   public role!:number;
+  public isFavoritedTeam:boolean=false;
   constructor(private dialog: MatDialog) {}
   // definir arrays para rellenar con datos de la BD
   public aTeams:Team[]=[];
@@ -60,6 +61,9 @@ export class TeamViewerComponent {
     if (this.serviceAuth.isLoggedIn()) {
       this.role = this.serviceAuth.getRoleFromToken()!;
     }
+    this.serviceTeams.isFavorited(this.teamId).subscribe(isFav=>{
+      this.isFavoritedTeam = isFav;
+    });
   }
 
   /**
@@ -163,7 +167,14 @@ export class TeamViewerComponent {
   }
 
   favoriteTeam(){
-    console.log("equipo super favorito");
+    this.serviceTeams.favoriteTeam(this.teamId).subscribe({
+      next:(data)=>{
+        Swal.fire("The team has been marked as favorite","","success");
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
   }
 
   async exportTeam() {

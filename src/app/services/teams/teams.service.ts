@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Team } from '../../models/team';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -75,6 +75,22 @@ private url=environment.apiUrl;
       catchError(this.handleError)
     )
   }
+
+  favoriteTeam(teamId:number):Observable<{message:string}>{
+    return this.http.get<{message:string}>(`${this.url}/teams/favoriteTeam/${teamId}`).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  isFavorited(teamId: number): Observable<boolean> {
+  return this.getTeam(teamId).pipe(
+    map(data => data[0].favorited == true),
+    catchError(err => {
+      console.error(err);
+      return of(false); // Default to false on error
+    })
+  );
+}
 
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";

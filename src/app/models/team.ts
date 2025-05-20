@@ -9,4 +9,5 @@ export interface Team {
     pokemon_4?:number,
     pokemon_5?:number,
     pokemon_6?:number,
+    favorited?:boolean,
 }
