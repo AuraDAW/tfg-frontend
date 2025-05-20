@@ -5,7 +5,7 @@ import { PokemonTeam } from '../../models/pokemon-team';
 import { Team } from '../../models/team';
 import { TeamsService } from '../../services/teams/teams.service';
 import { PokemonTeamService } from '../../services/pokemon-team/pokemon-team.service';
-import { forkJoin, Observable } from 'rxjs';
+import { firstValueFrom, forkJoin, Observable } from 'rxjs';
 import { PokemonData } from '../../models/pokemon-data';
 import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.service';
 import { ItemsService } from '../../services/items/items.service';
@@ -19,6 +19,7 @@ import { PokemonShinyPathPipe } from '../../pipes/pokemonShinyPath/pokemon-shiny
 import { TypesService } from '../../services/types/types.service';
 import { TypePathPipe } from '../../pipes/typePath/type-path.pipe';
 import { TranslateModule } from '@ngx-translate/core';
+import { DialogExportComponent } from '../dialog-export/dialog-export.component';
 
 @Component({
   selector: 'app-team-builder',
@@ -37,6 +38,7 @@ export class TeamBuilderComponent {
   public aPokemonTeamInfo:PokemonTeam[]=[];
   public aPokemonData:PokemonData[]=[];
   public aFullPokemonTeam: { teamInfo: any, baseData: any,teraTypeImage: string }[] = [];
+  public aExport:String[]=[];
   // inyectar servicios
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -45,6 +47,8 @@ export class TeamBuilderComponent {
   private servicePokemonData = inject(PokemonDataService)
   private serviceAbilities = inject(AbilitiesService)
   private serviceTypes = inject(TypesService)
+  private serviceItems = inject(ItemsService)
+  private serviceMoves = inject(MovesService)
 
  ngOnInit(){
     this.activatedRoute.paramMap.subscribe(params=>{
@@ -199,19 +203,35 @@ export class TeamBuilderComponent {
       });
   }
 
-  exportTeam() {
-    const test = this.generateShowdownTeam(this.aFullPokemonTeam);
-    // console.log(test);
+  async exportTeam() {
+    await this.generateShowdownTeam(this.aFullPokemonTeam);
+    console.log(this.aExport);
+    const dialogRef = this.dialog.open(DialogExportComponent,{
+      data:this.aExport
+    });
+    this.aExport = [];
   }
 
-  private generateShowdownTeam = (fullPokemonTeamData: any[]) => {
-    return fullPokemonTeamData.map(pokemonData => {
-      // Extract base data and team data
-      const baseData = pokemonData.baseData;
-      const teamInfo = pokemonData.teamInfo;
-      let ability;
-
-      // Construct EVs from teamInfo
+  private generateShowdownTeam = async (fullPokemonTeamData: any[]) => {
+    for (let index = 0; index < fullPokemonTeamData.length; index++) {
+      // first, we must obtain ability, item, move, teratype names from their ids
+      const baseData = fullPokemonTeamData[index].baseData;
+      const teamInfo = fullPokemonTeamData[index].teamInfo;
+      // call to service and make it async with firstValueFrom, so it always has all the names before trying to format
+      const abilityData = await firstValueFrom(this.serviceAbilities.getAbility(teamInfo.ability));
+      const abilityName = abilityData[0].name_en;
+      const itemData = await firstValueFrom(this.serviceItems.getItem(teamInfo.item));
+      const itemName = itemData[0].name_en;
+      const teratypeData:{[key: string]: any} = await firstValueFrom(this.serviceTypes.getType(teamInfo.tera_type));
+      const teratypeName = teratypeData[0].name_en;
+      const move1Data = await firstValueFrom(this.serviceMoves.getMove(teamInfo.move_1));
+      const move1Name = move1Data[0].name_en;
+      const move2Data = await firstValueFrom(this.serviceMoves.getMove(teamInfo.move_2));
+      const move2Name = move2Data[0].name_en;
+      const move3Data = await firstValueFrom(this.serviceMoves.getMove(teamInfo.move_3));
+      const move3Name = move3Data[0].name_en;
+      const move4Data = await firstValueFrom(this.serviceMoves.getMove(teamInfo.move_4));
+      const move4Name = move4Data[0].name_en;
       const evs = [
         { stat: 'HP', value: teamInfo.ev_hp },
         { stat: 'Atk', value: teamInfo.ev_atk },
@@ -220,29 +240,66 @@ export class TeamBuilderComponent {
         { stat: 'SpD', value: teamInfo.ev_spdef },
         { stat: 'Spe', value: teamInfo.ev_spd }
       ].filter(ev => ev.value > 0); // Only include EVs with non-zero values
-
-      // Get the moves (from move ids)
-      const moves = [
-        pokemonData.baseData.name_en === "Cinccino" ? "Tail Slap" : "Move 1",  // Example move lookup
-        pokemonData.baseData.name_en === "Cinccino" ? "Knock Off" : "Move 2",
-        "Move 3", // Default for now
-        "Move 4"  // Default for now
-      ];
-
-      const abilityId = pokemonData.teamInfo.ability;
-      
-      // Get item from teamInfo (Example: 3 could be mapped to "Focus Sash")
-      const item = "Focus Sash"; // This should be mapped from item ID 3
-
-       console.log("ability right before formatting data",ability);
+      const ivs = [
+        { stat: 'HP', value: teamInfo.iv_hp },
+        { stat: 'Atk', value: teamInfo.iv_atk },
+        { stat: 'Def', value: teamInfo.iv_def },
+        { stat: 'SpA', value: teamInfo.iv_spatk },
+        { stat: 'SpD', value: teamInfo.iv_spdef },
+        { stat: 'Spe', value: teamInfo.iv_spd }
+      ].filter(iv => iv.value < 31); // Only include IVs with values lower than 31 
       // Format the Pokemon's data into Showdown format
-      return `${baseData.name_en} @ ${item}
-Ability: ${ability}
+      const exportString = `${baseData.name_en} @ ${itemName}
+Ability: ${abilityName}
+Tera Type: ${teratypeName}
 Level: ${teamInfo.level}
 EVs: ${evs.map(ev => `${ev.value} ${ev.stat}`).join(' / ')}
-Serious Nature
-${moves.map(move => `- ${move}`).join('\n')}\n`;
-    }).join('\n');
+IVs: ${ivs.map(iv => `${iv.value} ${iv.stat}`).join(' / ')}
+- ${move1Name}
+- ${move2Name}
+- ${move3Name}
+- ${move4Name}`
+this.aExport.push(exportString);
+    };
+//     return fullPokemonTeamData.map(pokemonData => {
+//       // Extract base data and team data
+//       const baseData = pokemonData.baseData;
+//       const teamInfo = pokemonData.teamInfo;
+//       let ability;
+
+//       // Construct EVs from teamInfo
+//       const evs = [
+//         { stat: 'HP', value: teamInfo.ev_hp },
+//         { stat: 'Atk', value: teamInfo.ev_atk },
+//         { stat: 'Def', value: teamInfo.ev_def },
+//         { stat: 'SpA', value: teamInfo.ev_spatk },
+//         { stat: 'SpD', value: teamInfo.ev_spdef },
+//         { stat: 'Spe', value: teamInfo.ev_spd }
+//       ].filter(ev => ev.value > 0); // Only include EVs with non-zero values
+
+//       // Get the moves (from move ids)
+//       const moves = [
+//         pokemonData.baseData.name_en === "Cinccino" ? "Tail Slap" : "Move 1",  // Example move lookup
+//         pokemonData.baseData.name_en === "Cinccino" ? "Knock Off" : "Move 2",
+//         "Move 3", // Default for now
+//         "Move 4"  // Default for now
+//       ];
+
+//       const abilityId = pokemonData.teamInfo.ability;
+
+//       // Get item from teamInfo (Example: 3 could be mapped to "Focus Sash")
+//       const item = "Focus Sash"; // This should be mapped from item ID 3
+
+//       console.log("ability right before formatting data", ability);
+//       // Format the Pokemon's data into Showdown format
+//       return `${baseData.name_en} @ ${item}
+// Ability: ${ability}
+// Level: ${teamInfo.level}
+// EVs: ${evs.map(ev => `${ev.value} ${ev.stat}`).join(' / ')}
+// Serious Nature
+// ${moves.map(move => `- ${move}`).join('\n')}\n`;
+//     }).join('\n');
   };
 }
+
 

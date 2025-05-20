@@ -30,7 +30,7 @@ import { AutocompleteSelectComponent } from "../autocomplete-select/autocomplete
 @Component({
   selector: 'app-pokemon-frm',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe, TranslateModule,
-    MatInputModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, AutocompleteSelectComponent],
+    MatInputModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule],
   templateUrl: './pokemon-frm.component.html',
   styles: ``
 })
@@ -461,9 +461,5 @@ export class PokemonFrmComponent {
 
       this.aStatbar.push(stat)
     }
-  }
-  // Getter to cast the control to FormControl
-  get pokemonControl(): FormControl {
-    return this.frm.get('pokemonId') as FormControl;
   }
 }

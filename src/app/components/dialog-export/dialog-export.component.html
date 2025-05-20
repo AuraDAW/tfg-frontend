@@ -1,0 +1,10 @@
+<h1 mat-dialog-title class="text-center">Exported Team</h1>
+<mat-dialog-content class="mat-typography">
+    @for (item of arrayTest; track $index) {
+        <pre>{{item}}</pre>
+        <br>
+    }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
