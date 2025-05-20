@@ -93,6 +93,11 @@ export const routes: Routes = [
         loadComponent:()=>import("./components/admin-ability/admin-ability.component").then(c=>c.AdminAbilityComponent)
     },
     {
+        // add possible abilities and moves to a pokemon
+        path:"adminAbilitiesMovesPokemon",
+        loadComponent:()=>import("./components/add-abilities-moves-pokemon/add-abilities-moves-pokemon.component").then(c=>c.AddAbilitiesMovesPokemonComponent)
+    },
+    {
         // 404
         path:"**",
         loadComponent:()=>import("./components/c404/c404.component").then(c=>c.C404Component)

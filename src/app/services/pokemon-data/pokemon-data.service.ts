@@ -4,6 +4,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, catchError, throwError } from 'rxjs';
 import { Move } from '../../models/move';
 import { environment } from '../../../environments/environment';
+import { PokemonHasAbility } from '../../models/pokemon-has-ability';
+import { PokemonLearnsMove } from '../../models/pokemon-learns-move';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +58,24 @@ private url=environment.apiUrl;
       'Content-Type'  : 'application/json'
     })
     return this.http.put<{message:string}>(`${this.url}/pokemonData/${pokemon.id}`,pokemon, {headers}).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  addAbilitiesToPokemon(data:PokemonHasAbility[]):Observable<any>{
+    const headers= new HttpHeaders({
+      'Content-Type'  : 'application/json'
+    })
+    return this.http.post(`${this.url}/pokemonData/addAbilities`,data,{headers}).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  addMovesToPokemon(data:PokemonLearnsMove[]):Observable<any>{
+    const headers= new HttpHeaders({
+      'Content-Type'  : 'application/json'
+    })
+    return this.http.post(`${this.url}/pokemonData/addMoves`,data,{headers}).pipe(
       catchError(this.handleError)
     )
   }
