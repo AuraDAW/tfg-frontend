@@ -205,7 +205,6 @@ export class TeamBuilderComponent {
 
   async exportTeam() {
     await this.generateShowdownTeam(this.aFullPokemonTeam);
-    console.log(this.aExport);
     const dialogRef = this.dialog.open(DialogExportComponent,{
       data:this.aExport
     });
@@ -258,7 +257,7 @@ IVs: ${ivs.map(iv => `${iv.value} ${iv.stat}`).join(' / ')}
 - ${move1Name}
 - ${move2Name}
 - ${move3Name}
-- ${move4Name}`
+- ${move4Name}\n\n`
 this.aExport.push(exportString);
     };
 //     return fullPokemonTeamData.map(pokemonData => {

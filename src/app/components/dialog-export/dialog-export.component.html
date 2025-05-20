@@ -1,10 +1,14 @@
 <h1 mat-dialog-title class="text-center">Exported Team</h1>
 <mat-dialog-content class="mat-typography">
-    @for (item of arrayTest; track $index) {
-        <pre>{{item}}</pre>
-        <br>
+  <div #inputTarget>
+  @for (item of arrayTest; track $index) {
+        <p style="white-space: pre-line;">{{item}}</p>
     }
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
+  <button mat-button (click)="copyClipboard(inputTarget)">Copy to Clipboard</button>
   <button mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>
+
+<!-- ies fidiana o lope de vega, aula software libre -->
