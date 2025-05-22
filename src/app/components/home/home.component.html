@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-12 text-center mt-3">
         <h1>{{"home.main.title2" | translate}}</h1>
-        <div class="d-flex justify-content-around">
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-around align-items-center align-items-lg-center align-items-lg-stretch">
             <div class="card my-2" style="width: 18rem;">
                 <img [src]="'smogon_overused.png'| logoPath" class="card-img-top img-fluid h-50" alt="...">
                 <div class="card-body">
@@ -47,7 +47,7 @@
 <div class="row">
   <div class="col-12 text-center mt-3">
       <h1>{{"home.main.title3" | translate}}</h1>
-      <div class="d-flex justify-content-around">
+      <div class="d-flex flex-column flex-lg-row justify-content-lg-around align-items-center align-items-lg-center align-items-lg-stretch">
           <div class="card my-2" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">{{'home.usefulLinks.title1' | translate}}</h5>
@@ -69,6 +69,25 @@
                 <a href="https://www.smogon.com/forums/threads/sv-ou-speed-tiers.3711207/" target="_blank" class="btn btn-primary stretched-link">Link</a>
               </div>
             </div>
+      </div>
+  </div>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col-12 text-center mt-3">
+      <h1>Team Of The Week</h1>
+      <div class="d-flex flex-column flex-lg-row justify-content-lg-around align-items-center align-items-lg-center">
+        @for (team of aTeamsWeek; track $index) {
+          <div class="card my-2" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{team.name}}</h5>
+              <p class="card-text">{{team.description}}</p>
+              <p class="card-text">Made By: {{userNamesMap.get(team.id!)}}</p>
+              <a routerLink="/teamViewer/{{team.id}}" href="" target="_blank" class="btn btn-primary stretched-link">Link</a>
+            </div>
+          </div>
+        }
       </div>
   </div>
 </div>

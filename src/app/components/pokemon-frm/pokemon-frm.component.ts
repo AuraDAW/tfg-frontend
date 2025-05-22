@@ -143,6 +143,7 @@ export class PokemonFrmComponent {
     if(this.id){ 
       this.servicePokemonTeam.getPokemonTeamId(this.id).subscribe({
         next:(data)=>{
+          console.log(data);
           // set all values in the form
           this.frm.get("pokemonId")?.setValue(data[0].id_pokemon);
           this.frm.get("ability")?.setValue(data[0].ability);
@@ -166,6 +167,8 @@ export class PokemonFrmComponent {
           this.frm.get("evdef")?.setValue(data[0].ev_def);
           this.frm.get("evspdef")?.setValue(data[0].ev_spdef);
           this.frm.get("evpd")?.setValue(data[0].ev_spd);
+          console.log(this.frm.get("pokemonId")?.value);
+          console.log(this.frm.get("move4")?.value);
           this.obtainPokemonDataId();
         }
       })
@@ -330,7 +333,7 @@ export class PokemonFrmComponent {
     this.serviceItems.getItems().subscribe({
       next:(data)=>{
         this.aItems=data;
-        console.log("items",this.aItems);
+        // console.log("items",this.aItems);
       },
       error:(err)=>{
         console.log(err);

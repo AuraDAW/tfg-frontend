@@ -9,6 +9,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { DialogHelpComponent } from '../dialog-help/dialog-help.component';
 import { Observable } from 'rxjs';
+import { TeamsService } from '../../services/teams/teams.service';
+import { UsersService } from '../../services/users/users.service';
 @Component({
   selector: 'app-menu',
   imports: [RouterLink, RouterLinkActive, MatSlideToggleModule, MatButtonModule, MatMenuModule, CommonModule, TranslateModule],
@@ -20,9 +22,12 @@ export class MenuComponent {
   public language: 'en' | 'es' = 'en';
   public isAuthenticated!:boolean;
   public userId!:number;
-  private serviceAuth = inject(AuthService)
-  private router = inject(Router)
   public role!:number
+
+  private router = inject(Router)
+  public serviceAuth = inject(AuthService)
+  private serviceTeams = inject(TeamsService)
+  private serviceUsers = inject(UsersService)
 
   constructor(private translate: TranslateService, private dialog: MatDialog) {
     this.translate.addLangs(['en', 'es']); //adds possible translations
@@ -32,18 +37,23 @@ export class MenuComponent {
     this.translate.use(this.language); 
   }
   
+  ngOnInit(){
+    this.isLoggedIn$ = this.serviceAuth.isLoggedIn$;
+    if (this.serviceAuth.isLoggedIn()) {
+      this.serviceAuth.startTokenExpirationWatcher();
+      //subscribe to the role observable to auto update role variable whenever user logs in or out
+      this.serviceAuth.role$.subscribe(role => {
+        console.log("role updated");
+        this.role = role!;
+    });
+    }
+  }
   toggleLanguage(isSpanish: boolean) {
     this.language = isSpanish ? 'es' : 'en';
     this.translate.use(this.language);
     localStorage.setItem('language', this.language); // Optional: remember language
   }
-  ngOnInit(){
-    this.isLoggedIn$ = this.serviceAuth.isLoggedIn$;
-    if (this.serviceAuth.isLoggedIn()) {
-      this.serviceAuth.startTokenExpirationWatcher();
-      this.role = this.serviceAuth.getRoleFromToken()!;
-    }
-  }
+  
   /**
    * @description Opens the "help" dialog window.
    */
@@ -59,5 +69,6 @@ export class MenuComponent {
     this.serviceAuth.logout();
     this.router.navigateByUrl("/home")
   }
+  
 
 }

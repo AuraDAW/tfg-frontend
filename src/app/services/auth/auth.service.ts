@@ -18,6 +18,8 @@ export class AuthService {
   private http = inject(HttpClient);
   private loggedIn = new BehaviorSubject<boolean>(this.isLoggedIn());
   public isLoggedIn$ = this.loggedIn.asObservable();
+  private roleSubject = new BehaviorSubject<number | null>(this.getRoleFromToken());
+  public role$: Observable<number | null> = this.roleSubject.asObservable();
   private router = inject(Router)
   constructor(private translate: TranslateService) {}
 
@@ -58,8 +60,11 @@ export class AuthService {
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
 
     this.loggedIn.next(true); //notify to observable that user is logged in (because token was just set)
-    // console.log('Expires at:', new Date(expiresAt).toLocaleString());
     this.startTokenExpirationWatcher();
+    // notify to role observable with the user's role
+    const role = this.getRoleFromToken();
+    console.log("role after logging",role);
+    this.roleSubject.next(role);
   }
 
   /**

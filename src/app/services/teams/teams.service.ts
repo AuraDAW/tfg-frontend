@@ -92,6 +92,14 @@ private url=environment.apiUrl;
   );
 }
 
+getFavoritedTeams():Observable<Team[]>{
+    return this.http.get<Team[]>(`${this.url}/teams/favoriteTeam`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  
+
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";
     if(err.error instanceof ErrorEvent ){

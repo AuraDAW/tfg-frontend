@@ -26,7 +26,7 @@
             <mat-select id="pokemonId" formControlName="pokemonId" (selectionChange)="onChangeEvent($event)" #inputElement>
                 <mat-option value="" selected>{{'pokemonFrm.select.pokemon' | translate}}</mat-option>
                 @for (data of aPokemonData; track $index){
-                <mat-option value={{data.id}}>{{`pokemonData.name.${data.id}` | translate | titlecase}}</mat-option>
+                <mat-option [value]="data.id">{{`pokemonData.name.${data.id}` | translate | titlecase}}</mat-option>
                 }
             </mat-select>
             @if (this.frm.get('pokemonId')?.errors?.['required'] && this.frm.get('pokemonId')?.touched) {
@@ -62,7 +62,7 @@
             <mat-select id="ability" formControlName="ability">
                 <mat-option value="" selected>{{'pokemonFrm.select.ability' | translate}}</mat-option>
                 @for (ability of aAbilities; track $index) {
-                     <mat-option value={{ability.id}}>{{`abilities.name.${ability.id}` | translate | titlecase}}</mat-option>
+                     <mat-option [value]="ability.id">{{`abilities.name.${ability.id}` | translate | titlecase}}</mat-option>
                 }
             </mat-select>
             @if (this.frm.get('ability')?.errors?.['required'] && this.frm.get('ability')?.touched) {
@@ -76,7 +76,7 @@
             <mat-select id="item" formControlName="item">
                 <mat-option value="" selected>{{'pokemonFrm.select.item' | translate}}</mat-option>
                 @for(item of aItems;track $index){
-                    <mat-option value={{item.id}}>{{`items.name.${item.id}` | translate | titlecase}}</mat-option>
+                    <mat-option [value]="item.id">{{`items.name.${item.id}` | translate | titlecase}}</mat-option>
                 }
             </mat-select>
             @if (this.frm.get('item')?.errors?.['required'] && this.frm.get('item')?.touched) {
@@ -97,7 +97,7 @@
                 <mat-select id="teratype" formControlName="teratype">
                     <mat-option value="" selected>{{'pokemonFrm.select.tera' | translate}}</mat-option>
                     @for (type of aTypes; track $index){
-                        <mat-option value={{type.id}}>{{`types.name.${type.id}` | translate | titlecase}}</mat-option>
+                        <mat-option [value]="type.id">{{`types.name.${type.id}` | translate | titlecase}}</mat-option>
                     }
                 </mat-select>
                 @if (this.frm.get('teratype')?.errors?.['required'] && this.frm.get('teratype')?.touched) {
@@ -120,7 +120,7 @@
                 <mat-select id="move1" formControlName="move1">
                     <mat-option value="" selected>{{'pokemonFrm.move1' | translate}}</mat-option>
                     @for (move of aMoves; track $index){
-                        <mat-option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
+                        <mat-option [value]="move.id">{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
                     }
                 </mat-select>
                 @if (this.frm.get('move1')?.errors?.['required'] && this.frm.get('move1')?.touched) {
@@ -133,7 +133,7 @@
                 <mat-select id="move2" formControlName="move2">
                     <mat-option value="" selected>{{'pokemonFrm.move2' | translate}}</mat-option>
                     @for (move of aMoves; track $index){
-                        <mat-option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
+                        <mat-option [value]="move.id">{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
                     }
                 </mat-select>
                 @if (this.frm.get('move2')?.errors?.['required'] && this.frm.get('move2')?.touched) {
@@ -146,7 +146,7 @@
                 <mat-select id="move3" formControlName="move3">
                     <mat-option value="" selected>{{'pokemonFrm.move3' | translate}}</mat-option>
                     @for (move of aMoves; track $index){
-                        <mat-option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
+                        <mat-option [value]="move.id">{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
                     }
                 </mat-select>
                 @if (this.frm.get('move3')?.errors?.['required'] && this.frm.get('move3')?.touched) {
@@ -159,7 +159,7 @@
                 <mat-select id="move4" formControlName="move4">
                     <mat-option value="" selected>{{'pokemonFrm.move4' | translate}}</mat-option>
                     @for (move of aMoves; track $index){
-                        <mat-option value={{move.id}}>{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
+                        <mat-option [value]="move.id">{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>
                     }
                 </mat-select>
                 @if (this.frm.get('move4')?.errors?.['required'] && this.frm.get('move4')?.touched) {
