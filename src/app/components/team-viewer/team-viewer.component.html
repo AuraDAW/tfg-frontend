@@ -15,7 +15,7 @@
         @for (pokemonData of aFullPokemonTeam; track $index) {
         <div class="border my-2 shadow-sm">
             <div class="row">
-                <div class="col-2 text-center my-2">
+                <div class="col-12 col-lg-2 text-center my-2">
                     @if (pokemonData.teamInfo.is_shiny) {
                         <img [src]="pokemonData.baseData.image_shiny | pokemonShinyPath" class="img-fluid mx-auto d-block">
                     }@else{
@@ -26,7 +26,7 @@
                         <img [src]="pokemonData.teraTypeImage | typePath" class="img-fluid d-block" style="width: 30px; height: 30px;">
                     </div>
                 </div>
-                <div class="col-4 my-2">
+                <div class="col-4 col-lg-4 my-2">
                     <div class="form-group text-center">
                         <small>{{"teamBuilder.ability" | translate}}</small>
                         <select id="ability" class="form-select" disabled>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <div class="col-6 my-2">
+                <div class="col-8 col-lg-6 my-2">
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group text-center">

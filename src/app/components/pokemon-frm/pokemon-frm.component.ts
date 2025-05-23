@@ -25,12 +25,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import { AutocompleteSelectComponent } from "../autocomplete-select/autocomplete-select.component";
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 @Component({
   selector: 'app-pokemon-frm',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe, TranslateModule,
-    MatInputModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule],
+    MatInputModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, MatCheckboxModule],
   templateUrl: './pokemon-frm.component.html',
   styles: ``
 })
@@ -167,8 +166,6 @@ export class PokemonFrmComponent {
           this.frm.get("evdef")?.setValue(data[0].ev_def);
           this.frm.get("evspdef")?.setValue(data[0].ev_spdef);
           this.frm.get("evpd")?.setValue(data[0].ev_spd);
-          console.log(this.frm.get("pokemonId")?.value);
-          console.log(this.frm.get("move4")?.value);
           this.obtainPokemonDataId();
         }
       })
@@ -185,7 +182,7 @@ export class PokemonFrmComponent {
       item:['', [Validators.required]],
       level:['100', [Validators.min(1), Validators.max(100)]],
       teratype:['', [Validators.required]],
-      isShiny:[''],
+      isShiny:[false],
       move1:['', [Validators.required]],
       move2:['', [Validators.required]],
       move3:['', [Validators.required]],
@@ -228,6 +225,15 @@ export class PokemonFrmComponent {
    * @description Creates a pokemonTeam object with data from the form, then either uses it to create a new pokemon or update an existing one.
    */
   savePokemon(){
+    // had errors caused by isShiny defaulting to "" instead of false, this fixed it + makes sure it can only be true or false
+    let shinyValue;
+    if(this.frm.get("isShiny")?.value=="" || this.frm.get("isShiny")?.value==false){
+      shinyValue=false;
+    }else if(this.frm.get("isShiny")?.value==true){
+      shinyValue=true;
+    }else{
+      shinyValue=false;
+    }
     const pokemonToAdd:PokemonTeam={
       id:this.id,
       id_pokemon:this.frm.get("pokemonId")?.value,
@@ -249,7 +255,7 @@ export class PokemonFrmComponent {
       ev_spdef:this.frm.get("evspdef")?.value,
       ev_spd:this.frm.get("evspd")?.value,
       ev_hp:this.frm.get("evhp")?.value,
-      is_shiny:this.frm.get("isShiny")?.value,
+      is_shiny:shinyValue,
       tera_type:this.frm.get("teratype")?.value,
       level:this.frm.get("level")?.value
     }

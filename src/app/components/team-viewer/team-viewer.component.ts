@@ -24,7 +24,7 @@ import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-team-viewer',
-  imports: [CommonModule, NgStyle, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe,TranslateModule],
+  imports: [CommonModule, PokemonPathPipe, PokemonShinyPathPipe, TypePathPipe,TranslateModule],
   templateUrl: './team-viewer.component.html',
   styles: ``
 })
