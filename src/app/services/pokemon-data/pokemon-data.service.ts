@@ -44,20 +44,14 @@ private url=environment.apiUrl;
     )
   }
 
-  postPokemonData(pokemon:PokemonData):Observable<{id:Number}>{
-    const headers = new HttpHeaders({
-      'Content-Type':'application/json'
-    })
-    return this.http.post<{id:Number}>(`${this.url}/pokemonData`,pokemon,{headers}).pipe(
+  postPokemonData(pokemon:FormData):Observable<{id:Number}>{
+    return this.http.post<{id:Number}>(`${this.url}/pokemonData`,pokemon).pipe(
       catchError(this.handleError)
     )
   }
   
-  updatePokemonTeam(pokemon:PokemonData):Observable<{message:string}>{
-    const headers= new HttpHeaders({
-      'Content-Type'  : 'application/json'
-    })
-    return this.http.put<{message:string}>(`${this.url}/pokemonData/${pokemon.id}`,pokemon, {headers}).pipe(
+  updatePokemonData(pokemon:FormData):Observable<{message:string}>{
+    return this.http.put<{message:string}>(`${this.url}/pokemonData/${pokemon.get("id")}`,pokemon).pipe(
       catchError(this.handleError)
     )
   }

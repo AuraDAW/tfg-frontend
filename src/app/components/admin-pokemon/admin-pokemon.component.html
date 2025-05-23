@@ -7,6 +7,7 @@
     </div>
     <hr>
     <div class="row ">
+        <input type="hidden" formControlName="id" value="">
         <mat-form-field class="col-12">
             <mat-label>Pokemon Name</mat-label>
             <input matInput formControlName="name">
@@ -18,7 +19,6 @@
         <mat-form-field>
             <mat-label>Type 1</mat-label>
             <mat-select formControlName="type_1">
-                <mat-option value="">Placeholder Type 1</mat-option>
                 @for (type of aTypes; track $index) {
                 <mat-option [value]="type.id">{{`types.name.${type.id}` | translate | titlecase}}</mat-option>
                 }
@@ -27,7 +27,6 @@
         <mat-form-field>
             <mat-label>Type 2</mat-label>
             <mat-select formControlName="type_2">
-                <mat-option value="">If the Pokemon only has 1 field, leave this field empty.</mat-option>
                 @for (type of aTypes; track $index) {
                 <mat-option [value]="type.id">{{`types.name.${type.id}` | translate | titlecase}}</mat-option>
                 }

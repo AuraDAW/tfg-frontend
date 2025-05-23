@@ -40,6 +40,7 @@ export class AdminPokemonComponent {
 
   private validacionesFrm(){
     this.frm=this.fb.group({
+      id:[""],
       name:["",[Validators.required]],
       pokedex_id:["",[Validators.required]],
       type_1:["",[Validators.required]],
@@ -64,6 +65,7 @@ export class AdminPokemonComponent {
       this.servicePokemonData.getPokemonDataId(this.id).subscribe({
         next:(data)=>{
           console.log(data);
+          this.frm.get("id")?.setValue(this.id);
           this.frm.get("name")?.setValue(data[0].name_en);
           this.frm.get("pokedex_id")?.setValue(data[0].pokedex_id);
           this.frm.get("type_1")?.setValue(data[0].type);
@@ -119,23 +121,41 @@ export class AdminPokemonComponent {
     if(!type2|| type2 === type1){
       type2=null;
     }
+    const pokemonToAdd = new FormData();
     //create pokemon to add to database, by default set name_es as same as name_en
-    const pokemonToAdd:PokemonData={
-      id:this.id,
-      pokedex_id:this.frm.get("pokedex_id")?.value,
-      name_en:this.frm.get("name")?.value,
-      image:this.frm.get("image")?.value.name,
-      image_shiny:this.frm.get("imageShiny")?.value.name,
-      type:type1,
-      type_2:type2,
-      base_atk:this.frm.get("base_atk")?.value,
-      base_spatk:this.frm.get("base_spatk")?.value,
-      base_def:this.frm.get("base_def")?.value,
-      base_spdef:this.frm.get("base_spdef")?.value,
-      base_spd:this.frm.get("base_spd")?.value,
-      base_hp:this.frm.get("base_hp")?.value,
-      name_es:this.frm.get("name")?.value,
-    }
+    pokemonToAdd.append("id",this.frm.get("id")?.value);
+    pokemonToAdd.append('pokedex_id',this.frm.get("pokedex_id")?.value);
+    pokemonToAdd.append('name_en',this.frm.get("name")?.value);
+    pokemonToAdd.append('type',type1);
+    pokemonToAdd.append("type_2",type2);
+    pokemonToAdd.append('base_atk',this.frm.get("base_atk")?.value);
+    pokemonToAdd.append('base_def',this.frm.get("base_def")?.value);
+    pokemonToAdd.append('base_spatk',this.frm.get("base_spatk")?.value);
+    pokemonToAdd.append('base_spdef',this.frm.get("base_spdef")?.value);
+    pokemonToAdd.append('base_spd',this.frm.get("base_spd")?.value);
+    pokemonToAdd.append('base_hp',this.frm.get("base_hp")?.value);
+    pokemonToAdd.append('name_es',this.frm.get("name")?.value);
+
+    pokemonToAdd.append("image", this.frm.get("image")?.value);
+    pokemonToAdd.append("image_shiny", this.frm.get("imageShiny")?.value);
+
+    // const pokemonToAdd:PokemonData={
+    //   id:this.id,
+    //   pokedex_id:this.frm.get("pokedex_id")?.value,
+    //   name_en:this.frm.get("name")?.value,
+    //   image:this.frm.get("image")?.value.name,
+    //   image_shiny:this.frm.get("imageShiny")?.value.name,
+    //   type:type1,
+    //   type_2:type2,
+    //   base_atk:this.frm.get("base_atk")?.value,
+    //   base_spatk:this.frm.get("base_spatk")?.value,
+    //   base_def:this.frm.get("base_def")?.value,
+    //   base_spdef:this.frm.get("base_spdef")?.value,
+    //   base_spd:this.frm.get("base_spd")?.value,
+    //   base_hp:this.frm.get("base_hp")?.value,
+    //   name_es:this.frm.get("name")?.value,
+    // }
+    console.log(pokemonToAdd);
     if(!this.id){ //if id does not exist, then we are trying to create a new pokemon
       this.addPokemon(pokemonToAdd);
     }else{
@@ -143,7 +163,7 @@ export class AdminPokemonComponent {
     }
   }
 
-  private addPokemon(pokemon:PokemonData){
+  private addPokemon(pokemon:FormData){
     this.servicePokemonData.postPokemonData(pokemon).subscribe({
       next:(data)=>{
         Swal.fire('The pokemon has been added', "","success");
@@ -156,8 +176,8 @@ export class AdminPokemonComponent {
     });
   }
 
-  private updatePokemon(pokemon:PokemonData){
-    this.servicePokemonData.updatePokemonTeam(pokemon).subscribe({
+  private updatePokemon(pokemon:FormData){
+    this.servicePokemonData.updatePokemonData(pokemon).subscribe({
       next:(data)=>{
         Swal.fire('The pokemon has been updated',"","success");
         this.frm.reset();
