@@ -138,23 +138,6 @@ export class AdminPokemonComponent {
 
     pokemonToAdd.append("image", this.frm.get("image")?.value);
     pokemonToAdd.append("image_shiny", this.frm.get("imageShiny")?.value);
-
-    // const pokemonToAdd:PokemonData={
-    //   id:this.id,
-    //   pokedex_id:this.frm.get("pokedex_id")?.value,
-    //   name_en:this.frm.get("name")?.value,
-    //   image:this.frm.get("image")?.value.name,
-    //   image_shiny:this.frm.get("imageShiny")?.value.name,
-    //   type:type1,
-    //   type_2:type2,
-    //   base_atk:this.frm.get("base_atk")?.value,
-    //   base_spatk:this.frm.get("base_spatk")?.value,
-    //   base_def:this.frm.get("base_def")?.value,
-    //   base_spdef:this.frm.get("base_spdef")?.value,
-    //   base_spd:this.frm.get("base_spd")?.value,
-    //   base_hp:this.frm.get("base_hp")?.value,
-    //   name_es:this.frm.get("name")?.value,
-    // }
     console.log(pokemonToAdd);
     if(!this.id){ //if id does not exist, then we are trying to create a new pokemon
       this.addPokemon(pokemonToAdd);

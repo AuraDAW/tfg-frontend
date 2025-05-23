@@ -32,6 +32,7 @@ export class AdminItemComponent {
 
   private validacionesFrm(){
     this.frm=this.fb.group({
+      id:[""],
       name_en:["",[Validators.required]],
       name_es:["",[Validators.required]],
       description_en:["",[Validators.required]],
@@ -48,6 +49,7 @@ export class AdminItemComponent {
       this.serviceItems.getItem(this.id).subscribe({
         next: (data) => {
           console.log(data);
+          this.frm.get("id")?.setValue(this.id);
           this.frm.get("name_en")?.setValue(data[0].name_en);
           this.frm.get("name_es")?.setValue(data[0].name_es);
           this.frm.get("description_en")?.setValue(data[0].description_en);
@@ -75,23 +77,30 @@ export class AdminItemComponent {
   }
 
   saveItem(){
-    const itemToAdd:Item={
-      id:this.id,
-      name_en:this.frm.get("name_en")?.value,
-      name_es:this.frm.get("name_es")?.value,
-      description_en:this.frm.get("description_en")?.value,
-      description_es:this.frm.get("description_es")?.value,
-      image:this.frm.get("image")?.value.name
-    }
+    const itemToAdd = new FormData();
+    itemToAdd.append("id",this.frm.get("id")?.value);
+    itemToAdd.append("name_en",this.frm.get("name_en")?.value);
+    itemToAdd.append("name_es",this.frm.get("name_es")?.value);
+    itemToAdd.append("description_en",this.frm.get("description_en")?.value);
+    itemToAdd.append("description_es",this.frm.get("description_es")?.value);
+    itemToAdd.append("image",this.frm.get("image")?.value);
+    // const itemToAdd:Item={
+    //   id:this.id,
+    //   name_en:this.frm.get("name_en")?.value,
+    //   name_es:this.frm.get("name_es")?.value,
+    //   description_en:this.frm.get("description_en")?.value,
+    //   description_es:this.frm.get("description_es")?.value,
+    //   image:this.frm.get("image")?.value.name
+    // }
     console.log(itemToAdd);
     if(!this.id){
       this.addItem(itemToAdd)
     }else{
-      this.updateItem(itemToAdd)
+      // this.updateItem(itemToAdd)
     }
   }
 
-  private addItem(item:Item){
+  private addItem(item:FormData){
     this.serviceItems.postItem(item).subscribe({
       next:(data)=>{
         Swal.fire("The item has been created","","success");
@@ -104,7 +113,7 @@ export class AdminItemComponent {
     })
   }
 
-  private updateItem(item:Item){
+  private updateItem(item:FormData){
     this.serviceItems.updateItem(item).subscribe({
       next:(data)=>{
         Swal.fire("The item has been updated","","success");

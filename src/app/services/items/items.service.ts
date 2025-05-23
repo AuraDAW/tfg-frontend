@@ -31,20 +31,17 @@ export class ItemsService {
     )
   }
   
-  postItem(item: Item): Observable<{ id: Number }> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-    return this.http.post<{ id: Number }>(`${this.url}/items`, item, { headers }).pipe(
+  postItem(item: FormData): Observable<{ id: Number }> {
+    return this.http.post<{ id: Number }>(`${this.url}/items`, item).pipe(
       catchError(this.handleError)
     )
   }
 
-  updateItem(item: Item): Observable<{ message: string }> {
+  updateItem(item: FormData): Observable<{ message: string }> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     })
-    return this.http.put<{ message: string }>(`${this.url}/items/${item.id}`, item, { headers }).pipe(
+    return this.http.put<{ message: string }>(`${this.url}/items/${item.get("id")}`, item).pipe(
       catchError(this.handleError)
     )
   }
