@@ -68,14 +68,13 @@ export class PokemonFrmComponent {
     this.validacionesFrm();
     this.obtainData();
     this.obtainDataForUpdate();
+    console.log("move1 value on ngInit", this.frm.get("move1")?.value);
 
     // we subscribe to the pokemonId select, so that when it changes it will execute the following methods to:
     // 1- Reset all selects and inputs to default value 
-    // 2- Rebuild all selects (futureproofing to allow easy implementation when i make it so a pokemon can only have moves they actually learn)
+    // 2- Rebuild ability and move selects so they have the relevant info for the selected pokemon
     this.frm.get('pokemonId')!.valueChanges.subscribe(pokemon => {
       this.resetAllFields();
-      // there is no point in executing resetsAbilitiesMoves as its a placeholder for a future method
-      // it would only slow down the application (negligible tbf)
       this.resetsAbilitiesMoves(pokemon);
     });
   }
@@ -199,7 +198,7 @@ export class PokemonFrmComponent {
       ivspdef:['31', [Validators.min(0), Validators.max(31)]],
       evspd:['0', [Validators.min(0), Validators.max(252)]],
       ivspd:['31', [Validators.min(0), Validators.max(31)]],
-    }, {validators:[this.EVTotalValidator()]})
+    }, {validators:[this.EVTotalValidator(), this.moveCantRepeatValidator]})
   }
 
   /**
@@ -219,6 +218,25 @@ export class PokemonFrmComponent {
 
     return total > 510 ? { evTotalExceeded: true } : null;
   };
+  }
+
+  private moveCantRepeatValidator(control: AbstractControl): ValidationErrors | null {
+    // the filter will ignore any field whose value is null or "", this should make it so that empty fields dont count towards duplication
+    // if they count, the error message will show even when all fields are empty, the filter fixes this
+    const values = [
+      control.get('move1')?.value,
+      control.get('move2')?.value,
+      control.get('move3')?.value,
+      control.get('move4')?.value,
+    ].filter(v => v !== null && v !== '');
+
+    // with less than 2 values there cant be any duplicates
+    if (values.length < 2) {
+      return null; 
+      }
+
+    const unique = new Set(values);
+    return unique.size !== values.length ? { duplicateMoves: true } : null;
   }
 
   /**
