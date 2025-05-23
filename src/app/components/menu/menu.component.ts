@@ -9,8 +9,6 @@ import {MatButtonModule} from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { DialogHelpComponent } from '../dialog-help/dialog-help.component';
 import { Observable } from 'rxjs';
-import { TeamsService } from '../../services/teams/teams.service';
-import { UsersService } from '../../services/users/users.service';
 @Component({
   selector: 'app-menu',
   imports: [RouterLink, RouterLinkActive, MatSlideToggleModule, MatButtonModule, MatMenuModule, CommonModule, TranslateModule],
@@ -26,8 +24,6 @@ export class MenuComponent {
 
   private router = inject(Router)
   public serviceAuth = inject(AuthService)
-  private serviceTeams = inject(TeamsService)
-  private serviceUsers = inject(UsersService)
 
   constructor(private translate: TranslateService, private dialog: MatDialog) {
     this.translate.addLangs(['en', 'es']); //adds possible translations

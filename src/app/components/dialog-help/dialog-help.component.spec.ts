@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogHelpComponent } from './dialog-help.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DialogHelpComponent', () => {
   let component: DialogHelpComponent;
@@ -8,7 +9,7 @@ describe('DialogHelpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DialogHelpComponent]
+      imports: [DialogHelpComponent, TranslateModule]
     })
     .compileComponents();
 

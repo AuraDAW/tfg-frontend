@@ -108,7 +108,7 @@ getFavoritedTeams():Observable<Team[]>{
       errorMessage=`Error del servidor:${err.error.message}`;
     }
     return throwError(()=>{
-      new Error (errorMessage)
+      return new Error (errorMessage)
     })
   }
 }

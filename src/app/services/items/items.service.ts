@@ -54,7 +54,7 @@ export class ItemsService {
       errorMessage=`Error del servidor:${err.error.message}`;
     }
     return throwError(()=>{
-      new Error (errorMessage)
+      return new Error (errorMessage)
     })
   }
 }
