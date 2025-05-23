@@ -8,9 +8,7 @@
 
 <div class="row">
     <div class="col-12">
-        @if(role==2){
-            <button class="btn btn-success mx-2" (click)="favoriteTeam()">@if (isFavoritedTeam==true){Remove Favorite}@else{Add Favorite}</button>
-        }
+        <button *ngIf="role==2" class="btn btn-success mx-2" (click)="favoriteTeam()">{{ isFavoritedTeam ? 'Remove Favorite' : 'Add Favorite' }}</button>
         <button class="btn btn-success mx-2" (click)="exportTeam()">{{"teamBuilder.export" | translate}}</button>
         @for (pokemonData of aFullPokemonTeam; track $index) {
         <div class="border my-2 shadow-sm">

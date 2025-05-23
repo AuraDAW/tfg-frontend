@@ -169,7 +169,18 @@ export class TeamViewerComponent {
   favoriteTeam(){
     this.serviceTeams.favoriteTeam(this.teamId).subscribe({
       next:(data)=>{
-        Swal.fire("The team has been marked as favorite","","success");
+        //if api returned added inside message, show marked as fav message in alert, otherwise show remove message
+        const message = data.message === "added"
+        ? "The team has been marked as favorite"
+        : "The team has been removed from favorites";
+        // update isFavoriteTeam so the text inside button changes
+        if(data.message==="added"){
+          this.isFavoritedTeam=true;
+        }else{
+          this.isFavoritedTeam=false;
+        }
+        console.log(this.isFavoritedTeam);
+        Swal.fire(message,"","success");
       },
       error:(err)=>{
         console.log(err);
@@ -182,6 +193,7 @@ export class TeamViewerComponent {
     const dialogRef = this.dialog.open(DialogExportComponent,{
       data:this.aExport
     });
+    //reset array to empty so that if user clicks again, the text does not repeat itself
     this.aExport = [];
   }
 
