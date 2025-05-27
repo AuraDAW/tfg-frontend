@@ -26,7 +26,7 @@
             }
             <mat-form-field class="col-12">
               <mat-label>{{"register.password" | translate}}</mat-label>
-              <input matInput formControlName="password">
+              <input matInput formControlName="password" type="password">
             </mat-form-field>
             @if (passwordNotRequired) {
                 <span class="text-danger fst-italic">{{"register.error.passwordRequired" | translate}}</span>
