@@ -5,5 +5,6 @@ export const environment = {
   typeBasePath: "assets/images/types/",
   pokemonBasePath: `${apiUrl}/assets/images/pokemon/`,
   pokemonShinyBasePath: `${apiUrl}/assets/images/shinyPokemon/`,
+  itemBasePath: `${apiUrl}/assets/images/items/`,
   logoBasePath: "assets/images/logos/"
 };

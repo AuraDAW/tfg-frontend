@@ -11,7 +11,7 @@ export class ItemPathPipe implements PipeTransform {
       // if fileName does not exist, return empty string
       return "";
     }
-    return `${environment.logoBasePath}${fileName}`;
+    return `${environment.itemBasePath}${fileName}`;
   }
 
 }
