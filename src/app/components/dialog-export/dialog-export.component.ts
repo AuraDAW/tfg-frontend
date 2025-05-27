@@ -30,18 +30,13 @@ export class DialogExportComponent {
     }
   }
 
-  copyClipboard(element:HTMLElement){
-    const text = element.textContent || "";
-    navigator.clipboard.writeText(text).then(() => {
-    this.snackbar.open("Copied to clipboard!", "Dismiss",{
-      duration:3000
-    })
-  }).catch(err => {
-    this.snackbar.open("Failed to copy.", "Dismiss",{
-      duration:3000
-    })
-  });
-    
+  async copyClipboard(element: HTMLElement) {
+    try {
+      await navigator.clipboard.writeText(element.innerText);
+      this.snackbar.open('Copied to clipboard!', 'Dismiss', { duration: 3000 });
+    } catch (e) {
+      this.snackbar.open('Failed to copy.', 'Dismiss', { duration: 3000 });
+    }
   }
 
 }
