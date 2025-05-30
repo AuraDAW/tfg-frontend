@@ -36,7 +36,7 @@
                     }
                     <td class="">
                         <a class="pointer m-2" [ngStyle]="{color: '#1f516f'}" (click)="editElement(element)"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a class="pointer m-2" [ngStyle]="{color: '#e15639'}" ><i class="fa-solid fa-trash"></i></a>
+                        <a class="pointer m-2" [ngStyle]="{color: '#e15639'}" (click)="deleteElement(element)"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             }@empty{

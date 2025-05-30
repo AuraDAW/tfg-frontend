@@ -14,6 +14,7 @@ import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.ser
 import { User } from '../../models/user';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users/users.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-adminpanel',
@@ -203,7 +204,96 @@ export class AdminpanelComponent {
     }else{
       console.log("Error. No type was found.");
     }
+  }
 
+  deleteElement(element:any){
+    if(this.isPokemonData(element)){
+      Swal.fire({
+        title: `¿Are you sure you wish to delete the Pokemon ${element.name_en}?`,
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // si se pulsa boton de confirmar, eliminar tarea
+          this.servicePokemonData.deletePokemonData(element.id!).subscribe({
+            next: (data) => {
+              Swal.fire(`${data.message}`, '', 'success');
+              this.loadPokemonData(); //actualizamos la tabla
+              this.frm.get("selectElement")?.setValue(""); //reseteamos el select
+            },
+            error: (err) => {
+              Swal.fire(`${err.message}`, '', 'error');
+            },
+          });
+        }
+      });
+    }else if(this.isMove(element)){
+            Swal.fire({
+        title: `¿Are you sure you wish to delete the move ${element.name_en}?`,
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // si se pulsa boton de confirmar, eliminar tarea
+          this.serviceMoves.deleteMove(element.id!).subscribe({
+            next: (data) => {
+              Swal.fire(`${data.message}`, '', 'success');
+              this.loadMoves(); //actualizamos la tabla
+              this.frm.get("selectElement")?.setValue(""); //reseteamos el select
+            },
+            error: (err) => {
+              Swal.fire(`${err.message}`, '', 'error');
+            },
+          });
+        }
+      });
+    }else if(this.isItem(element)){
+            Swal.fire({
+        title: `¿Are you sure you wish to delete the item ${element.name_en}?`,
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // si se pulsa boton de confirmar, eliminar tarea
+          this.serviceItems.deleteItem(element.id!).subscribe({
+            next: (data) => {
+              Swal.fire(`${data.message}`, '', 'success');
+              this.loadItems(); //actualizamos la tabla
+              this.frm.get("selectElement")?.setValue(""); //reseteamos el select
+            },
+            error: (err) => {
+              Swal.fire(`${err.message}`, '', 'error');
+            },
+          });
+        }
+      });
+    }else if(this.isAbility(element)){
+            Swal.fire({
+        title: `¿Are you sure you wish to delete the ability ${element.name_en}?`,
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // si se pulsa boton de confirmar, eliminar tarea
+          this.serviceAbilities.deleteAbility(element.id!).subscribe({
+            next: (data) => {
+              Swal.fire(`${data.message}`, '', 'success');
+              this.loadAbilities(); //actualizamos la tabla
+              this.frm.get("selectElement")?.setValue(""); //reseteamos el select
+            },
+            error: (err) => {
+              Swal.fire(`${err.message}`, '', 'error');
+            },
+          });
+        }
+      });
+    }else{
+      console.log("Error. No type was found.");
+    }
   }
 
   isPokemonData(element: any): element is PokemonData {

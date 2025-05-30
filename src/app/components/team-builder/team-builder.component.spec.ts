@@ -9,7 +9,7 @@ import { ItemsService } from '../../services/items/items.service';
 import { MovesService } from '../../services/moves/moves.service';
 import { TypesService } from '../../services/types/types.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { DialogFormComponent } from '../dialog-form/dialog-form.component';
 import { DialogExportComponent } from '../dialog-export/dialog-export.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -38,7 +38,7 @@ describe('TeamBuilderComponent', () => {
     movesServiceSpy = jasmine.createSpyObj('MovesService', ['getMove']);
     typesServiceSpy = jasmine.createSpyObj('TypesService', ['getType']);
     dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-    routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate', 'navigateByUrl']);
     activatedRouteStub = {
       paramMap: of({
         get: (key: string) => {
@@ -117,47 +117,138 @@ describe('TeamBuilderComponent', () => {
     ]));
     pokemonDataServiceSpy.getPokemonDataFromTeam.and.returnValue(of([
       {
-        id: 101,
-        pokedex_id: 25,
-        name_en: 'Pikachu',
-        image: 'pikachu.png',
-        image_shiny: 'pikachu_shiny.png',
-        type: 13,
-        type_2: 0,
-        base_atk: 55,
-        base_spatk: 50,
-        base_def: 40,
-        base_spdef: 50,
-        base_spd: 90,
-        base_hp: 35,
-        name_es: 'Pikachu',
-        entityType: 'pokemonData'
+      id: 101,
+      pokedex_id: 25,
+      name_en: 'Pikachu',
+      image: 'pikachu.png',
+      image_shiny: 'pikachu_shiny.png',
+      type: 13,
+      type_2: 0,
+      base_atk: 55,
+      base_spatk: 50,
+      base_def: 40,
+      base_spdef: 50,
+      base_spd: 90,
+      base_hp: 35,
+      name_es: 'Pikachu',
+      entityType: 'pokemonData'
       }
     ]));
     typesServiceSpy.getType.and.returnValue(of({
-      id: 1,
+      id: 13,
       name_en: 'Electric',
       image: 'electric.png',
       image_small: 'electric_small.png',
       name_es: 'Eléctrico'
     }));
-    abilitiesServiceSpy.getAbility.and.returnValue(of([{ name_en: 'Static' }]));
-    itemsServiceSpy.getItem.and.returnValue(of([{ name_en: 'Light Ball' }]));
-    movesServiceSpy.getMove.and.returnValue(of([{ name_en: 'Thunderbolt' }]));
+    abilitiesServiceSpy.getAbility.and.returnValue(of([{ id: 1, name_en: 'Static', description_en: '', name_es: '', description_es: '' }]));
+    itemsServiceSpy.getItem.and.returnValue(of([{ id: 1, name_en: 'Light Ball', description_en: '', image: '', name_es: '', description_es: '' }]));
+    movesServiceSpy.getMove.and.returnValue(of([{ id: 1, name_en: 'Thunderbolt', description_en: '', type: 13, power: 90, accuracy: 100, name_es: '', description_es: '' }]));
     fixture.detectChanges();
-  });
+    });
 
-  it('should create', () => {
+    it('should create', () => {
     expect(component).toBeTruthy();
-  });
+    });
 
-  it('should load team and pokemon data on init', () => {
-    expect(component.aTeams.length).toBeGreaterThan(0);
-    expect(component.aTeams[0].name).toBe('Test Team');
-    expect(component.aFullPokemonTeam.length).toBeGreaterThan(0);
-    expect(component.aFullPokemonTeam[0].baseData.name_en).toBe('Pikachu');
-  });
+    it('should navigate to addPokemon', () => {
+    component['teamId'] = 10;
+    component.addPokemon();
+    expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/pokemonFrm/10');
+    });
 
+    it('should open edit dialog and update team on editTeam', () => {
+    component.aTeams = [{
+      id: 10,
+      name: 'Test Team',
+      description: 'A test team',
+      user_id: 1,
+      pokemon_1: 101,
+      pokemon_2: undefined,
+      pokemon_3: undefined,
+      pokemon_4: undefined,
+      pokemon_5: undefined,
+      pokemon_6: undefined
+    }];
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({ name: 'Updated Team', description: 'Updated Desc' }), close: null });
+    dialogSpy.open.and.returnValue(dialogRefSpyObj);
+    teamsServiceSpy.updatePokemonTeam.and.returnValue(of({ message: 'updated' }));
+    component.editTeam();
+    expect(dialogSpy.open).toHaveBeenCalledWith(DialogFormComponent, {
+      data: { name: 'Test Team', description: 'A test team' }
+    });
+    expect(teamsServiceSpy.updatePokemonTeam).toHaveBeenCalled();
+    });
+
+    it('should open export dialog on exportTeam', async () => {
+    spyOn(component as any, 'generateShowdownTeam').and.returnValue(Promise.resolve());
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as any);
+    component.aFullPokemonTeam = [{} as any];
+    await component.exportTeam();
+    expect(dialogSpy.open).toHaveBeenCalledWith(DialogExportComponent, { data: component.aExport });
+    expect(component.aExport).toEqual([]);
+    });
+
+    it('should render team name and description', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Test Team');
+    expect(compiled.textContent).toContain('A test team');
+    });
+
+    it('should render export button', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('teamBuilder.export');
+    });
+
+    it('should render empty team message if no pokemon', () => {
+    component.aFullPokemonTeam = [];
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('teamBuilder.emptyTeam');
+    });
+
+    // Additional tests
+
+    it('should call obtainTeamInfo on ngOnInit', () => {
+    const spy = spyOn<any>(component, 'obtainTeamInfo');
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalled();
+    });
+
+    it('should handle error in obtainTeamInfo', () => {
+    teamsServiceSpy.getTeam.and.returnValue({
+      subscribe: (obj: any) => obj.error('error')
+    } as any);
+    spyOn(console, 'log');
+    (component as any).obtainTeamInfo();
+    expect(console.log).toHaveBeenCalledWith('error');
+    });
+
+    it('should handle error in obtainPokemonTeamInfo', () => {
+    pokemonTeamServiceSpy.getPokemonTeamId.and.returnValue(throwError(() => 'error'));
+    component.aPokemonTeamIds = [101];
+    spyOn(console, 'error');
+    (component as any).obtainPokemonTeamInfo();
+    expect(console.error).toHaveBeenCalledWith('Error fetching team data:', 'error');
+    });
+
+    it('should handle error in obtainPokemonData', () => {
+    component.aPokemonTeamInfo = [{ id_pokemon: 101, tera_type: 1 }];
+    pokemonDataServiceSpy.getPokemonDataFromTeam.and.returnValue(throwError(() => new Error('error')));
+    typesServiceSpy.getType.and.returnValue(of({
+      id: 0,
+      name_en: '',
+      image: '',
+      image_small: '',
+      name_es: ''
+    }));
+    spyOn(console, 'error');
+    (component as any).obtainPokemonData();
+    expect(console.error).toHaveBeenCalled();
+    });
+    
   it('should navigate to addPokemon', () => {
     component['teamId'] = 10;
     component.addPokemon();

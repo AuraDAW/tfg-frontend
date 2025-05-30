@@ -55,6 +55,12 @@ private url=environment.apiUrl;
     )
   }
 
+  deleteMove(id: Number): Observable<{ message: string }> {
+    return this.http
+      .delete<{ message: string }>(`${this.url}/moves/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   handleError(err:HttpErrorResponse){
     let errorMessage:string="";
     if(err.error instanceof ErrorEvent ){

@@ -212,6 +212,7 @@ export class TeamBuilderComponent {
   }
 
   private generateShowdownTeam = async (fullPokemonTeamData: any[]) => {
+    console.log("fullPokemonTeamData que el metodo generateShowdownTeam recibe:", fullPokemonTeamData);
     for (let index = 0; index < fullPokemonTeamData.length; index++) {
       // first, we must obtain ability, item, move, teratype names from their ids
       const baseData = fullPokemonTeamData[index].baseData;
