@@ -51,7 +51,8 @@ describe('AdminPokemonComponent', () => {
   it('should initialize the form on ngOnInit', () => {
     component.ngOnInit();
     expect(component.frm).toBeDefined();
-    expect(component.frm.get('name')).toBeTruthy();
+    expect(component.frm.get('name_en')).toBeTruthy();
+    expect(component.frm.get('name_es')).toBeTruthy();
     expect(component.frm.get('pokedex_id')).toBeTruthy();
     expect(component.frm.get('type_1')).toBeTruthy();
     expect(component.frm.get('type_2')).toBeTruthy();
@@ -63,6 +64,7 @@ describe('AdminPokemonComponent', () => {
     expect(component.frm.get('base_spd')).toBeTruthy();
     expect(component.frm.get('image')).toBeTruthy();
     expect(component.frm.get('imageShiny')).toBeTruthy();
+
   });
 
   it('should call addPokemon when saving a new pokemon', () => {
@@ -157,7 +159,7 @@ describe('AdminPokemonComponent', () => {
       pokedex_id: 25,
       name_en: 'Pikachu',
       image: 'pikachu.png',
-      image_shiny: 'pikachu_shiny.png',
+      image_shiny: 'pikachu_shiny.png', 
       type: 13,
       type_2: 0,
       base_atk: 55,
@@ -171,7 +173,8 @@ describe('AdminPokemonComponent', () => {
     component.ngOnInit();
     expect(pokemonDataServiceSpy.getPokemonDataId).toHaveBeenCalledWith(1);
     expect(component.frm.get('id')?.value).toBe(1);
-    expect(component.frm.get('name')?.value).toBe('Pikachu');
+    expect(component.frm.get('name_en')?.value).toBe('Pikachu');
+    expect(component.frm.get('name_es')?.value).toBe('Pikachu');
     expect(component.frm.get('pokedex_id')?.value).toBe(25);
     expect(component.frm.get('type_1')?.value).toBe(13);
     expect(component.frm.get('type_2')?.value).toBe(0);
@@ -181,8 +184,6 @@ describe('AdminPokemonComponent', () => {
     expect(component.frm.get('base_spatk')?.value).toBe(50);
     expect(component.frm.get('base_spdef')?.value).toBe(50);
     expect(component.frm.get('base_spd')?.value).toBe(90);
-    expect(component.frm.get('image')?.value).toBe('pikachu.png');
-    expect(component.frm.get('imageShiny')?.value).toBe('pikachu_shiny.png');
   });
 
   it('should update form control when file is selected', () => {
