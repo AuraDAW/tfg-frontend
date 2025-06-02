@@ -84,19 +84,11 @@ export class AdminItemComponent {
     itemToAdd.append("description_en",this.frm.get("description_en")?.value);
     itemToAdd.append("description_es",this.frm.get("description_es")?.value);
     itemToAdd.append("image",this.frm.get("image")?.value);
-    // const itemToAdd:Item={
-    //   id:this.id,
-    //   name_en:this.frm.get("name_en")?.value,
-    //   name_es:this.frm.get("name_es")?.value,
-    //   description_en:this.frm.get("description_en")?.value,
-    //   description_es:this.frm.get("description_es")?.value,
-    //   image:this.frm.get("image")?.value.name
-    // }
     console.log(itemToAdd);
     if(!this.id){
       this.addItem(itemToAdd)
     }else{
-      // this.updateItem(itemToAdd)
+      this.updateItem(itemToAdd)
     }
   }
 

@@ -38,9 +38,7 @@ export class ItemsService {
   }
 
   updateItem(item: FormData): Observable<{ message: string }> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
+    console.log(item.get("id"));
     return this.http.put<{ message: string }>(`${this.url}/items/${item.get("id")}`, item).pipe(
       catchError(this.handleError)
     )

@@ -41,7 +41,8 @@ export class AdminPokemonComponent {
   private validacionesFrm(){
     this.frm=this.fb.group({
       id:[""],
-      name:["",[Validators.required]],
+      name_en:["",[Validators.required]],
+      name_es:["",[Validators.required]],
       pokedex_id:["",[Validators.required]],
       type_1:["",[Validators.required]],
       type_2:[""],
@@ -66,7 +67,8 @@ export class AdminPokemonComponent {
         next:(data)=>{
           console.log(data);
           this.frm.get("id")?.setValue(this.id);
-          this.frm.get("name")?.setValue(data[0].name_en);
+          this.frm.get("name_en")?.setValue(data[0].name_en);
+          this.frm.get("name_es")?.setValue(data[0].name_es);
           this.frm.get("pokedex_id")?.setValue(data[0].pokedex_id);
           this.frm.get("type_1")?.setValue(data[0].type);
           this.frm.get("type_2")?.setValue(data[0].type_2);
@@ -76,8 +78,7 @@ export class AdminPokemonComponent {
           this.frm.get("base_spatk")?.setValue(data[0].base_spatk);
           this.frm.get("base_spdef")?.setValue(data[0].base_spdef);
           this.frm.get("base_spd")?.setValue(data[0].base_spd);
-          this.frm.get("image")?.setValue(data[0].image);
-          this.frm.get("imageShiny")?.setValue(data[0].image_shiny);
+          
         },
         error:(err)=>{
           console.log(err);
@@ -125,7 +126,8 @@ export class AdminPokemonComponent {
     //create pokemon to add to database, by default set name_es as same as name_en
     pokemonToAdd.append("id",this.frm.get("id")?.value);
     pokemonToAdd.append('pokedex_id',this.frm.get("pokedex_id")?.value);
-    pokemonToAdd.append('name_en',this.frm.get("name")?.value);
+    pokemonToAdd.append('name_en',this.frm.get("name_en")?.value);
+    pokemonToAdd.append('name_es',this.frm.get("name_es")?.value);
     pokemonToAdd.append('type',type1);
     pokemonToAdd.append("type_2",type2);
     pokemonToAdd.append('base_atk',this.frm.get("base_atk")?.value);
@@ -134,7 +136,6 @@ export class AdminPokemonComponent {
     pokemonToAdd.append('base_spdef',this.frm.get("base_spdef")?.value);
     pokemonToAdd.append('base_spd',this.frm.get("base_spd")?.value);
     pokemonToAdd.append('base_hp',this.frm.get("base_hp")?.value);
-    pokemonToAdd.append('name_es',this.frm.get("name")?.value);
 
     pokemonToAdd.append("image", this.frm.get("image")?.value);
     pokemonToAdd.append("image_shiny", this.frm.get("imageShiny")?.value);
