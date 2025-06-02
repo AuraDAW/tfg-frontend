@@ -68,7 +68,6 @@ export class PokemonFrmComponent {
     this.validacionesFrm();
     this.obtainData();
     this.obtainDataForUpdate();
-    console.log("move1 value on ngInit", this.frm.get("move1")?.value);
 
     // we subscribe to the pokemonId select, so that when it changes it will execute the following methods to:
     // 1- Reset all selects and inputs to default value 

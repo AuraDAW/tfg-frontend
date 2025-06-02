@@ -13,6 +13,8 @@ import { Ability } from '../../models/ability';
 import { PokemonDataService } from '../../services/pokemon-data/pokemon-data.service';
 import { MovesService } from '../../services/moves/moves.service';
 import { AbilitiesService } from '../../services/abilities/abilities.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-abilities-moves-pokemon',
@@ -30,11 +32,16 @@ export class AddAbilitiesMovesPokemonComponent {
   private servicePokemonData = inject(PokemonDataService)
   private serviceMoves = inject(MovesService)
   private serviceAbilities=inject(AbilitiesService)
+  private router = inject(Router);
 
   private fb = inject(FormBuilder)
   ngOnInit(){
     this.validacionesFrm();
     this.loadData();
+    // subscribe to changes in pokemonId, so that when the user selects a pokemon we can check the moves and abilities it already has
+    this.frm.get('pokemonId')!.valueChanges.subscribe(pokemon => {
+      this.selectExistingMovesAbilities(pokemon);
+    });
   }
 
   private validacionesFrm(){
@@ -93,15 +100,38 @@ export class AddAbilitiesMovesPokemonComponent {
 
     this.servicePokemonData.addAbilitiesToPokemon(abilityMap).subscribe({
       next:(data)=>{
-        console.log("added abilities to pokemon");
+        this.servicePokemonData.addMovesToPokemon(movesMap).subscribe({
+          next:(data)=>{
+            Swal.fire("The moves and abilities have been added to the pokemon", "", "success");
+            this.frm.reset();
+            this.router.navigateByUrl('/adminPanel');
+          },
+          error:(err)=>{
+            console.log(err);
+          }
+        })
       },
       error:(err)=>{
         console.log(err);
       }
     })
-    this.servicePokemonData.addMovesToPokemon(movesMap).subscribe({
+    
+  }
+
+  private selectExistingMovesAbilities(pokemonId:number) {
+    this.serviceAbilities.getPokemonAbilities(pokemonId).subscribe({
       next:(data)=>{
-        console.log("added moves to pokemon");
+        const abilitiesIds = data.map((ability: Ability) => ability.id);
+        this.frm.get('abilities')?.setValue(abilitiesIds);
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    })
+    this.serviceMoves.getPokemonMoves(pokemonId).subscribe({
+      next:(data)=>{
+        const movesIds = data.map((move: Move) => move.id);
+        this.frm.get('moves')?.setValue(movesIds);
       },
       error:(err)=>{
         console.log(err);
