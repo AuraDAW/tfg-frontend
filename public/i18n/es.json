@@ -229,5 +229,6 @@
   "adminPanel.table.name": "Nombre",
   "adminPanel.table.actions": "Acciones",
   "adminPanel.noOption": "No se ha encontrado ninguna opción.",
-  "abilities.name.22": "nueva habilidad"
+  "abilities.name.22": "nueva habilidad",
+  "moves.name.14": "Lanzallamas"
 }
