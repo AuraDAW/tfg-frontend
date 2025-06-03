@@ -1,1 +1,0 @@
-var s="http://localhost:3000",e={apiUrl:s,typeBasePath:"assets/images/types/",pokemonBasePath:`${s}/assets/images/pokemon/`,pokemonShinyBasePath:`${s}/assets/images/shinyPokemon/`,itemBasePath:`${s}/assets/images/items/`,logoBasePath:"assets/images/logos/"};export{e as a};

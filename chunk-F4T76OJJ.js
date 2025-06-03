@@ -1,0 +1,1 @@
+var s="tfg-backend-production-537d.up.railway.app",e={apiUrl:s,typeBasePath:"assets/images/types/",pokemonBasePath:`${s}/assets/images/pokemon/`,pokemonShinyBasePath:`${s}/assets/images/shinyPokemon/`,itemBasePath:`${s}/assets/images/items/`,logoBasePath:"assets/images/logos/"};export{e as a};
