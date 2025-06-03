@@ -83,8 +83,6 @@ export class AuthService {
   public isLoggedIn() {
     const token = localStorage.getItem('id_token');
     const expired = this.isTokenExpired();
-    // console.log('Token:', token);
-    // console.log('Expired:', expired);
     return token !== null && !expired;
   }
   /**

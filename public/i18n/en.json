@@ -175,5 +175,9 @@
   "types.name.19": "Stellar",
   "items.name.15": "changed image",
   "pokemonData.name.25": "test uploading image",
-  "moves.name.15": "Light That Burns The Sky"
+  "moves.name.15": "Light That Burns The Sky",
+  "dialog.export": "Copy to clipboard",
+  "c404.notFound": "The page you are looking for does not exist.",
+  "c404.goHome": "Go to Home",
+  "home.teamWeek.title": "Team of the Week"
 }

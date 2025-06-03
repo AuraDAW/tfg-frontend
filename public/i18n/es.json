@@ -175,5 +175,9 @@
   "types.name.19": "Astral",
   "items.name.15": "ccccccc",
   "pokemonData.name.25": "probando subir imagen",
-  "moves.name.15": "fotodestruccion apocaliptica"
+  "moves.name.15": "fotodestruccion apocaliptica",
+  "dialog.export": "Copiar al portapapeles",
+  "c404.notFound": "La pagina que estás buscando no existe.",
+  "c404.goHome": "Ir a Inicio",
+  "home.teamWeek.title": "Equipo de la Semana"
 }

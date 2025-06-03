@@ -84,14 +84,9 @@ describe('HomeComponent', () => {
   });
 
 it('should NOT display teams of the week section if aTeamsWeek array is empty', () => {
-  // Simulate the service returning an empty array
   teamsServiceSpy.getFavoritedTeams.and.returnValue(of([]));
   fixture.detectChanges();
   const compiled = fixture.nativeElement as HTMLElement;
-  // Since aTeamsWeek is empty, there should be no content related to teams of the week
-  // Adjust the selector/text below to match what would be rendered for teams of the week
   expect(compiled.textContent).not.toContain('Team Of The Week');
-  // If you have a section or card for teams, you can check for its absence as well
-  // expect(compiled.querySelector('.teams-of-the-week')).toBeNull();
 });
 });

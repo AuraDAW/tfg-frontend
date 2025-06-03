@@ -180,7 +180,7 @@ export class AdminpanelComponent {
         this.router.navigateByUrl('/register');
         break;
       default:
-        console.log("no option chosen");
+        Swal.fire("Please select an option first", '', 'warning');
     }
   }
 
