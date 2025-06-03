@@ -108,7 +108,12 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "repo": "https://github.com/AuraDAW/tfg-frontend.git",
+            "branch": "gh-pages",
+            "message": "Deploying Angular app"
+          }
         }
       }
     }
