@@ -1,14 +1,14 @@
 <form [formGroup]="frm" autocomplete="off" (submit)="savePokemon()">
     <div class="row">
         <div class="col-12 text-center mt-3 d-flex justify-content-between">
-            <h2>{{"pokemonFrm.title" | translate}}</h2>
-            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Save</button>
+            <h2>{{"pokemonAdd.title" | translate}}</h2>
+            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">{{"button.save" | translate}}</button>
         </div>
     </div>
     <hr>
     <div class="row">
         <mat-form-field>
-            <mat-label>Select a Pokemon</mat-label>
+            <mat-label>{{"pokemonAdd.pokemon" | translate}}</mat-label>
             <mat-select formControlName="pokemonId">
                 @for (pokemonData of aPokemonData; track $index) {
                 <mat-option [value]="pokemonData.id">{{`pokemonData.name.${pokemonData.id}` | translate | titlecase}}</mat-option>
@@ -17,7 +17,7 @@
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Select all abilities</mat-label>
+            <mat-label>{{"pokemonAdd.abilities" | translate}}</mat-label>
             <mat-select formControlName="abilities" multiple>
                 @for (ability of aAbilities; track $index) {
                 <mat-option [value]="ability.id">{{`abilities.name.${ability.id}` | translate | titlecase}}</mat-option>
@@ -26,7 +26,7 @@
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Select all moves</mat-label>
+            <mat-label>{{"pokemonAdd.moves" | translate}}</mat-label>
             <mat-select formControlName="moves" multiple>
                 @for (move of aMoves; track $index) {
                 <mat-option [value]="move.id">{{`moves.name.${move.id}` | translate | titlecase}}</mat-option>

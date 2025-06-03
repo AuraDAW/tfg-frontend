@@ -1,27 +1,27 @@
 <form [formGroup]="frm" autocomplete="off" (submit)="savePokemon()">
     <div class="row">
         <div class="col-12 text-center mt-3 d-flex justify-content-between">
-            <h2>Create a Pokemon</h2>
-            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Save</button>
+            <h2>{{"adminPokemon.title" | translate}}</h2>
+            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">{{"button.save" | translate}}</button>
         </div>
     </div>
     <hr>
     <div class="row ">
         <input type="hidden" formControlName="id" value="">
         <mat-form-field class="col-12">
-            <mat-label>Pokemon English Name</mat-label>
+            <mat-label>{{"adminPokemon.nameEN" | translate}}</mat-label>
             <input matInput formControlName="name_en">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Pokemon Spanish Name</mat-label>
+            <mat-label>{{"adminPokemon.nameES" | translate}}</mat-label>
             <input matInput formControlName="name_es">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Pokedex Id</mat-label>
+            <mat-label>{{"adminPokemon.pokedex" | translate}}</mat-label>
             <input type="number" matInput formControlName="pokedex_id">
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Type 1</mat-label>
+            <mat-label>{{"adminPokemon.type1" | translate}}</mat-label>
             <mat-select formControlName="type_1">
                 @for (type of aTypes; track $index) {
                 <mat-option [value]="type.id">{{`types.name.${type.id}` | translate | titlecase}}</mat-option>
@@ -29,7 +29,7 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Type 2</mat-label>
+            <mat-label>{{"adminPokemon.type2" | translate}}</mat-label>
             <mat-select formControlName="type_2">
                 @for (type of aTypes; track $index) {
                 <mat-option [value]="type.id">{{`types.name.${type.id}` | translate | titlecase}}</mat-option>
@@ -37,39 +37,39 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Base HP</mat-label>
+            <mat-label>{{"adminPokemon.baseHP" | translate}}</mat-label>
             <input type="number" matInput formControlName="base_hp">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Base Attack</mat-label>
+            <mat-label>{{"adminPokemon.baseATK" | translate}}</mat-label>
             <input type="number" matInput formControlName="base_atk">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Base Defense</mat-label>
+            <mat-label>{{"adminPokemon.baseDEF" | translate}}</mat-label>
             <input type="number" matInput formControlName="base_def">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Base Special Attack</mat-label>
+            <mat-label>{{"adminPokemon.baseSPATK" | translate}}</mat-label>
             <input type="number" matInput formControlName="base_spatk">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Base Special Defense</mat-label>
+            <mat-label>{{"adminPokemon.baseSPDEF" | translate}}</mat-label>
             <input type="number" matInput formControlName="base_spdef">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Base Speed</mat-label>
+            <mat-label>{{"adminPokemon.baseSPD" | translate}}</mat-label>
             <input matInput formControlName="base_spd">
         </mat-form-field>
         <!-- IMAGE -->
         <mat-form-field class="col-12">
-            <mat-label for="image">Image</mat-label>
+            <mat-label for="image">{{"adminPokemon.image" | translate}}</mat-label>
             <input matInput [value]="frm.get('image')?.value?.name || ''" readonly (click)="triggerFileInput('image')"
                 placeholder="Choose image" />
             <input type="file" id="image" (change)="onFileChange($event, 'image')" style="display: none" accept=".jpg,.jpeg,.png" />
         </mat-form-field>
         <!-- IMAGE SHINY -->
         <mat-form-field class="col-12">
-            <mat-label for="imageShiny">Image Shiny</mat-label>
+            <mat-label for="imageShiny">{{"adminPokemon.imageShiny" | translate}}</mat-label>
             <input matInput [value]="frm.get('imageShiny')?.value?.name || ''" readonly
                 (click)="triggerFileInput('imageShiny')" placeholder="Choose shiny image" />
             <input type="file" id="imageShiny" (change)="onFileChange($event, 'imageShiny')" style="display: none" accept=".jpg,.jpeg,.png" />

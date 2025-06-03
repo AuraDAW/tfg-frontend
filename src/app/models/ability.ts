@@ -4,5 +4,5 @@ export interface Ability {
     description_en:string,
     name_es:string,
     description_es:string,
-    entityType?:"ability"
+    entityType?:"abilities"
 }

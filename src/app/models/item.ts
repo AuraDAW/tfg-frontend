@@ -5,5 +5,5 @@ export interface Item {
     image:string,
     name_es:string,
     description_es:string,
-    entityType?:"item"
+    entityType?:"items"
 }

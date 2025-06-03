@@ -7,5 +7,5 @@ export interface Move {
     accuracy:number,
     name_es:string,
     description_es:string,
-    entityType?:"move"
+    entityType?:"moves"
 }

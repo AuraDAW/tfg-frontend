@@ -63,7 +63,7 @@ export class AdminpanelComponent {
         this.aItems=data;
         //add entityType to each Item so we may know later if it's an item to send to correct urls
         this.aItems.forEach(element => {
-          element.entityType="item";
+          element.entityType="items";
         });
       },
       error:(err)=>{
@@ -78,7 +78,7 @@ export class AdminpanelComponent {
         this.aAbilities=data;
         //add entityType to each ability so we may know later if it's an ability to send to correct urls
         this.aAbilities.forEach(element => {
-          element.entityType="ability";
+          element.entityType="abilities";
         });
       },
       error:(err)=>{
@@ -93,7 +93,7 @@ export class AdminpanelComponent {
         this.aMoves=data;
         //add entityType to each move so we may know later if it's a move to send to correct urls
         this.aMoves.forEach(element => {
-          element.entityType="move";
+          element.entityType="moves";
         });
       },
       error:(err)=>{
@@ -300,12 +300,12 @@ export class AdminpanelComponent {
     return element.entityType==='pokemonData';
   }
   isMove(element: any): element is Move {
-    return element.entityType==='move';
+    return element.entityType==='moves';
   }
   isItem(element: any): element is Item {
-    return element.entityType==='item';
+    return element.entityType==='items';
   }
   isAbility(element: any): element is Ability {
-    return element.entityType==='ability';
+    return element.entityType==='abilities';
   }
 }

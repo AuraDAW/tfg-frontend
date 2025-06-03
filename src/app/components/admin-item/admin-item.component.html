@@ -1,34 +1,33 @@
 <form [formGroup]="frm" autocomplete="off" (submit)="saveItem()">
     <div class="row">
         <div class="col-12 text-center mt-3 d-flex justify-content-between">
-            <h2>Create Item</h2>
-            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Save</button>
+            <h2>{{"adminItem.title" | translate}}</h2>
+            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">{{"button.save" | translate}}</button>
         </div>
     </div>
     <hr>
     <div class="row">
         <input type="hidden" formControlName="id" value="">
         <mat-form-field class="col-12">
-            <mat-label>Item English Name</mat-label>
+            <mat-label>{{"adminItem.nameEN" | translate}}</mat-label>
             <input matInput formControlName="name_en">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Item Spanish Name</mat-label>
+            <mat-label>{{"adminItem.nameES" | translate}}</mat-label>
             <input matInput formControlName="name_es">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Item English Description</mat-label>
+            <mat-label>{{"adminItem.descriptionEN" | translate}}</mat-label>
             <input matInput formControlName="description_en">
         </mat-form-field>
         <mat-form-field class="col-12">
-            <mat-label>Item Spanish Description</mat-label>
+            <mat-label>{{"adminItem.descriptionES" | translate}}</mat-label>
             <input matInput formControlName="description_es">
         </mat-form-field>
         <!-- IMAGE -->
         <mat-form-field class="col-12">
-            <mat-label for="image">Image</mat-label>
-            <input matInput [value]="frm.get('image')?.value?.name || ''" readonly (click)="triggerFileInput('image')"
-                placeholder="Choose image" />
+            <mat-label for="image">{{"adminItem.image" | translate}}</mat-label>
+            <input matInput [value]="frm.get('image')?.value?.name || ''" readonly (click)="triggerFileInput('image')"/>
             <input type="file" id="image" (change)="onFileChange($event, 'image')" style="display: none" accept=".jpg,.jpeg,.png" />
         </mat-form-field>
     </div>
