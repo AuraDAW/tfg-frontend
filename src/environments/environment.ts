@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3000";
+const apiUrl = "tfg-backend-production-537d.up.railway.app";
 
 export const environment = {
   apiUrl,
