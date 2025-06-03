@@ -1,4 +1,4 @@
-const apiUrl = "tfg-backend-production-537d.up.railway.app";
+const apiUrl = "https://tfg-backend-production-537d.up.railway.app";
 
 export const environment = {
   apiUrl,
